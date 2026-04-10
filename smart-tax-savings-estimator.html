@@ -1,0 +1,2971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ══════════════════ SEO META ══════════════════ -->
+<title>Free Federal Tax Calculator 2025-2026 | Smart Tax Savings Estimator</title>
+<meta name="description" content="Free 2025-2026 federal income tax calculator. Estimate your tax refund, marginal tax bracket, and take-home pay across all filing statuses.">
+<meta name="keywords" content="federal tax calculator, income tax calculator 2025, income tax calculator 2026, tax refund calculator, tax bracket calculator, tax estimator, take home pay calculator, self employment tax calculator, QBI deduction calculator, HSA tax savings, 401k tax savings, married filing jointly calculator, head of household tax, capital gains tax calculator, tax withholding calculator, year end tax planning">
+<meta name="author" content="Smart Tax Savings Estimator">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<meta name="theme-color" content="#1e40af">
+<link rel="canonical" href="https://smarttaxsavingscalculator.com/">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Free Federal Tax Calculator 2025-2026 | Smart Tax Savings Estimator">
+<meta property="og:description" content="Estimate your 2025 or 2026 federal tax refund in seconds. Supports all filing statuses, QBI, self-employment tax, HSA, 401(k), CTC, and capital gains.">
+<meta property="og:url" content="https://smarttaxsavingscalculator.com/">
+<meta property="og:site_name" content="Smart Tax Savings Estimator">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Free Federal Tax Calculator 2025-2026">
+<meta name="twitter:description" content="Free tax refund estimator for 2025 &amp; 2026. Compare filing statuses, model deductions, and see your marginal tax bracket instantly.">
+
+<!-- Structured Data: WebApplication -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Smart Tax Savings Estimator",
+  "alternateName": "Federal Tax Calculator 2025-2026",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Any (browser-based)",
+  "description": "Free 2025 and 2026 federal income tax calculator that estimates your tax refund, marginal tax bracket, and take-home pay across all filing statuses. Supports QBI, self-employment tax, HSA, 401(k), Child Tax Credit, and long-term capital gains.",
+  "url": "https://smarttaxsavingscalculator.com/",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "featureList": [
+    "2025 and 2026 federal tax brackets",
+    "Single, Married Filing Jointly, MFS, Head of Household",
+    "Standard and itemized deductions",
+    "Qualified Business Income (QBI) deduction",
+    "Self-employment tax",
+    "HSA and 401(k) contribution modeling",
+    "Child Tax Credit and Additional CTC",
+    "Long-term capital gains stacking",
+    "Year-end tax planning suggestions"
+  ]
+}
+</script>
+
+<style>
+:root {
+  --primary: #1e40af;
+  --primary-light: #dbeafe;
+  --primary-mid: #3b82f6;
+  --primary-dark: #1e3a8a;
+  --success: #059669;
+  --success-light: #d1fae5;
+  --danger: #dc2626;
+  --danger-light: #fee2e2;
+  --warning: #d97706;
+  --warning-light: #fef3c7;
+  --purple: #7c3aed;
+  --purple-light: #ede9fe;
+  --gray-50: #f8fafc;
+  --gray-100: #f1f5f9;
+  --gray-200: #e2e8f0;
+  --gray-300: #cbd5e1;
+  --gray-400: #94a3b8;
+  --gray-500: #64748b;
+  --gray-600: #475569;
+  --gray-700: #334155;
+  --gray-800: #1e293b;
+  --gray-900: #0f172a;
+  --radius: 10px;
+  --shadow: 0 1px 4px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.10);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--gray-100);
+  color: var(--gray-800);
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+/* ── REMOVE NUMBER SPINNERS ── */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+input[type=number] { -moz-appearance: textfield; }
+
+/* ── HEADER ── */
+.site-header {
+  background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 60%, #2563eb 100%);
+  color: white;
+  padding: 14px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(30,64,175,0.3);
+}
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.header-title h1 { font-size: 18px; font-weight: 700; letter-spacing: -0.3px; }
+.header-title p  { font-size: 11px; opacity: 0.7; margin-top: 1px; }
+
+/* ── TAX PROFILE BANNER (step 1) ── */
+.profile-banner {
+  background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  color: white;
+  margin-bottom: 0;
+}
+.profile-banner-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.7;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.profile-banner-label .step-badge {
+  background: rgba(255,255,255,0.2);
+  padding: 1px 8px;
+  border-radius: 20px;
+  font-size: 9px;
+}
+.profile-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  align-items: center;
+}
+.profile-field label {
+  font-size: 11px;
+  opacity: 0.75;
+  margin-bottom: 5px;
+  display: block;
+}
+.year-toggle-form {
+  display: inline-flex;
+  background: rgba(255,255,255,0.15);
+  border-radius: 8px;
+  padding: 3px;
+}
+.ytf-btn {
+  padding: 7px 20px;
+  border: none;
+  background: transparent;
+  color: rgba(255,255,255,0.65);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 700;
+  transition: all 0.18s;
+  letter-spacing: -0.3px;
+}
+.ytf-btn.active { background: white; color: var(--primary); }
+.profile-select {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: white;
+  border-radius: 7px;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  width: 100%;
+}
+.profile-select option { color: var(--gray-800); background: white; }
+
+/* ── LAYOUT ── */
+.app-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 16px;
+  align-items: start;
+}
+.input-column {
+  grid-column: 1;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-right: 16px;
+}
+.results-column {
+  grid-column: 2;
+  grid-row: 1;
+  position: sticky;
+  top: 66px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.suggestions-section {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  margin-top: 8px;
+}
+.disclaimer-row {
+  grid-column: 1 / -1;
+  grid-row: 0;
+}
+
+/* ── CARDS / ACCORDIONS ── */
+.card {
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  cursor: pointer;
+  user-select: none;
+  border-bottom: 1px solid transparent;
+  transition: background 0.15s;
+}
+.card-header:hover { background: var(--gray-50); }
+.card-header.open { border-bottom-color: var(--gray-200); }
+.card-header-left { display: flex; align-items: center; gap: 10px; }
+.card-icon {
+  width: 32px; height: 32px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; flex-shrink: 0;
+}
+.card-icon.blue   { background: var(--primary-light); }
+.card-icon.green  { background: var(--success-light); }
+.card-icon.yellow { background: var(--warning-light); }
+.card-icon.purple { background: var(--purple-light); }
+.card-icon.red    { background: var(--danger-light); }
+.card-header h2 { font-size: 14px; font-weight: 600; color: var(--gray-800); }
+.card-header .section-hint { font-size: 11px; color: var(--gray-500); margin-top: 1px; }
+.chevron { transition: transform 0.2s; color: var(--gray-400); font-size: 12px; }
+.chevron.open { transform: rotate(180deg); }
+.card-body { padding: 16px; display: none; }
+.card-body.open { display: block; }
+
+/* ── FORM ELEMENTS ── */
+.form-grid   { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+.form-group  { display: flex; flex-direction: column; gap: 4px; }
+.form-group.full { grid-column: 1 / -1; }
+.form-label {
+  font-size: 12px; font-weight: 500; color: var(--gray-600);
+  display: flex; align-items: center; gap: 4px;
+}
+.tooltip-icon {
+  width: 14px; height: 14px; background: var(--gray-300); border-radius: 50%;
+  font-size: 9px; color: white; display: inline-flex; align-items: center;
+  justify-content: center; cursor: help; position: relative; flex-shrink: 0;
+}
+/* tooltip popup handled by JS (#global-tooltip) */
+.form-input {
+  padding: 8px 10px;
+  border: 1px solid var(--gray-300);
+  border-radius: 7px;
+  font-size: 13px;
+  color: var(--gray-800);
+  transition: border-color 0.15s, box-shadow 0.15s;
+  width: 100%;
+  background: white;
+}
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary-mid);
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.12);
+}
+.form-input.currency { padding-left: 22px; }
+.input-wrap { position: relative; }
+.input-prefix {
+  position: absolute; left: 9px; top: 50%; transform: translateY(-50%);
+  color: var(--gray-500); font-size: 13px; pointer-events: none;
+}
+.form-select {
+  padding: 8px 10px; border: 1px solid var(--gray-300); border-radius: 7px;
+  font-size: 13px; color: var(--gray-800); background: white; width: 100%; cursor: pointer;
+}
+.form-select:focus { outline: none; border-color: var(--primary-mid); }
+.form-checkbox-row {
+  display: flex; align-items: center; gap: 8px; margin-top: 4px;
+  padding: 8px 10px; background: var(--gray-50); border-radius: 7px;
+  border: 1px solid var(--gray-200);
+}
+.form-checkbox-row input[type="checkbox"] { width: 15px; height: 15px; cursor: pointer; accent-color: var(--primary); }
+.form-checkbox-row label { font-size: 12px; color: var(--gray-700); cursor: pointer; }
+.computed-field {
+  padding: 8px 10px; background: var(--gray-100); border: 1px solid var(--gray-200);
+  border-radius: 7px; font-size: 13px; color: var(--gray-600); font-style: italic;
+}
+.section-divider {
+  font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px;
+  color: var(--gray-500); margin: 16px 0 10px; padding-bottom: 6px;
+  border-bottom: 1px solid var(--gray-200);
+}
+.limit-hint { font-size: 11px; color: var(--primary); margin-top: 2px; }
+.itemized-total-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 12px; background: var(--gray-50); border-radius: 7px;
+  border: 1px solid var(--gray-200); margin-top: 12px;
+}
+.itemized-total-row .label { font-size: 12px; color: var(--gray-600); }
+.itemized-total-row .value { font-size: 14px; font-weight: 700; color: var(--gray-800); }
+.deduction-winner {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 12px; border-radius: 7px; font-size: 12px; font-weight: 600; margin-top: 8px;
+}
+.deduction-winner.std      { background: var(--primary-light); color: var(--primary); }
+.deduction-winner.itemized { background: var(--success-light); color: var(--success); }
+.deduction-winner.override { background: var(--warning-light); color: var(--warning); }
+
+/* ── RESULTS PANEL ── */
+.results-card {
+  background: white; border-radius: var(--radius);
+  box-shadow: var(--shadow-md); overflow: hidden;
+}
+.results-header { padding: 16px; background: var(--gray-800); color: white; }
+.results-header h3 {
+  font-size: 11px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.8px; opacity: 0.65; margin-bottom: 4px;
+}
+.refund-amount { font-size: 36px; font-weight: 800; letter-spacing: -1px; line-height: 1; }
+.refund-amount.refund { color: #34d399; }
+.refund-amount.due    { color: #f87171; }
+.refund-label { font-size: 13px; opacity: 0.65; margin-top: 4px; }
+.key-metrics {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+  background: var(--gray-200); border-bottom: 1px solid var(--gray-200);
+}
+.metric-cell { background: white; padding: 10px 12px; }
+.metric-label {
+  font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--gray-500); font-weight: 600;
+}
+.metric-value { font-size: 16px; font-weight: 700; color: var(--gray-800); margin-top: 2px; }
+.metric-value.rate { color: var(--primary); }
+.breakdown-table { width: 100%; font-size: 12px; }
+.breakdown-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 7px 16px; border-bottom: 1px solid var(--gray-100);
+}
+.breakdown-row:last-child { border-bottom: none; }
+.breakdown-row.subtotal    { background: var(--gray-50); font-weight: 600; }
+.breakdown-row.total-row   { background: var(--gray-800); color: white; font-weight: 700; font-size: 13px; }
+.breakdown-row.credit-row  { color: var(--success); }
+.breakdown-row.withholding-row { color: var(--primary); }
+.breakdown-row .row-value  { font-weight: 600; }
+.bracket-vis { padding: 12px 16px; border-top: 1px solid var(--gray-200); }
+.bracket-vis-title {
+  font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--gray-500); font-weight: 600; margin-bottom: 8px;
+}
+.bracket-bar-wrap { display: flex; flex-direction: column; gap: 4px; }
+.bracket-bar-row  { display: flex; align-items: center; gap: 6px; }
+.bracket-bar-label { font-size: 10px; color: var(--gray-600); width: 28px; text-align: right; }
+.bracket-bar-bg {
+  flex: 1; height: 10px; background: var(--gray-100); border-radius: 3px; overflow: hidden;
+}
+.bracket-bar-fill { height: 100%; border-radius: 3px; transition: width 0.4s ease; }
+.bracket-bar-amt  { font-size: 10px; color: var(--gray-500); width: 55px; text-align: right; }
+
+/* ── PLANNING SUGGESTIONS — LIST LAYOUT ── */
+.suggestions-header { padding: 20px 0 12px; }
+.suggestions-header h2 { font-size: 18px; font-weight: 700; color: var(--gray-800); }
+.suggestions-header p  { font-size: 13px; color: var(--gray-500); margin-top: 3px; }
+.suggestion-list {
+  display: flex; flex-direction: column; gap: 8px; padding-bottom: 40px;
+}
+.suggestion-item {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 14px 18px; background: white; border-radius: var(--radius);
+  box-shadow: var(--shadow); border-left: 4px solid var(--gray-300);
+  transition: box-shadow 0.15s;
+}
+.suggestion-item:hover { box-shadow: var(--shadow-md); }
+.suggestion-item.high-impact  { border-left-color: var(--success); }
+.suggestion-item.medium-impact{ border-left-color: var(--purple); }
+.suggestion-item.info         { border-left-color: var(--primary-mid); }
+.suggestion-item.caution      { border-left-color: var(--purple); }
+.sug-icon    { font-size: 22px; line-height: 1; flex-shrink: 0; margin-top: 2px; }
+.sug-content { flex: 1; min-width: 0; }
+.sug-title   { font-size: 13px; font-weight: 700; color: var(--gray-800); }
+.sug-desc    { font-size: 12px; color: var(--gray-600); margin-top: 4px; line-height: 1.55; }
+.sug-badge {
+  flex-shrink: 0; font-size: 11px; font-weight: 700;
+  padding: 4px 12px; border-radius: 20px; white-space: nowrap;
+  align-self: center; margin-left: 8px;
+}
+.sug-badge.green  { background: var(--success-light); color: var(--success); }
+.sug-badge.blue   { background: var(--primary-light); color: var(--primary); }
+.sug-badge.yellow { background: var(--purple-light); color: var(--purple); }
+.sug-badge.red    { background: var(--purple-light); color: var(--purple); }
+.no-suggestions {
+  text-align: center; padding: 32px; color: var(--gray-400);
+  background: white; border-radius: var(--radius); font-size: 13px;
+}
+
+/* ── PAYROLL NOTE (attached to 401k / HSA fields) ── */
+.payroll-note {
+  display: flex; align-items: center; gap: 6px;
+  margin-top: 4px; padding: 4px 8px 4px 10px;
+  background: var(--gray-50); border-left: 2px solid var(--gray-300);
+  border-radius: 0 5px 5px 0; font-size: 11px; color: var(--gray-500);
+}
+.payroll-note input[type="checkbox"] {
+  width: 13px; height: 13px; cursor: pointer;
+  accent-color: var(--gray-600); flex-shrink: 0;
+}
+.payroll-note label { cursor: pointer; line-height: 1.3; }
+
+/* ── STRATEGY LEGEND ── */
+.strat-legend {
+  display: flex; flex-wrap: wrap; gap: 6px 16px;
+  margin-bottom: 14px; font-size: 11px; color: var(--gray-500);
+}
+.legend-key { display: flex; align-items: center; gap: 5px; }
+.legend-dot {
+  display: inline-block; width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+}
+.legend-dot.green  { background: var(--success); }
+.legend-dot.purple { background: var(--purple); }
+.legend-dot.blue   { background: var(--primary-mid); }
+
+/* ── DISCLAIMER ── */
+.disclaimer {
+  background: var(--warning-light); border: 1px solid #fcd34d;
+  border-radius: var(--radius); padding: 10px 16px; font-size: 11px;
+  color: var(--warning); line-height: 1.5; margin-bottom: 4px;
+}
+.disclaimer strong { font-weight: 700; }
+
+/* ── DATA NOTE ── */
+.data-note {
+  font-size: 11px; color: var(--gray-500); padding: 8px 16px;
+  border-top: 1px solid var(--gray-100); background: var(--gray-50); line-height: 1.5;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 800px) {
+  .app-layout { grid-template-columns: 1fr; padding: 12px; }
+  .input-column { padding-right: 0; }
+  .results-column { position: static; grid-column: 1; grid-row: auto; }
+  .suggestions-section { grid-column: 1; }
+  .form-grid { grid-template-columns: 1fr; }
+  .profile-grid { grid-template-columns: 1fr; }
+  .sug-badge { display: none; }
+}
+@media (max-width: 500px) {
+  .form-grid-3 { grid-template-columns: 1fr 1fr; }
+}
+
+/* ── UTILS ── */
+.text-success { color: var(--success); }
+.text-danger  { color: var(--danger); }
+.text-primary { color: var(--primary); }
+.fw-700 { font-weight: 700; }
+.mt-8  { margin-top: 8px; }
+.mt-12 { margin-top: 12px; }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--gray-100); }
+::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: 3px; }
+
+/* ── CALCULATE BUTTON ── */
+.calc-btn-wrap {
+  padding: 8px 0 4px;
+}
+.calc-btn {
+  width: 100%;
+  padding: 18px 24px;
+  background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 60%, #2563eb 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 4px 20px rgba(30,64,175,0.35);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.calc-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(30,64,175,0.45);
+}
+.calc-btn:active { transform: translateY(0); }
+.calc-btn-sub {
+  font-size: 12px;
+  opacity: 0.7;
+  font-weight: 400;
+  margin-top: 3px;
+  text-align: center;
+}
+
+/* ── RESULTS PAGE ── */
+#resultsPage { display: none; }
+.rp-header {
+  background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 60%, #2563eb 100%);
+  color: white;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(30,64,175,0.3);
+}
+.rp-back-btn {
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: white;
+  padding: 7px 14px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+.rp-back-btn:hover { background: rgba(255,255,255,0.28); }
+.rp-header-title { flex: 1; }
+.rp-header-title h1 { font-size: 17px; font-weight: 700; letter-spacing: -0.3px; }
+.rp-header-title p  { font-size: 11px; opacity: 0.65; margin-top: 1px; }
+.rp-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px 16px 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Hero card */
+.rp-hero {
+  background: var(--gray-800);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  color: white;
+  text-align: center;
+}
+.rp-hero-eyebrow { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.55; margin-bottom: 6px; font-weight: 700; }
+.rp-hero-amount  { font-size: 56px; font-weight: 900; letter-spacing: -2px; line-height: 1; margin-bottom: 6px; }
+.rp-hero-amount.refund { color: #34d399; }
+.rp-hero-amount.due    { color: #f87171; }
+.rp-hero-sublabel { font-size: 15px; opacity: 0.6; }
+
+/* Metrics strip */
+.rp-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+.rp-metric {
+  background: white;
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+.rp-metric-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gray-500); font-weight: 600; }
+.rp-metric-value { font-size: 20px; font-weight: 800; color: var(--gray-800); margin-top: 4px; letter-spacing: -0.5px; }
+.rp-metric-value.rate { color: var(--primary); }
+
+/* Breakdown accordion */
+.rp-breakdown-card {
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.rp-breakdown-toggle {
+  width: 100%;
+  padding: 14px 18px;
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gray-700);
+  transition: background 0.15s;
+}
+.rp-breakdown-toggle:hover { background: var(--gray-50); }
+.rp-breakdown-body { display: none; border-top: 1px solid var(--gray-200); }
+.rp-breakdown-body.open { display: block; }
+
+/* ── TAX SAVINGS ROADMAP ── */
+.rp-roadmap {
+  background: white; border-radius: var(--radius); box-shadow: var(--shadow);
+  overflow: hidden; border-top: 4px solid var(--success);
+}
+.rp-roadmap-header {
+  padding: 16px 20px 10px;
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  border-bottom: 1px solid #bbf7d0;
+}
+.rp-roadmap-header h2 { font-size: 18px; font-weight: 800; color: var(--gray-800); margin-bottom: 2px; }
+.rp-roadmap-header p  { font-size: 13px; color: var(--gray-600); }
+.rp-roadmap-table {
+  width: 100%; border-collapse: collapse; font-size: 13px;
+}
+.rp-roadmap-table thead th {
+  padding: 10px 16px; text-align: left; font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.6px; color: var(--gray-500);
+  background: var(--gray-50); border-bottom: 1px solid var(--gray-200);
+}
+.rp-roadmap-table thead th.num { text-align: right; }
+.rp-roadmap-table tbody td {
+  padding: 11px 16px; border-bottom: 1px solid var(--gray-100); vertical-align: middle;
+}
+.rp-roadmap-table td.num { text-align: right; font-variant-numeric: tabular-nums; color: var(--gray-700); }
+.rp-roadmap-table td.savings { color: var(--success); font-weight: 700; }
+.rp-roadmap-table td.rate-cell {
+  text-align: right;
+}
+.rate-pill {
+  display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 700;
+}
+.rate-pill.best  { background: var(--success-light); color: var(--success); }
+.rate-pill.good  { background: var(--purple-light); color: var(--purple); }
+.rate-pill.fair  { background: var(--primary-light); color: var(--primary); }
+.rp-roadmap-table tbody tr:last-child td { border-bottom: none; }
+.rp-roadmap-table tfoot td {
+  padding: 12px 16px; font-weight: 800; font-size: 13px;
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  border-top: 2px solid #bbf7d0; color: var(--gray-800);
+}
+.rp-roadmap-table tfoot td.savings { color: var(--success); }
+.rp-roadmap-bottom {
+  padding: 12px 20px; font-size: 13px; color: var(--gray-600);
+  background: var(--gray-50); border-top: 1px solid var(--gray-200);
+  line-height: 1.5;
+}
+.rp-roadmap-bottom strong { color: var(--success); }
+
+/* Strategies on results page */
+.rp-strat-header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 4px 0 8px;
+}
+.rp-strat-header h2 { font-size: 22px; font-weight: 800; color: var(--gray-800); }
+.rp-strat-header p  { font-size: 13px; color: var(--gray-500); }
+.rp-strat-list { display: flex; flex-direction: column; gap: 10px; }
+
+/* Disclaimer on results page */
+.rp-disclaimer {
+  background: var(--warning-light); border: 1px solid #fcd34d;
+  border-radius: var(--radius); padding: 10px 16px; font-size: 11px;
+  color: var(--warning); line-height: 1.5;
+}
+
+@media (max-width: 700px) {
+  .rp-metrics { grid-template-columns: 1fr 1fr; }
+  .rp-hero-amount { font-size: 42px; }
+  .rp-strat-header { flex-direction: column; gap: 2px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════ HEADER ══════════════════ -->
+<header class="site-header">
+  <div class="header-top">
+    <div class="header-title">
+      <h1>Smart Tax Savings Estimator</h1>
+      <p>Free federal income tax calculator · 2025 &amp; 2026 brackets · refund &amp; take-home pay estimator</p>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════ MAIN LAYOUT ══════════════════ -->
+<div class="app-layout">
+
+  <!-- ════════════════ LEFT: INPUT COLUMN ════════════════ -->
+  <div class="input-column">
+
+    <!-- ── STEP 1: TAX PROFILE BANNER ── -->
+    <div class="profile-banner">
+      <div class="profile-banner-label">
+        📋 Step 1 — Start Here
+        <span class="step-badge">Required</span>
+      </div>
+      <div class="profile-grid">
+        <div class="profile-field">
+          <label>Tax Year</label>
+          <div class="year-toggle-form">
+            <button class="ytf-btn active" onclick="setYear(2025)" id="btn2025">2025</button>
+            <button class="ytf-btn" onclick="setYear(2026)" id="btn2026">2026</button>
+          </div>
+        </div>
+        <div class="profile-field">
+          <label>Filing Status</label>
+          <select class="profile-select" id="filingStatus" onchange="recalc()">
+            <option value="single">Single</option>
+            <option value="mfj">Married Filing Jointly</option>
+            <option value="mfs">Married Filing Separately</option>
+            <option value="hoh">Head of Household</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SECTION 1: PERSONAL INFO ── -->
+    <div class="card">
+      <div class="card-header open" onclick="toggleSection(this)">
+        <div class="card-header-left">
+          <div class="card-icon blue">👤</div>
+          <div><h2>Personal Information</h2><div class="section-hint">Age, dependents &amp; coverage</div></div>
+        </div>
+        <span class="chevron open">▼</span>
+      </div>
+      <div class="card-body open">
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Your Age
+              <span class="tooltip-icon" data-tip="Age affects IRA catch-up contributions, the 401(k) age 60–63 special catch-up limit, and the senior bonus deduction (65+).">?</span>
+            </label>
+            <input class="form-input" type="number" id="age" min="18" max="120" onchange="recalc()">
+          </div>
+          <div class="form-group" id="spouseAgeGroup">
+            <label class="form-label">Spouse Age</label>
+            <input class="form-input" type="number" id="spouseAge" min="18" max="120" onchange="recalc()">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Qualifying Children (under 17)
+              <span class="tooltip-icon" data-tip="Children under age 17 who qualify for the Child Tax Credit. Worth $2,200 per child for 2025–2026. A refundable portion (Additional CTC) of up to $1,700/child can be received as a refund even if you owe no tax.">?</span>
+            </label>
+            <input class="form-input" type="number" id="numChildren" value="0" min="0" max="20" onchange="recalc()">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Other Dependents</label>
+            <input class="form-input" type="number" id="numDependents" value="0" min="0" max="20" onchange="recalc()">
+          </div>
+        </div>
+        <div style="margin-top:12px; display:flex; flex-wrap:wrap; gap:8px;">
+          <div class="form-checkbox-row">
+            <input type="checkbox" id="isBlind" onchange="recalc()">
+            <label for="isBlind">You are blind / legally blind</label>
+          </div>
+          <div class="form-checkbox-row" id="spouseBlindRow">
+            <input type="checkbox" id="spouseBlind" onchange="recalc()">
+            <label for="spouseBlind">Spouse is blind</label>
+          </div>
+          <div class="form-checkbox-row">
+            <input type="checkbox" id="covered401k" checked onchange="recalc()">
+            <label for="covered401k">You have a workplace retirement plan (401k/403b)</label>
+          </div>
+          <div class="form-checkbox-row" id="spouseCoveredRow">
+            <input type="checkbox" id="spouseCovered401k" onchange="recalc()">
+            <label for="spouseCovered401k">Spouse has a workplace retirement plan</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SECTION 2: INCOME ── -->
+    <div class="card">
+      <div class="card-header open" onclick="toggleSection(this)">
+        <div class="card-header-left">
+          <div class="card-icon green">💰</div>
+          <div><h2>Income Sources</h2><div class="section-hint">Wages, self-employment, investments &amp; more</div></div>
+        </div>
+        <span class="chevron open">▼</span>
+      </div>
+      <div class="card-body open">
+
+        <div class="section-divider">W-2 / Employment Income</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">W-2 Wages &amp; Salary</label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="w2Wages" value="" placeholder="0" data-currency>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Federal Tax Withheld (W-2)
+              <span class="tooltip-icon" data-tip="Box 2 of your W-2. This is the amount already sent to the IRS on your behalf — it reduces your balance due or increases your refund.">?</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="w2Withholding" value="" placeholder="0" data-currency>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-divider" style="margin-top:16px;">Investment &amp; Passive Income</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Short-Term Capital Gains
+              <span class="tooltip-icon" data-tip="Gains on assets held 1 year or less — taxed at ordinary income rates. Enter a negative number for short-term losses. Net capital losses up to $3,000 can offset ordinary income.">?</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="stcg" value="" placeholder="0" data-currency>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Long-Term Capital Gains
+              <span class="tooltip-icon" data-tip="Gains on assets held more than 1 year — taxed at preferential 0%, 15%, or 20% rates. Crypto held more than 1 year qualifies. Enter a negative number for long-term losses.">?</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="ltcg" value="" placeholder="0" data-currency>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Prior Year Capital Loss Carryforward
+              <span class="tooltip-icon" data-tip="If your prior year's Schedule D had a capital loss carryforward (Line 14 on Schedule D, or your tax software's carryover worksheet), enter the amount here. This loss offsets current-year gains first, then up to $3,000 can offset ordinary income. Always a positive number.">?</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="capitalLossCarryforward" value="" placeholder="0" data-currency>
+            </div>
+            <div class="limit-hint" style="color:var(--gray-500);">From prior year Schedule D · always enter as positive</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Qualified Dividends
+              <span class="tooltip-icon" data-tip="Dividends taxed at long-term capital gains rates (0%/15%/20%). Found on Form 1099-DIV Box 1b. Must be a subset of your total ordinary dividends below.">?</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="qualifiedDividends" value="" placeholder="0" data-currency>
+            </div>
+            <div id="qualDivWarning" style="display:none; font-size:11px; color:var(--warning); margin-top:3px; padding:2px 4px;">⚠ Qualified dividends can't exceed ordinary dividends — capped automatically.</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Ordinary Dividends (total)
+              <span class="tooltip-icon" data-tip="Total dividends from Form 1099-DIV Box 1a. Qualified dividends (Box 1b) are a subset that get preferential rates — enter them separately above.">?</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="ordDividends" value="" placeholder="0" data-currency>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Interest Income
+              <span class="tooltip-icon" data-tip="Taxable interest from savings accounts, CDs, bonds (Form 1099-INT Box 1). Taxed as ordinary income. Municipal bond interest is generally federally tax-exempt (don't include it here).">?</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="interestIncome" value="" placeholder="0" data-currency>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">U.S. Savings Bond Redemption Interest
+              <span class="tooltip-icon" data-tip="Interest earned on redeemed Series EE or I savings bonds. This is federally taxable as ordinary income (reported on Form 1099-INT Box 3) but EXEMPT from state and local income taxes — a common source of confusion. If you used the proceeds for qualified education expenses, a federal exclusion may apply (Form 8815). Enter the taxable interest amount from your 1099-INT.">?</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="bondInterest" value="" placeholder="0" data-currency>
+            </div>
+            <div class="limit-hint" style="color:var(--gray-500);">Federal taxable · State/local exempt · From 1099-INT Box 3</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Rental Income (net)
+              <span class="tooltip-icon" data-tip="Net rental income after allowable expenses: mortgage interest, property taxes, insurance, repairs, and depreciation. A net loss may be limited to $25,000/year for active participants with AGI under $100,000.">?</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="rentalIncome" value="" placeholder="0" data-currency>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Other Taxable Income
+              <span class="tooltip-icon" data-tip="Includes alimony (pre-2019 agreements), gambling winnings, jury duty, unemployment compensation, the taxable portion of Social Security, hobby income, and other miscellaneous income.">?</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="otherIncome" value="" placeholder="0" data-currency>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Estimated Tax Payments Made
+              <span class="tooltip-icon" data-tip="Quarterly estimated payments made to the IRS (Form 1040-ES). Include any prior-year refund you applied to this year. Q4 deadline: January 15 of the following year.">?</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="estimatedPayments" value="" placeholder="0" data-currency>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SECTION: BUSINESS & SELF-EMPLOYMENT ── -->
+    <div class="card" id="businessCard">
+      <div class="card-header open" onclick="toggleSection(this)">
+        <div class="card-header-left">
+          <div class="card-icon green">🏢</div>
+          <div><h2>Business &amp; Self-Employment</h2><div class="section-hint">Revenue, expenses, SE tax, QBI &amp; retirement</div></div>
+        </div>
+        <span class="chevron open">▼</span>
+      </div>
+      <div class="card-body open">
+
+        <div class="section-divider">Business Profile</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Business / Industry Type
+              <span class="tooltip-icon" data-tip="Selecting your business type lets us give you tailored, specific year-end tax strategies and expense suggestions that actually apply to your situation.">?</span>
+            </label>
+            <select class="form-select" id="bizType" onchange="recalc()">
+              <option value="general">General / Other</option>
+              <option value="consulting">Freelance / Consulting / Coaching</option>
+              <option value="technology">Technology / Software / IT</option>
+              <option value="healthcare">Healthcare / Medical / Dental</option>
+              <option value="legal">Legal / Financial / Accounting</option>
+              <option value="creative">Creative / Media / Photography</option>
+              <option value="retail">Retail / E-Commerce / Amazon</option>
+              <option value="construction">Construction / Trades / Contracting</option>
+              <option value="food">Food / Restaurant / Catering</option>
+              <option value="realestate">Real Estate Professional / Agent</option>
+              <option value="transportation">Transportation / Rideshare / Delivery</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Business Structure
+              <span class="tooltip-icon" data-tip="Sole proprietor (Schedule C): most common for freelancers. Single-member LLC is usually taxed the same as sole proprietor. S-Corp, Partnership, and Multi-member LLC have different rules — consult a CPA for entity-level strategies.">?</span>
+            </label>
+            <select class="form-select" id="isSSTB" onchange="recalc()">
+              <option value="non-sstb">Non-SSTB (contractor, trade, tech, retail…)</option>
+              <option value="sstb">SSTB (consulting, law, finance, health, arts…)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="section-divider" style="margin-top:16px;">Income &amp; Expenses</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Gross Business Revenue / Sales
+              <span class="tooltip-icon" data-tip="Enter your total gross receipts or sales for the year BEFORE deducting any expenses. This is the top-line number on Schedule C (Line 1). Include all payments received — checks, PayPal, Venmo, credit card settlements, and 1099-NEC amounts.">?</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="seRevenue" value="" placeholder="0" data-currency>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Total Business Expenses
+              <span class="tooltip-icon" data-tip="Common deductible expenses: ✅ Home office (dedicated workspace — $5/sq ft simplified or actual) ✅ Vehicle / mileage (70¢/mile in 2025; 72.5¢/mile in 2026) ✅ Software subscriptions (QuickBooks, Adobe, Zoom, etc.) ✅ Phone &amp; internet (business-use %) ✅ Marketing / advertising ✅ Professional services (CPA, attorney, bookkeeper) ✅ Health insurance premiums (if self-employed) ✅ Equipment &amp; tools ✅ Professional development / courses / books ✅ Business travel (flights, hotels — 100% deductible; meals 50%) ✅ Bank fees &amp; merchant processing fees ✅ Professional memberships / licenses
+
+💡 Two people often miss: (1) Section 179 lets you IMMEDIATELY deduct the full cost of equipment, computers, vehicles, and machinery in the year of purchase — no multi-year depreciation required. (2) Qualified Business Meals with clients are 50% deductible even at a restaurant — keep a note of the business purpose.">?</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="seExpenses" value="" placeholder="0" data-currency>
+            </div>
+            <div id="bizLossWarning" style="display:none; font-size:11px; color:var(--warning); margin-top:3px; padding:2px 4px;">⚠ Expenses exceed revenue — net business income set to $0. Business losses can't offset other income in this calculator.</div>
+          </div>
+        </div>
+
+        <!-- Net profit auto-display -->
+        <div class="itemized-total-row" id="seProfitRow" style="display:none; margin-top:8px;">
+          <span class="label">Net Business Profit (Revenue − Expenses)</span>
+          <span class="value" id="seProfitDisplay">$0</span>
+        </div>
+
+        <div class="section-divider" style="margin-top:16px;">Self-Employment Taxes &amp; Deductions</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">SE Tax (auto-calculated)</label>
+            <div class="computed-field" id="seTaxDisplay">$0</div>
+            <div class="limit-hint">15.3% on first $176,100 net SE income · 2.9% above</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">½ SE Tax Deduction (auto-calculated)</label>
+            <div class="computed-field" id="seTaxDeductDisplay">$0</div>
+            <div class="limit-hint">Reduces your AGI automatically</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">SE Health Insurance Premiums
+              <span class="tooltip-icon" data-tip="Self-employed individuals can deduct 100% of health, dental, and vision insurance premiums paid for themselves, their spouse, and dependents. Cannot exceed net SE profit. Do NOT include premiums already deducted through a spouse's employer plan.">?</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="seHealthIns" value="" placeholder="0" data-currency>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">SEP-IRA / Solo 401(k) Contribution
+              <span class="tooltip-icon" data-tip="For self-employed individuals. SEP-IRA: contribute up to 25% of net self-employment income, max $70,000 (2025) / $72,000 (2026). Solo 401(k): employee elective deferrals up to $23,500 + 25% of net SE income as employer contribution. Reduces both income tax and SE tax base — one of the most powerful deductions available.">?</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="sepIRA" value="" placeholder="0" data-currency>
+            </div>
+            <div class="limit-hint" id="sepIRALimitHint">Available for self-employed individuals</div>
+          </div>
+        </div>
+
+        <div class="section-divider" style="margin-top:16px;">Qualified Business Income (QBI) — §199A</div>
+        <div class="form-grid">
+          <div class="form-group full">
+            <label class="form-label">QBI Deduction (auto-calculated)
+              <span class="tooltip-icon" data-tip="The §199A Qualified Business Income deduction lets eligible self-employed taxpayers deduct 20% of their net business income — completely free of charge. SSTB businesses (consulting, law, finance, health, arts) are subject to income phase-outs. Non-SSTB businesses are generally not restricted. This deduction cannot exceed 20% of your taxable income before QBI.">?</span>
+            </label>
+            <div class="computed-field" id="qbiDisplay" style="font-size:14px; font-weight:700; color:var(--success);">$0 — Enter business revenue to calculate</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── SECTION 3: RETIREMENT & SAVINGS ── -->
+    <div class="card">
+      <div class="card-header open" onclick="toggleSection(this)">
+        <div class="card-header-left">
+          <div class="card-icon green">🏦</div>
+          <div><h2>Retirement &amp; Tax-Advantaged Savings</h2><div class="section-hint">401(k), IRA, HSA — reduce AGI directly</div></div>
+        </div>
+        <span class="chevron open">▼</span>
+      </div>
+      <div class="card-body open">
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Your 401(k) / 403(b) / 457 Contributions
+              <span class="tooltip-icon" data-tip="Enter YOUR OWN pre-tax contributions only — do NOT include your employer's matching contributions. Only the amount you personally elect to contribute reduces your taxable income. For example, if you contribute $10,000 and your employer matches $5,000, enter $10,000.">?</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="k401Contrib" value="" placeholder="0" data-currency>
+            </div>
+            <div class="limit-hint" id="k401LimitHint"></div>
+            <div class="payroll-note">
+              <input type="checkbox" id="k401ThroughPayroll" checked onchange="recalc()">
+              <label for="k401ThroughPayroll">↑ This 401(k)/403(b) amount is already withheld from my paycheck — not included in W-2 Box 1 wages (most employees)</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Traditional IRA Contribution
+              <span class="tooltip-icon" data-tip="Deductibility depends on your income and whether you (or your spouse) have a workplace plan. Roth IRA contributions are NOT deductible — don't enter them here. The deductibility is calculated automatically.">?</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="iraContrib" value="" placeholder="0" data-currency>
+            </div>
+            <div class="limit-hint" id="iraLimitHint"></div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">HSA Contribution
+              <span class="tooltip-icon" data-tip="Health Savings Account — triple tax advantage: deductible going in, tax-free growth, and tax-free withdrawals for qualified medical expenses. Must have a qualifying High Deductible Health Plan (HDHP).">?</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="hsaContrib" value="" placeholder="0" data-currency>
+            </div>
+            <div class="limit-hint" id="hsaLimitHint"></div>
+            <div class="payroll-note">
+              <input type="checkbox" id="hsaThroughPayroll" checked onchange="recalc()">
+              <label for="hsaThroughPayroll">↑ This HSA amount is already withheld from my paycheck — not included in W-2 Box 1 wages (most employees)</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">HSA Coverage Type</label>
+            <select class="form-select" id="hsaCoverage" onchange="recalc()">
+              <option value="none">No HSA / Not eligible</option>
+              <option value="self">Self-only HDHP</option>
+              <option value="family">Family HDHP</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Student Loan Interest Paid
+              <span class="tooltip-icon" data-tip="Up to $2,500 deductible. Phases out for single filers $85,000–$100,000 and MFJ filers $175,000–$205,000 (2025 MAGI).">?</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="studentLoanInterest" value="" placeholder="0" data-currency>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SECTION 4: ITEMIZED DEDUCTIONS (open by default) ── -->
+    <div class="card">
+      <div class="card-header open" onclick="toggleSection(this)">
+        <div class="card-header-left">
+          <div class="card-icon yellow">📋</div>
+          <div><h2>Itemized Deductions</h2><div class="section-hint">Standard deduction used automatically if higher</div></div>
+        </div>
+        <span class="chevron open">▼</span>
+      </div>
+      <div class="card-body open">
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">State &amp; Local Taxes Paid (SALT)
+              <span class="tooltip-icon" data-tip="Combined state income taxes paid + property taxes. Capped at $10,000 ($5,000 for MFS). This is one of the most impactful itemized deductions for many taxpayers.">?</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="saltPaid" value="" placeholder="0" data-currency>
+            </div>
+            <div class="limit-hint">Capped at $10,000 ($5,000 MFS)</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Mortgage Interest Paid
+              <span class="tooltip-icon" data-tip="Deductible interest on your primary and/or secondary home mortgage (up to $750,000 of debt for loans originating after December 15, 2017). From Form 1098 Box 1.">?</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="mortgageInterest" value="" placeholder="0" data-currency>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Charitable Contributions
+              <span class="tooltip-icon" data-tip="Cash and non-cash donations to IRS-qualified 501(c)(3) organizations. Keep written acknowledgment for donations of $250 or more. Non-cash gifts over $500 require Form 8283.">?</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="charitableDed" value="" placeholder="0" data-currency>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Medical Expenses (total paid)
+              <span class="tooltip-icon" data-tip="Enter your total unreimbursed medical expenses. Only the portion exceeding 7.5% of your AGI is deductible — the calculator applies this floor automatically.">?</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="medicalExpenses" value="" placeholder="0" data-currency>
+            </div>
+            <div class="limit-hint">Only the amount over 7.5% of AGI is deductible</div>
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Other Itemized Deductions
+              <span class="tooltip-icon" data-tip="Includes: casualty/theft losses from federally declared disasters, investment interest expense, gambling losses (to the extent of winnings), and certain other deductions.">?</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="otherItemized" value="" placeholder="0" data-currency>
+            </div>
+          </div>
+        </div>
+        <div class="itemized-total-row">
+          <span class="label">Total Itemized Deductions</span>
+          <span class="value" id="itemizedTotalDisplay">$0</span>
+        </div>
+        <div class="deduction-winner" id="deductionWinner">
+          <span>📌</span>
+          <span id="deductionWinnerText">Standard deduction: $15,750</span>
+        </div>
+        <!-- forceItemized: shown when standard naturally wins -->
+        <div class="form-checkbox-row mt-8" id="forceItemizedRow">
+          <input type="checkbox" id="forceItemized" onchange="recalc()">
+          <label for="forceItemized">Override: force use of itemized deductions (unusual — only if required)</label>
+        </div>
+        <!-- forceStandard: shown when itemized naturally wins -->
+        <div class="form-checkbox-row mt-8" id="forceStandardRow" style="display:none;">
+          <input type="checkbox" id="forceStandard" onchange="recalc()">
+          <label for="forceStandard">Override: use standard deduction instead — simplifies filing and reduces audit risk even if itemized is slightly higher</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SECTION 5: CREDITS (open by default) ── -->
+    <div class="card">
+      <div class="card-header open" onclick="toggleSection(this)">
+        <div class="card-header-left">
+          <div class="card-icon purple">⭐</div>
+          <div><h2>Tax Credits</h2><div class="section-hint">Dollar-for-dollar reduction of your tax bill</div></div>
+        </div>
+        <span class="chevron open">▼</span>
+      </div>
+      <div class="card-body open">
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Child / Dependent Care Expenses
+              <span class="tooltip-icon" data-tip="Daycare, after-school, or summer camp expenses while you work. Capped at $3,000 for 1 child, $6,000 for 2 or more. Credit rate: 20–35% depending on income.">?</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="depCareExpenses" value="" placeholder="0" data-currency>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Education Credits (max $2,500)
+              <span class="tooltip-icon" data-tip="American Opportunity Credit: up to $2,500/student for the first 4 years of college (40% refundable). Lifetime Learning Credit: 20% of up to $10,000. Enter the total credit amount.">?</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="educationCredit" value="" placeholder="0" data-currency>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Clean Vehicle / EV Tax Credit
+              <span class="tooltip-icon" data-tip="Up to $7,500 for a new qualifying clean vehicle; up to $4,000 for a used one. Income limits apply: $150,000 single / $300,000 MFJ (new vehicle); $75,000 single / $150,000 MFJ (used). Non-refundable.">?</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="evCredit" value="" placeholder="0" data-currency>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Other Credits
+              <span class="tooltip-icon" data-tip="Foreign tax credit, residential energy efficiency credits (up to $3,200/yr), Saver's Credit, premium tax credit (ACA marketplace), and other credits. Enter the total.">?</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="otherCredits" value="" placeholder="0" data-currency>
+            </div>
+          </div>
+        </div>
+        <div class="mt-8" style="font-size:12px; color:var(--gray-500); padding:8px 12px; background:var(--gray-50); border-radius:7px; line-height:1.55;">
+          <strong>Auto-calculated from your inputs:</strong> Child Tax Credit ($2,200/child, refundable Additional CTC up to $1,700/child), Credit for Other Dependents ($500/dependent), Earned Income Tax Credit (EITC), and ½ Self-Employment Tax deduction.
+        </div>
+
+        <div class="section-divider" style="margin-top:16px;">Other Taxes (Schedule 2)</div>
+        <div class="form-group full">
+          <label class="form-label">Additional Taxes — Form 5329 / 8962 / 8959 / other
+            <span class="tooltip-icon" data-tip="Enter any additional taxes from Schedule 2 of Form 1040 that aren't captured above. Common examples: ▪ Form 5329: 10% early retirement distribution penalty OR 6% excise tax on excess IRA/HSA contributions ▪ Form 8962: Repayment of excess Advance Premium Tax Credits (if your marketplace health insurance subsidy was over-estimated based on your actual income) ▪ Form 8959: Additional 0.9% Medicare Tax (earned income over $200,000 single / $250,000 MFJ) ▪ Schedule H: Household employment taxes (nanny, housekeeper) ▪ Recapture of prior-year credits. Look at Schedule 2 Part II of your prior-year return to find the source.">?</span>
+          </label>
+          <div class="input-wrap">
+            <span class="input-prefix">$</span>
+            <input class="form-input currency" type="text" inputmode="decimal" id="additionalTaxes" value="" placeholder="0" data-currency>
+          </div>
+          <div class="limit-hint" style="color:var(--gray-500);">Check Schedule 2 Part II of your tax return to identify the specific source</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CALCULATE BUTTON ── -->
+    <div class="calc-btn-wrap">
+      <button class="calc-btn" onclick="showResultsPage()">
+        <span style="font-size:20px;">🧮</span>
+        <div>
+          <div>Calculate My Tax Strategies</div>
+          <div class="calc-btn-sub">Lock in your numbers &amp; view your personalized year-end plan</div>
+        </div>
+        <span style="font-size:18px; margin-left:4px;">→</span>
+      </button>
+    </div>
+
+  </div><!-- end input-column -->
+
+  <!-- ════════════════ RIGHT: RESULTS COLUMN ════════════════ -->
+  <div class="results-column">
+
+    <div class="results-card">
+      <div class="results-header">
+        <h3 id="yearLabel">2025 Tax Estimate</h3>
+        <div class="refund-amount" id="refundAmount">$0</div>
+        <div class="refund-label" id="refundLabel">Enter your information above</div>
+      </div>
+
+      <div class="key-metrics">
+        <div class="metric-cell">
+          <div class="metric-label">Gross Income</div>
+          <div class="metric-value" id="grossIncomeDisplay">$0</div>
+        </div>
+        <div class="metric-cell">
+          <div class="metric-label">AGI</div>
+          <div class="metric-value" id="agiDisplay">$0</div>
+        </div>
+        <div class="metric-cell">
+          <div class="metric-label">Marginal Rate</div>
+          <div class="metric-value rate" id="marginalRateDisplay">10%</div>
+        </div>
+        <div class="metric-cell">
+          <div class="metric-label">Effective Rate</div>
+          <div class="metric-value rate" id="effectiveRateDisplay">0.0%</div>
+        </div>
+      </div>
+
+      <div class="breakdown-table">
+        <div class="breakdown-row">
+          <span class="row-label">Gross Income</span>
+          <span class="row-value" id="br_gross">$0</span>
+        </div>
+        <div class="breakdown-row">
+          <span class="row-label">Above-the-Line Deductions</span>
+          <span class="row-value text-success" id="br_aboveLine">−$0</span>
+        </div>
+        <div class="breakdown-row subtotal">
+          <span class="row-label">Adjusted Gross Income (AGI)</span>
+          <span class="row-value" id="br_agi">$0</span>
+        </div>
+        <div class="breakdown-row">
+          <span class="row-label" id="br_deductionLabel">Standard Deduction</span>
+          <span class="row-value text-success" id="br_deduction">−$0</span>
+        </div>
+        <div class="breakdown-row" id="br_qbiRow">
+          <span class="row-label">QBI Deduction (§199A)</span>
+          <span class="row-value text-success" id="br_qbi">−$0</span>
+        </div>
+        <div class="breakdown-row subtotal">
+          <span class="row-label">Taxable Income</span>
+          <span class="row-value" id="br_taxable">$0</span>
+        </div>
+        <div class="breakdown-row">
+          <span class="row-label">Ordinary Income Tax</span>
+          <span class="row-value" id="br_ordTax">$0</span>
+        </div>
+        <div class="breakdown-row" id="br_cgTaxRow">
+          <span class="row-label">Capital Gains Tax</span>
+          <span class="row-value" id="br_cgTax">$0</span>
+        </div>
+        <div class="breakdown-row" id="br_amtRow">
+          <span class="row-label">Alternative Minimum Tax (AMT)</span>
+          <span class="row-value" id="br_amt">$0</span>
+        </div>
+        <div class="breakdown-row" id="br_niitRow">
+          <span class="row-label">Net Investment Income Tax (3.8%)</span>
+          <span class="row-value" id="br_niit">$0</span>
+        </div>
+        <div class="breakdown-row" id="br_seTaxRow">
+          <span class="row-label">Self-Employment Tax</span>
+          <span class="row-value" id="br_seTax">$0</span>
+        </div>
+        <div class="breakdown-row" id="br_addlTaxRow">
+          <span class="row-label">Additional Taxes (Sch. 2)</span>
+          <span class="row-value" id="br_addlTax">$0</span>
+        </div>
+        <div class="breakdown-row total-row">
+          <span class="row-label">Total Tax Liability</span>
+          <span class="row-value" id="br_totalTax">$0</span>
+        </div>
+        <div class="breakdown-row credit-row" id="br_creditsRow">
+          <span class="row-label">Credits (CTC, EITC, etc.)</span>
+          <span class="row-value" id="br_credits">−$0</span>
+        </div>
+        <div class="breakdown-row withholding-row">
+          <span class="row-label">Withholding &amp; Estimated Payments</span>
+          <span class="row-value" id="br_withholding">−$0</span>
+        </div>
+        <div class="breakdown-row total-row" style="background:var(--gray-700);">
+          <span class="row-label" id="br_balanceLabel">Estimated Refund</span>
+          <span class="row-value" id="br_balance">$0</span>
+        </div>
+      </div>
+
+      <div class="bracket-vis">
+        <div class="bracket-vis-title">Income by Tax Bracket</div>
+        <div class="bracket-bar-wrap" id="bracketBars"></div>
+      </div>
+      <div class="data-note">
+        2025 figures reflect the One Big Beautiful Bill Act (OBBB, signed July 2025).
+        2026 contribution limits are based on official IRS announcements; some 2026 figures are estimates pending final publication.
+      </div>
+    </div>
+
+    <!-- CG Rate info card -->
+    <div class="results-card" id="cgRateCard" style="display:none;">
+      <div style="padding:14px 16px;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--gray-500);margin-bottom:6px;">Capital Gains Snapshot</div>
+        <div id="cgRateBreakdown" style="font-size:12px; color:var(--gray-700); line-height:1.8;"></div>
+      </div>
+    </div>
+
+  </div><!-- end results-column -->
+
+  <!-- ════════════════ SUGGESTIONS (hidden — shown on results page only) ════════════════ -->
+  <div class="suggestions-section" style="display:none;">
+    <div class="suggestions-header">
+      <h2>💡 Year-End Tax Planning Strategies</h2>
+      <p>Personalized recommendations · Most require action by Dec 31 · Retirement contributions may have until Apr 15</p>
+    </div>
+    <div class="suggestion-list" id="suggestionsGrid">
+      <div class="no-suggestions">Enter your income and deduction information above to unlock personalized tax planning strategies.</div>
+    </div>
+  </div>
+
+</div><!-- end app-layout -->
+
+<!-- DISCLAIMER -->
+<div style="max-width:1200px; margin:0 auto; padding:0 16px;">
+  <div class="disclaimer">
+    <strong>Disclaimer:</strong> This estimator is for informational and planning purposes only. It provides a federal tax estimate based on simplified rules and may not reflect every deduction, credit, or situation applicable to your return. Always consult a qualified tax professional before making financial decisions. State taxes are not included.
+  </div>
+</div>
+
+<!-- ══════════════════ SEO CONTENT FOOTER ══════════════════ -->
+<footer class="seo-footer" style="max-width:1200px; margin:0 auto 0; padding:20px 16px; font-size:13px; line-height:1.6; color:var(--gray-700);">
+  <div style="background:#fff; border:1px solid var(--gray-200); border-radius:var(--radius); box-shadow:var(--shadow); padding:20px 22px;">
+    <h2 style="font-size:16px; font-weight:700; color:var(--gray-900); margin-bottom:10px;">About this free federal tax calculator (2025 &amp; 2026)</h2>
+    <p style="margin-bottom:10px;">The <strong>Smart Tax Savings Estimator</strong> is a free, browser-based <strong>federal income tax calculator</strong> that helps you estimate your <strong>tax refund</strong>, <strong>marginal tax bracket</strong>, and <strong>take-home pay</strong> for the 2025 and 2026 tax years. No sign-up, no email, no data collection — everything is computed in your browser.</p>
+    <p style="margin-bottom:10px;">Built on the IRS 2025 tax brackets and the 2026 brackets introduced under the One Big Beautiful Bill Act (OBBB), this <strong>tax estimator</strong> supports all filing statuses: <strong>Single</strong>, <strong>Married Filing Jointly</strong>, <strong>Married Filing Separately</strong>, and <strong>Head of Household</strong>. Model your standard or itemized deduction, <strong>Qualified Business Income (QBI) deduction</strong>, <strong>self-employment tax</strong>, <strong>HSA</strong> and <strong>401(k)</strong> contributions, <strong>Child Tax Credit</strong>, and <strong>long-term capital gains</strong> — all in one place.</p>
+
+    <h3 style="font-size:14px; font-weight:700; color:var(--gray-900); margin-top:14px; margin-bottom:6px;">What you can calculate</h3>
+    <ul style="margin-left:18px; margin-bottom:10px;">
+      <li>Federal income tax refund or balance due for tax years 2025 and 2026</li>
+      <li>Effective and marginal federal tax bracket</li>
+      <li>Take-home pay after federal tax, FICA, and self-employment tax</li>
+      <li>Tax savings from HSA, 401(k), Traditional IRA, and pre-tax contributions</li>
+      <li>QBI deduction for sole proprietors, LLCs, and S-corp pass-through income</li>
+      <li>Capital gains tax on long-term and qualified dividend income</li>
+      <li>Year-end tax planning moves personalized to your situation</li>
+    </ul>
+
+    <h3 style="font-size:14px; font-weight:700; color:var(--gray-900); margin-top:14px; margin-bottom:6px;">2026 federal income tax brackets</h3>
+    <p style="margin-bottom:10px;">The federal income tax has seven rates in 2026: <strong>10%, 12%, 22%, 24%, 32%, 35%, and 37%</strong>. The 2026 standard deduction is <strong>$16,100</strong> for single filers, <strong>$32,200</strong> for married couples filing jointly, and <strong>$24,150</strong> for head of household.</p>
+
+    <h3 style="font-size:14px; font-weight:700; color:var(--gray-900); margin-top:14px; margin-bottom:6px;">Frequently asked questions</h3>
+    <p style="margin-bottom:8px;"><strong>Is this tax calculator free?</strong> Yes. The Smart Tax Savings Estimator is 100% free to use, with no ads on the calculator itself and no account required.</p>
+    <p style="margin-bottom:8px;"><strong>Is my data private?</strong> All calculations run locally in your browser. Your income, deductions, and other tax information never leave your device.</p>
+    <p style="margin-bottom:8px;"><strong>Does it include state taxes?</strong> No — this is a <em>federal-only</em> tax calculator. Always consult a qualified tax professional for state tax questions and for advice specific to your return.</p>
+    <p style="margin-bottom:0;"><strong>Disclaimer:</strong> This estimator is provided for informational and planning purposes only. It is not tax advice. Consult a licensed CPA, Enrolled Agent, or tax attorney before making financial decisions based on these results.</p>
+  </div>
+</footer>
+
+<!-- ══════════════════ RESULTS PAGE ══════════════════ -->
+<div id="resultsPage">
+  <div class="rp-header">
+    <button class="rp-back-btn" onclick="showInputPage()">← Back to Edit</button>
+    <div class="rp-header-title">
+      <h1 id="rp_title">2025 Federal Tax Strategy Report</h1>
+      <p id="rp_subtitle">Personalized year-end planning · IRS data</p>
+    </div>
+  </div>
+  <div class="rp-content">
+    <!-- Hero -->
+    <div class="rp-hero">
+      <div class="rp-hero-eyebrow">Estimated Federal Tax Balance</div>
+      <div class="rp-hero-amount" id="rp_heroAmount">$0</div>
+      <div class="rp-hero-sublabel" id="rp_heroLabel">—</div>
+    </div>
+    <!-- Metrics -->
+    <div class="rp-metrics">
+      <div class="rp-metric">
+        <div class="rp-metric-label">Gross Income</div>
+        <div class="rp-metric-value" id="rp_gross">$0</div>
+      </div>
+      <div class="rp-metric">
+        <div class="rp-metric-label">Adjusted Gross Income</div>
+        <div class="rp-metric-value" id="rp_agi">$0</div>
+      </div>
+      <div class="rp-metric">
+        <div class="rp-metric-label">Marginal Rate</div>
+        <div class="rp-metric-value rate" id="rp_marginal">—</div>
+      </div>
+      <div class="rp-metric">
+        <div class="rp-metric-label">Effective Rate</div>
+        <div class="rp-metric-value rate" id="rp_effective">—</div>
+      </div>
+    </div>
+    <!-- Tax Savings Roadmap -->
+    <div class="rp-roadmap" id="rp_roadmapSection" style="display:none;">
+      <div class="rp-roadmap-header">
+        <h2>💰 Your Tax Savings Roadmap</h2>
+        <p id="rp_roadmapSubtitle">Deadlines vary — see each row below</p>
+      </div>
+      <table class="rp-roadmap-table">
+        <thead>
+          <tr>
+            <th>Action</th>
+            <th class="num">Invest / Spend</th>
+            <th class="num">Tax Saved</th>
+            <th class="num">Savings Rate</th>
+          </tr>
+        </thead>
+        <tbody id="rp_roadmapBody"></tbody>
+        <tfoot id="rp_roadmapFoot"></tfoot>
+      </table>
+      <div class="rp-roadmap-bottom" id="rp_roadmapBottom"></div>
+    </div>
+    <!-- Breakdown accordion -->
+    <div class="rp-breakdown-card">
+      <button class="rp-breakdown-toggle" onclick="toggleRpBreakdown(this)">
+        <span>📄 Tax Calculation Breakdown</span>
+        <span id="rp_chevron" style="font-size:12px; color:var(--gray-400);">▼ Show</span>
+      </button>
+      <div class="rp-breakdown-body" id="rp_breakdownBody">
+        <div class="breakdown-table" id="rp_breakdownTable"></div>
+      </div>
+    </div>
+    <!-- Strategies -->
+    <div>
+      <div class="rp-strat-header">
+        <h2>💡 Your Year-End Tax Strategies</h2>
+        <p>Personalized · Dec 31 for most · Apr 15 for retirement contributions</p>
+      </div>
+      <div class="strat-legend">
+        <span class="legend-key"><span class="legend-dot green"></span> Best savings opportunity</span>
+        <span class="legend-key"><span class="legend-dot purple"></span> Good savings opportunity</span>
+        <span class="legend-key"><span class="legend-dot blue"></span> Informational</span>
+      </div>
+      <div class="rp-strat-list" id="rp_stratList"></div>
+    </div>
+    <!-- Disclaimer -->
+    <div class="rp-disclaimer">
+      <strong>Disclaimer:</strong> This is an estimate for planning purposes only, based on simplified federal tax rules. It does not constitute tax advice, and state taxes are not included. Always consult a qualified tax professional before making financial decisions.
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ JAVASCRIPT ══════════════════ -->
+<script>
+'use strict';
+
+// ════════════════════════════════════════
+// TAX DATA — IRS 2025 & 2026
+// ════════════════════════════════════════
+const TAX_DATA = {
+  2025: {
+    brackets: {
+      single: [[11925,0.10],[48475,0.12],[103350,0.22],[197300,0.24],[250525,0.32],[626350,0.35],[Infinity,0.37]],
+      mfj:    [[23850,0.10],[96950,0.12],[206700,0.22],[394600,0.24],[501050,0.32],[751600,0.35],[Infinity,0.37]],
+      hoh:    [[17000,0.10],[64850,0.12],[103350,0.22],[197300,0.24],[250500,0.32],[626350,0.35],[Infinity,0.37]],
+      mfs:    [[11925,0.10],[48475,0.12],[103350,0.22],[197300,0.24],[250525,0.32],[375800,0.35],[Infinity,0.37]]
+    },
+    standardDeduction: { single:15750, mfj:31500, hoh:23625, mfs:15750 },
+    additionalStdDed:  { single:2000,  mfj:1600,  hoh:2000,  mfs:1600  },
+    seniorBonusMax:         { single:6000,   mfj:12000,  hoh:6000,   mfs:6000  },
+    seniorBonusPhaseoutStart:{ single:75000,  mfj:150000, hoh:75000,  mfs:75000 },
+    seniorBonusPhaseoutEnd:  { single:175000, mfj:250000, hoh:175000, mfs:175000},
+    capitalGains: {
+      single: [[48350,0.00],[533400,0.15],[Infinity,0.20]],
+      mfj:    [[96700,0.00],[600050,0.15],[Infinity,0.20]],
+      hoh:    [[64750,0.00],[566700,0.15],[Infinity,0.20]],
+      mfs:    [[48350,0.00],[300000,0.15],[Infinity,0.20]]
+    },
+    niitThreshold: { single:200000, mfj:250000, hoh:200000, mfs:125000 },
+    ssWageBase: 176100,
+    qbiPhaseout: { single:[197300,247300], mfj:[394600,544600], hoh:[197300,247300], mfs:[197300,247300] },
+    childTaxCredit: 2200,
+    additionalCTC: 1700,
+    ctcPhaseout: { single:200000, mfj:400000, hoh:200000, mfs:200000 },
+    amtExemption: { single:88100, mfj:137000, hoh:88100, mfs:68500 },
+    amtPhaseout:  { single:626350, mfj:1252700, hoh:626350, mfs:626350 },
+    amtBreakpoint: 220700,
+    saltCap: { single:10000, mfj:10000, hoh:10000, mfs:5000 },
+    retirement: {
+      k401:23500, k401Catchup50:7500, k401Catchup6063:11250,
+      ira:7000, iraCatchup50:1000,
+      sepIraMax:70000,
+      hsaSelf:4300, hsaFamily:8550, hsaCatchup55:1000
+    },
+    iraPhaseout: {
+      coveredSingle:[79000,89000], coveredMfj:[126000,146000], notCoveredSpouseMfj:[236000,246000]
+    },
+    rothPhaseout: { single:[150000,165000], mfj:[236000,246000], hoh:[150000,165000], mfs:[0,10000] },
+    qcdLimit: 108000,
+    studentLoanMax:2500,
+    studentLoanPhaseout: { single:[85000,100000], mfj:[175000,205000] },
+    eitc: {
+      0:{ max:649,  pStart:{single:10620,mfj:17730}, pEnd:{single:19104,mfj:26214} },
+      1:{ max:4328, pStart:{single:23511,mfj:30620}, pEnd:{single:46560,mfj:53670} },
+      2:{ max:7152, pStart:{single:23511,mfj:30620}, pEnd:{single:52918,mfj:59899} },
+      3:{ max:8046, pStart:{single:23511,mfj:30620}, pEnd:{single:59187,mfj:66819} }
+    }
+  },
+  2026: {
+    brackets: {
+      single: [[12400,0.10],[50400,0.12],[105700,0.22],[201775,0.24],[256225,0.32],[640600,0.35],[Infinity,0.37]],
+      mfj:    [[24800,0.10],[100800,0.12],[211400,0.22],[403550,0.24],[512450,0.32],[768700,0.35],[Infinity,0.37]],
+      hoh:    [[17650,0.10],[67100,0.12],[105700,0.22],[201775,0.24],[256225,0.32],[640600,0.35],[Infinity,0.37]],
+      mfs:    [[12400,0.10],[50400,0.12],[105700,0.22],[201775,0.24],[256225,0.32],[384350,0.35],[Infinity,0.37]]
+    },
+    standardDeduction: { single:16100, mfj:32200, hoh:24150, mfs:16100 },
+    additionalStdDed:  { single:2050,  mfj:1650,  hoh:2050,  mfs:1650  },
+    seniorBonusMax:         { single:6000,   mfj:12000,  hoh:6000,   mfs:6000  },
+    seniorBonusPhaseoutStart:{ single:75000,  mfj:150000, hoh:75000,  mfs:75000 },
+    seniorBonusPhaseoutEnd:  { single:175000, mfj:250000, hoh:175000, mfs:175000},
+    capitalGains: {
+      single: [[49450,0.00],[545500,0.15],[Infinity,0.20]],
+      mfj:    [[98900,0.00],[613700,0.15],[Infinity,0.20]],
+      hoh:    [[66700,0.00],[578200,0.15],[Infinity,0.20]],
+      mfs:    [[49450,0.00],[306850,0.15],[Infinity,0.20]]
+    },
+    niitThreshold: { single:200000, mfj:250000, hoh:200000, mfs:125000 },
+    ssWageBase: 180000,
+    qbiPhaseout: { single:[201775,251775], mfj:[403550,553550], hoh:[201775,251775], mfs:[201775,251775] },
+    childTaxCredit: 2200,
+    additionalCTC: 1800,
+    ctcPhaseout: { single:200000, mfj:400000, hoh:200000, mfs:200000 },
+    amtExemption: { single:90100, mfj:140300, hoh:90100, mfs:70150 },
+    amtPhaseout:  { single:641850, mfj:1283700, hoh:641850, mfs:641850 },
+    amtBreakpoint: 225400,
+    saltCap: { single:10000, mfj:10000, hoh:10000, mfs:5000 },
+    retirement: {
+      k401:24500, k401Catchup50:8000, k401Catchup6063:12250,
+      ira:7500, iraCatchup50:1100,
+      sepIraMax:72000,
+      hsaSelf:4400, hsaFamily:8750, hsaCatchup55:1000
+    },
+    iraPhaseout: {
+      coveredSingle:[81000,91000], coveredMfj:[129000,149000], notCoveredSpouseMfj:[241000,251000]
+    },
+    rothPhaseout: { single:[155000,170000], mfj:[246000,261000], hoh:[155000,170000], mfs:[0,10000] },
+    qcdLimit: 111000,
+    studentLoanMax:2500,
+    studentLoanPhaseout: { single:[87000,102000], mfj:[180000,210000] },
+    eitc: {
+      0:{ max:666,  pStart:{single:10890,mfj:18170}, pEnd:{single:19600,mfj:26900} },
+      1:{ max:4442, pStart:{single:24120,mfj:31390}, pEnd:{single:47770,mfj:55040} },
+      2:{ max:7342, pStart:{single:24120,mfj:31390}, pEnd:{single:54300,mfj:61570} },
+      3:{ max:8270, pStart:{single:24120,mfj:31390}, pEnd:{single:60780,mfj:68050} }
+    }
+  }
+};
+
+// ════════════════════════════════════════
+// CURRENCY INPUT FORMATTING
+// ════════════════════════════════════════
+function setupCurrencyInputs() {
+  document.querySelectorAll('[data-currency]').forEach(el => {
+    el.addEventListener('focus', function() {
+      // Strip commas on focus so user can type freely
+      const raw = parseFloat(this.value.replace(/[^0-9.-]/g,''));
+      this.value = isNaN(raw) || raw === 0 ? '' : String(raw);
+    });
+    el.addEventListener('blur', function() {
+      const raw = parseFloat(this.value.replace(/[^0-9.-]/g,''));
+      if (isNaN(raw) || raw === 0) { this.value = ''; }
+      else { this.value = raw.toLocaleString('en-US'); }
+      recalc();
+    });
+    el.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') this.blur();
+    });
+    // Recalc on input too (without formatting, which happens on blur)
+    el.addEventListener('input', () => recalc());
+  });
+}
+
+// ════════════════════════════════════════
+// HELPERS
+// ════════════════════════════════════════
+let currentYear = 2025;
+
+function getVal(id) {
+  const el = document.getElementById(id);
+  if (!el) return 0;
+  const v = el.value.trim();
+  if (!v) return 0;
+  // Strip currency symbols, commas, spaces — keep digits, period, minus, and 'e' for scientific notation
+  let raw = v.replace(/[$,\s]/g, '');
+  // Reject strings that would produce absurd values (e.g., Infinity, NaN text)
+  if (/[a-df-zA-DF-Z]/.test(raw)) return 0;  // allow 'e/E' for scientific notation
+  // Collapse multiple minus signs to one
+  raw = raw.replace(/^-+/, '-');
+  const n = parseFloat(raw);
+  if (!isFinite(n)) return 0;
+  // Cap at 10 billion to prevent nonsensical results
+  return Math.max(-1e10, Math.min(1e10, n));
+}
+function getChecked(id) { const el = document.getElementById(id); return el ? el.checked : false; }
+function fmt(n) { return '$' + Math.abs(Math.round(n)).toLocaleString('en-US'); }
+function fmtPct(n) { return (n * 100).toFixed(1) + '%'; }
+
+function calcBracketTax(income, brackets) {
+  let tax = 0, prev = 0;
+  for (const [upper, rate] of brackets) {
+    if (income <= prev) break;
+    tax += (Math.min(income, upper) - prev) * rate;
+    prev = upper;
+    if (!isFinite(upper)) break;
+  }
+  return tax;
+}
+
+function getMarginalRate(income, brackets) {
+  let prev = 0;
+  for (const [upper, rate] of brackets) {
+    if (income <= upper || !isFinite(upper)) return rate;
+    prev = upper;
+  }
+  return brackets[brackets.length-1][1];
+}
+
+function calcStackedCGTax(cgAmount, ordinaryBase, cgBrackets) {
+  if (cgAmount <= 0) return 0;
+  let tax = 0, remaining = cgAmount, base = ordinaryBase, prev = 0;
+  for (const [upper, rate] of cgBrackets) {
+    if (remaining <= 0) break;
+    const top = isFinite(upper) ? upper : Infinity;
+    if (base >= top) { prev = top; continue; }
+    const room = top - Math.max(prev, base);
+    const taxable = Math.min(remaining, room);
+    tax += taxable * rate;
+    remaining -= taxable;
+    base = Math.max(base, prev) + taxable;
+    prev = top;
+    if (!isFinite(top)) break;
+  }
+  return tax;
+}
+
+function phaseout(amount, income, start, end) {
+  if (income <= start) return amount;
+  if (income >= end) return 0;
+  return amount * (1 - (income - start) / (end - start));
+}
+
+function maxK401(year, age) {
+  const r = TAX_DATA[year].retirement;
+  let max = r.k401;
+  if (age >= 60 && age <= 63) max += r.k401Catchup6063;
+  else if (age >= 50) max += r.k401Catchup50;
+  return max;
+}
+function maxIRA(year, age) {
+  const r = TAX_DATA[year].retirement;
+  return r.ira + (age >= 50 ? r.iraCatchup50 : 0);
+}
+function maxHSA(year, coverage, age) {
+  const r = TAX_DATA[year].retirement;
+  if (coverage === 'none') return 0;
+  return (coverage === 'family' ? r.hsaFamily : r.hsaSelf) + (age >= 55 ? r.hsaCatchup55 : 0);
+}
+
+function getCGRate(ordinaryBase, cgBrackets) {
+  let prev = 0;
+  for (const [upper, rate] of cgBrackets) {
+    if (ordinaryBase <= upper || !isFinite(upper)) return rate;
+    prev = upper;
+  }
+  return cgBrackets[cgBrackets.length-1][1];
+}
+
+function getNextBracketInfo(income, brackets) {
+  let prevRate = brackets[0][1];
+  for (const [upper, rate] of brackets) {
+    if (income < upper) return { roomToNext: upper - income, nextRate: rate, currentRate: prevRate };
+    prevRate = rate;
+    if (!isFinite(upper)) break;
+  }
+  return null;
+}
+
+function calcEITC(earnedIncome, agi, numChildren, status, data) {
+  if (earnedIncome <= 0) return 0;
+  const isMfj = status === 'mfj';
+  const key = Math.min(numChildren, 3);
+  const eData = data.eitc[key];
+  if (!eData) return 0;
+  const incomeTest = Math.max(earnedIncome, agi);
+  const pEnd   = isMfj ? eData.pEnd.mfj   : eData.pEnd.single;
+  const pStart = isMfj ? eData.pStart.mfj : eData.pStart.single;
+  if (incomeTest > pEnd)   return 0;
+  if (incomeTest <= pStart) return eData.max;
+  return eData.max * (1 - (incomeTest - pStart) / (pEnd - pStart));
+}
+
+// ════════════════════════════════════════
+// MAIN CALCULATION
+// ════════════════════════════════════════
+function calculateTax() {
+  const year   = currentYear;
+  const status = document.getElementById('filingStatus').value;
+  const D      = TAX_DATA[year];
+  const age    = Math.max(18, parseInt(getVal('age')) || 35);
+  const spouseAge = Math.max(18, parseInt(getVal('spouseAge')) || 35);
+
+  // ── INCOME ──
+  const w2Wages       = Math.max(0, getVal('w2Wages'));
+  const seRevenue  = Math.max(0, getVal('seRevenue'));
+  const seExpenses = Math.max(0, getVal('seExpenses'));
+  const seIncome   = Math.max(0, seRevenue - seExpenses);
+  const stcgRaw       = getVal('stcg');
+  const ltcgRaw       = getVal('ltcg');
+  const qualDivRaw    = Math.max(0, getVal('qualifiedDividends'));
+  const ordDividends  = Math.max(0, getVal('ordDividends'));
+  const qualDividends = Math.min(qualDivRaw, ordDividends);
+  const interestIncome= Math.max(0, getVal('interestIncome')) + Math.max(0, getVal('bondInterest'));
+  const rentalIncome  = getVal('rentalIncome');
+  const otherIncome   = getVal('otherIncome');
+  const w2Withholding    = Math.max(0, getVal('w2Withholding'));
+  const estimatedPayments= Math.max(0, getVal('estimatedPayments'));
+  const totalWithholding = w2Withholding + estimatedPayments;
+
+  // ── SE TAX ──
+  const netSE = seIncome * 0.9235;
+  let seTax = 0;
+  if (netSE > 0) {
+    const ssPart = Math.min(netSE, D.ssWageBase);
+    seTax = ssPart * 0.153 + Math.max(0, netSE - D.ssWageBase) * 0.029;
+  }
+  const deductibleSeTax = seTax / 2;
+
+  // ── CAPITAL GAINS / LOSSES ──
+  const capitalLossCarryforward = Math.max(0, getVal('capitalLossCarryforward'));
+  let effectiveLtcg = ltcgRaw, effectiveStcg = stcgRaw, capitalLossOffset = 0;
+  // Carryforward is treated as additional capital loss: offsets gains first, then $3k vs ordinary income
+  const netCG = stcgRaw + ltcgRaw - capitalLossCarryforward;
+  if (netCG < 0) {
+    capitalLossOffset = Math.min(Math.abs(netCG), 3000);
+    effectiveLtcg = 0; effectiveStcg = 0;
+  } else if (stcgRaw < 0 && ltcgRaw > 0) {
+    effectiveLtcg = Math.max(0, ltcgRaw + stcgRaw); effectiveStcg = 0;
+  } else if (ltcgRaw < 0 && stcgRaw > 0) {
+    effectiveStcg = Math.max(0, stcgRaw + ltcgRaw); effectiveLtcg = 0;
+  }
+  effectiveLtcg = Math.max(0, effectiveLtcg);
+  effectiveStcg = Math.max(0, effectiveStcg);
+
+  const preferentialIncome = effectiveLtcg + qualDividends;
+  const ordinaryGross = w2Wages + seIncome
+    + Math.max(0, rentalIncome)
+    + interestIncome
+    + (ordDividends - qualDividends)
+    + effectiveStcg
+    + Math.max(0, otherIncome)
+    - capitalLossOffset;
+  const grossIncome = Math.max(0, ordinaryGross + preferentialIncome);
+
+  // ── ABOVE-THE-LINE DEDUCTIONS ──
+  const k401Max  = maxK401(year, age);
+  const k401Contrib = Math.min(Math.max(0, getVal('k401Contrib')), k401Max);
+  const iraMax   = maxIRA(year, age);
+  const iraContrib = Math.max(0, getVal('iraContrib'));
+  const hsaCoverage = document.getElementById('hsaCoverage').value;
+  const hsaMax   = maxHSA(year, hsaCoverage, age);
+  const hsaContrib  = Math.min(Math.max(0, getVal('hsaContrib')), hsaMax);
+  const seHealthIns = Math.min(Math.max(0, getVal('seHealthIns')), Math.max(0, seIncome - seTax));
+  const sepIRAMax   = Math.max(0, Math.min(D.retirement.sepIraMax, netSE * 0.25));
+  const sepIRA      = Math.min(Math.max(0, getVal('sepIRA')), sepIRAMax);
+  const sliRaw      = Math.min(Math.max(0, getVal('studentLoanInterest')), D.studentLoanMax);
+
+  // Approx MAGI for IRA deductibility
+  const magiApprox = grossIncome - deductibleSeTax - k401Contrib - hsaContrib - seHealthIns - sepIRA;
+
+  // IRA deductibility
+  const covered = getChecked('covered401k'), spouseCovered = getChecked('spouseCovered401k');
+  let deductibleIRA = 0;
+  if (covered) {
+    const po = status === 'mfj' ? D.iraPhaseout.coveredMfj : D.iraPhaseout.coveredSingle;
+    deductibleIRA = phaseout(Math.min(iraContrib, iraMax), magiApprox, po[0], po[1]);
+  } else if (status === 'mfj' && spouseCovered) {
+    const po = D.iraPhaseout.notCoveredSpouseMfj;
+    deductibleIRA = phaseout(Math.min(iraContrib, iraMax), magiApprox, po[0], po[1]);
+  } else {
+    deductibleIRA = Math.min(iraContrib, iraMax);
+  }
+
+  // Student loan phase-out
+  const slPO = status === 'mfj' ? D.studentLoanPhaseout.mfj : D.studentLoanPhaseout.single;
+  const deductibleSLI = phaseout(sliRaw, magiApprox, slPO[0], slPO[1]);
+
+  const k401ThroughPayroll = getChecked('k401ThroughPayroll');
+  const hsaThroughPayroll  = getChecked('hsaThroughPayroll');
+  const k401ForCalc = k401ThroughPayroll ? 0 : k401Contrib;
+  const hsaForCalc  = hsaThroughPayroll  ? 0 : hsaContrib;
+  const aboveLineDeductions = deductibleSeTax + k401ForCalc + deductibleIRA + hsaForCalc + seHealthIns + sepIRA + deductibleSLI;
+  const agi = Math.max(0, grossIncome - aboveLineDeductions);
+
+  // ── STANDARD DEDUCTION ──
+  const numSeniors = (age >= 65 ? 1 : 0) + (status === 'mfj' && spouseAge >= 65 ? 1 : 0);
+  const numBlind   = (getChecked('isBlind') ? 1 : 0) + (status === 'mfj' && getChecked('spouseBlind') ? 1 : 0);
+  const stdDeduction = D.standardDeduction[status] + D.additionalStdDed[status] * (numSeniors + numBlind);
+
+  // Senior Bonus Deduction (OBBB)
+  let seniorBonus = 0;
+  if (age >= 65) {
+    seniorBonus = phaseout(
+      D.seniorBonusMax[status] || 6000, agi,
+      D.seniorBonusPhaseoutStart[status] || 75000,
+      D.seniorBonusPhaseoutEnd[status]   || 175000
+    );
+  }
+
+  // ── ITEMIZED DEDUCTIONS ──
+  const saltCap = D.saltCap[status];
+  const salt          = Math.min(Math.max(0, getVal('saltPaid')), saltCap);
+  const mortgageInt   = Math.max(0, getVal('mortgageInterest'));
+  const charitable    = Math.max(0, getVal('charitableDed'));
+  const medDeductible = Math.max(0, getVal('medicalExpenses') - agi * 0.075);
+  const otherItemized = Math.max(0, getVal('otherItemized'));
+  const totalItemized = salt + mortgageInt + charitable + medDeductible + otherItemized;
+
+  const naturallyItemized = totalItemized > stdDeduction + seniorBonus;
+  const useItemized  = getChecked('forceItemized');
+  const useStandard  = getChecked('forceStandard');
+  const isItemized   = useItemized ? true : (useStandard ? false : naturallyItemized);
+  const effDeduction = isItemized ? totalItemized : (stdDeduction + seniorBonus);
+  const deductionLabel = isItemized ? 'Itemized Deductions' : 'Standard Deduction';
+
+  // ── QBI DEDUCTION ──
+  let qbiDeduction = 0;
+  if (seIncome > 0) {
+    const qbiBase = Math.max(0, seIncome - deductibleSeTax - sepIRA);
+    const isSSTB  = document.getElementById('isSSTB').value === 'sstb';
+    const taxableBeforeQBI = Math.max(0, agi - effDeduction);
+    const [qbiStart, qbiEnd] = D.qbiPhaseout[status] || D.qbiPhaseout.single;
+    const rawQBI = Math.min(qbiBase * 0.20, taxableBeforeQBI * 0.20);
+    if (!isSSTB) {
+      qbiDeduction = rawQBI;
+    } else if (agi <= qbiStart) {
+      qbiDeduction = rawQBI;
+    } else if (agi >= qbiEnd) {
+      qbiDeduction = 0;
+    } else {
+      qbiDeduction = rawQBI * (1 - (agi - qbiStart) / (qbiEnd - qbiStart));
+    }
+  }
+
+  // ── TAXABLE INCOME ──
+  const taxableIncome      = Math.max(0, agi - effDeduction - qbiDeduction);
+  const ordinaryTaxable    = Math.max(0, taxableIncome - preferentialIncome);
+  const brackets           = D.brackets[status];
+
+  // ── ORDINARY TAX ──
+  const ordinaryTax = calcBracketTax(ordinaryTaxable, brackets);
+
+  // ── CAPITAL GAINS TAX ──
+  const cgBrackets = D.capitalGains[status];
+  const cgTax = calcStackedCGTax(preferentialIncome, ordinaryTaxable, cgBrackets);
+
+  // ── AMT (simplified) ──
+  let amtAdd = 0;
+  {
+    const exemption    = D.amtExemption[status] || D.amtExemption.single;
+    const pStart       = D.amtPhaseout[status]  || D.amtPhaseout.single;
+    let amti = agi;
+    if (isItemized || useItemized) amti += salt;
+    const exemptReduced = phaseout(exemption, amti, pStart, pStart + exemption * 4);
+    amti = Math.max(0, amti - exemptReduced);
+    const bp = D.amtBreakpoint;
+    const amtTentative = amti <= bp ? amti * 0.26 : bp * 0.26 + (amti - bp) * 0.28;
+    amtAdd = Math.max(0, amtTentative - (ordinaryTax + cgTax));
+  }
+
+  // ── NIIT ──
+  const investIncome = qualDividends + effectiveLtcg + interestIncome + (ordDividends - qualDividends) + Math.max(0, rentalIncome);
+  const niitThreshold = D.niitThreshold[status];
+  const niit = (agi > niitThreshold && investIncome > 0)
+    ? Math.min(investIncome, agi - niitThreshold) * 0.038 : 0;
+
+  const additionalTaxes = Math.max(0, getVal('additionalTaxes'));
+  const grossTaxBeforeCredits = ordinaryTax + cgTax + amtAdd + seTax + niit + additionalTaxes;
+
+  // ── CREDITS ──
+  const numChildren = Math.max(0, parseInt(getVal('numChildren')) || 0);
+  const earnedIncome = w2Wages + Math.max(0, seIncome - deductibleSeTax);
+
+  // CTC — refundable and non-refundable portions handled separately
+  const ctcPhaseoutIncome = D.ctcPhaseout[status] || 200000;
+  let fullCTC = numChildren * D.childTaxCredit;
+  if (fullCTC > 0 && agi > ctcPhaseoutIncome) {
+    // IRS: reduce by $50 per $1,000 (or fraction thereof) over threshold — Math.ceil is correct
+    fullCTC = Math.max(0, fullCTC - Math.ceil((agi - ctcPhaseoutIncome) / 1000) * 50);
+  }
+
+  // Credit for Other Dependents ($500/qualifying dependent, non-refundable)
+  const numDependents = Math.max(0, parseInt(getVal('numDependents')) || 0);
+  let odcCredit = numDependents * 500;
+  if (odcCredit > 0 && agi > ctcPhaseoutIncome) {
+    odcCredit = Math.max(0, odcCredit - Math.ceil((agi - ctcPhaseoutIncome) / 1000) * 50);
+  }
+
+  // Other non-refundable credits first (against tax before CTC)
+  const depCareBase = Math.min(Math.max(0, getVal('depCareExpenses')), numChildren >= 2 ? 6000 : 3000);
+  const depCareRate = agi <= 15000 ? 0.35 : Math.max(0.20, 0.35 - Math.floor((Math.min(agi, 43000) - 15000) / 2000) * 0.01);
+  const depCareCred = depCareBase * depCareRate;
+  const educationCredit = Math.min(Math.max(0, getVal('educationCredit')), 2500);
+  const evCredit        = Math.min(Math.max(0, getVal('evCredit')), 7500);
+  const otherCredits    = Math.max(0, getVal('otherCredits'));
+  const otherNonRef = Math.min(odcCredit + depCareCred + educationCredit + evCredit + otherCredits, grossTaxBeforeCredits);
+  const taxAfterOther = Math.max(0, grossTaxBeforeCredits - otherNonRef);
+
+  // Non-refundable CTC portion (limited to remaining tax)
+  const nonRefundableCTC = Math.min(fullCTC, taxAfterOther);
+  const ctcRemainder     = fullCTC - nonRefundableCTC;
+
+  // Refundable Additional CTC
+  const maxAdditionalCTC    = D.additionalCTC * numChildren;
+  const earnedIncomeBase    = Math.max(0, earnedIncome - 2500);
+  const refundableCTC = Math.min(ctcRemainder, maxAdditionalCTC, earnedIncomeBase * 0.15);
+
+  // EITC (fully refundable)
+  const eitc = calcEITC(earnedIncome, agi, numChildren, status, D);
+
+  const totalNonRefundable = otherNonRef + nonRefundableCTC;
+  const totalRefundable    = refundableCTC + eitc;
+  const totalCredits       = totalNonRefundable + totalRefundable;
+
+  // ── NET TAX & BALANCE ──
+  const netTax = Math.max(0, grossTaxBeforeCredits - totalCredits);
+  const balance = totalWithholding - netTax;
+
+  // ── RATES ──
+  const marginalRate  = getMarginalRate(ordinaryTaxable, brackets);
+  const effectiveRate = grossIncome > 0 ? netTax / grossIncome : 0;
+
+  // ── BRACKET BREAKDOWN ──
+  const bracketBreakdown = [];
+  let prev = 0;
+  for (const [upper, rate] of brackets) {
+    if (ordinaryTaxable <= prev) break;
+    const inBracket = Math.min(ordinaryTaxable, upper) - prev;
+    if (inBracket > 0) bracketBreakdown.push({ rate, income: inBracket });
+    prev = upper;
+    if (!isFinite(upper)) break;
+  }
+
+  return {
+    year, status, age, spouseAge,
+    w2Wages, seRevenue, seExpenses, seIncome, rentalIncome,
+    grossIncome, earnedIncome, agi, taxableIncome, ordinaryTaxable,
+    aboveLineDeductions, deductibleSeTax, k401Contrib, k401Max, deductibleIRA, iraMax,
+    hsaContrib, hsaMax, hsaCoverage, seHealthIns, sepIRA, sepIRAMax, bizType: document.getElementById('bizType') ? document.getElementById('bizType').value : 'general',
+    effDeduction, stdDeduction, seniorBonus, totalItemized, isItemized, naturallyItemized, deductionLabel,
+    salt, medDeductible, qbiDeduction,
+    ordinaryTax, cgTax, amtAdd, seTax, niit, additionalTaxes,
+    grossTaxBeforeCredits,
+    fullCTC, nonRefundableCTC, refundableCTC, eitc, odcCredit, depCareCred, educationCredit, evCredit, otherCredits,
+    totalCredits, totalNonRefundable, totalRefundable,
+    netTax, totalWithholding, balance,
+    marginalRate, effectiveRate,
+    preferentialIncome, effectiveLtcg, effectiveStcg, capitalLossOffset,
+    cgBrackets, brackets, bracketBreakdown, D
+  };
+}
+
+// ════════════════════════════════════════
+// TAX SAVINGS ROADMAP
+// ════════════════════════════════════════
+function buildRoadmap(r) {
+  if (r.netTax < 50) return []; // no actionable savings when tax is already ~$0
+  const items = [];
+  const marg = r.marginalRate;
+
+  // Business expenses (highest rate: income tax + SE tax reduction)
+  if (r.seIncome > 0 && r.seRevenue > 0) {
+    const bizRate = marg + 0.0765;
+    const suggestedSpend = Math.min(Math.round(r.seIncome * 0.15 / 500) * 500, 50000);
+    if (suggestedSpend >= 500) {
+      items.push({
+        icon: '🧾', action: 'Accelerate Business Expenses',
+        amount: suggestedSpend,
+        savings: Math.round(bizRate * suggestedSpend),
+        rate: bizRate,
+        deadline: 'Dec 31'
+      });
+    }
+  }
+
+  // HSA (triple tax advantage) — direct contributions allowed until Apr 15
+  if (r.hsaCoverage !== 'none' && r.hsaMax > 0) {
+    const remaining = Math.round(r.hsaMax - r.hsaContrib);
+    if (remaining > 100) {
+      items.push({
+        icon: '🏥', action: 'Max Out HSA (Triple Tax Advantage)',
+        amount: remaining,
+        savings: Math.round(remaining * marg),
+        rate: marg,
+        deadline: 'Apr 15'
+      });
+    }
+  }
+
+  // 401(k) / 403(b) — must be elected through payroll by Dec 31
+  if (r.w2Wages > 0) {
+    const remaining = Math.round(r.k401Max - r.k401Contrib);
+    if (remaining > 200) {
+      items.push({
+        icon: '🏦', action: 'Max Out 401(k) / 403(b)',
+        amount: remaining,
+        savings: Math.round(remaining * marg),
+        rate: marg,
+        deadline: 'Dec 31'
+      });
+    }
+  }
+
+  // SEP-IRA — can contribute until Apr 15, or Oct 15 with extension
+  if (r.seIncome > 0 && r.sepIRAMax > 200) {
+    const remaining = Math.round(r.sepIRAMax - r.sepIRA);
+    if (remaining > 200) {
+      items.push({
+        icon: '💼', action: 'Max Out SEP-IRA',
+        amount: remaining,
+        savings: Math.round(remaining * marg),
+        rate: marg,
+        deadline: 'Apr 15†'
+      });
+    }
+  }
+
+  // Traditional IRA (only if deductible) — can contribute until Apr 15
+  if (r.deductibleIRA > 0) {
+    const remaining = Math.round(r.iraMax - Math.max(0, getVal('iraContrib')));
+    if (remaining > 0) {
+      items.push({
+        icon: '📈', action: 'Contribute to Deductible IRA',
+        amount: remaining,
+        savings: Math.round(remaining * marg),
+        rate: marg,
+        deadline: 'Apr 15'
+      });
+    }
+  }
+
+  // Charitable giving (only if already itemizing — each dollar saves at marginal rate)
+  if (r.isItemized && r.grossIncome > 30000) {
+    const exampleDonation = 1000;
+    items.push({
+      icon: '🎁', action: 'Additional Charitable Donations',
+      amount: exampleDonation,
+      savings: Math.round(exampleDonation * marg),
+      rate: marg,
+      deadline: 'Dec 31',
+      note: 'per $1,000 donated'
+    });
+  }
+
+  // Sort by savings rate desc, then by total savings desc as tiebreaker
+  items.sort((a, b) => (b.rate - a.rate) || (b.savings - a.savings));
+  return items;
+}
+
+// ════════════════════════════════════════
+// PLANNING SUGGESTIONS
+// ════════════════════════════════════════
+function generateSuggestions(r) {
+  const tips = [];
+  const D = r.D;
+  const margPct = Math.round(r.marginalRate * 100);
+  const taxIsZero = r.netTax < 50; // effectively zero tax liability
+
+  // ── 1. 401(k) CONTRIBUTION ──
+  const k401Remaining = r.k401Max - r.k401Contrib;
+  if (k401Remaining > 200 && r.w2Wages > 0) {
+    if (!taxIsZero) {
+      const saving = k401Remaining * r.marginalRate;
+      const centsK401 = Math.round(r.marginalRate * 100);
+      tips.push({
+        icon:'🏦', impact:'high-impact', value:centsK401,
+        title:`Max Out Your 401(k) — $${k401Remaining.toLocaleString()} Remaining`,
+        desc:`You can contribute $${k401Remaining.toLocaleString()} more before the ${r.year} limit of $${r.k401Max.toLocaleString()}. Each dollar you contribute saves you ${centsK401}¢ in federal taxes at your ${margPct}% marginal rate. Important: 401(k) contributions must be elected through your employer payroll by <strong>December 31st</strong> — unlike IRAs, there is no grace period into the following year. Contact your HR or benefits portal now if you want to increase your contribution for remaining paychecks.`,
+        badge:`~${fmt(saving)} federal tax savings`, badgeColor:'green'
+      });
+    } else {
+      tips.push({
+        icon:'🏦', impact:'info', value:30,
+        title:`Your Tax Is Already $0 — Perfect Time for a Roth IRA`,
+        desc:`With little or no tax liability this year, contributing to a Roth IRA instead of a traditional account is often the smarter move. Roth contributions aren't deductible now, but all future growth and withdrawals are tax-free. Your low effective rate makes this an ideal window.`,
+        badge:`0% effective rate = Roth sweet spot`, badgeColor:'blue'
+      });
+    }
+  }
+
+  // ── 2. SEP-IRA ──
+  if (r.seIncome > 0 && r.sepIRAMax > 200) {
+    const remaining = r.sepIRAMax - r.sepIRA;
+    if (remaining > 200 && !taxIsZero) {
+      const saving = remaining * (r.marginalRate + 0.0765);
+      const centsSEP = Math.round(r.marginalRate * 100);
+      tips.push({
+        icon:'💼', impact: saving > 2000 ? 'high-impact' : 'medium-impact', value:centsSEP,
+        title:`SEP-IRA: Up to $${Math.round(r.sepIRAMax).toLocaleString()} Deductible`,
+        desc:`As self-employed, you can contribute up to $${Math.round(r.sepIRAMax).toLocaleString()} to a SEP-IRA (25% of net self-employment income). You've entered $${Math.round(r.sepIRA).toLocaleString()}. Each dollar contributed saves you ${centsSEP}¢ in federal income tax. Unlike most year-end strategies, SEP-IRA contributions can be made until your tax filing deadline — April 15th, or as late as October 15th if you file an extension — giving you maximum flexibility.`,
+        badge:`~${fmt(remaining * r.marginalRate)} in income tax savings`, badgeColor:'green'
+      });
+    }
+  }
+
+  // ── 3. HSA ──
+  if (r.hsaCoverage !== 'none' && r.hsaMax > 0) {
+    const remaining = r.hsaMax - r.hsaContrib;
+    if (remaining > 100 && !taxIsZero) {
+      const centsHSA = Math.round(r.marginalRate * 100);
+      tips.push({
+        icon:'🏥', impact:'high-impact', value:200, /* triple-tax-advantage — always sorts first */
+        title:`HSA: $${Math.round(remaining).toLocaleString()} of Tax-Free Savings Left`,
+        desc:`HSAs are the only <strong>triple-tax-advantaged</strong> account: deductible now (saves ${centsHSA}¢ per dollar at your ${margPct}% rate), tax-free growth, and tax-free withdrawals for medical expenses. No other account delivers this combination. Your ${r.hsaCoverage === 'family' ? 'family' : 'self-only'} ${r.year} limit is $${r.hsaMax.toLocaleString()}. Like an IRA, direct HSA contributions can be made until April 15th of the following year — so you have until Tax Day to fund this account.`,
+        badge:`~${fmt(remaining * r.marginalRate)} federal tax savings`, badgeColor:'green'
+      });
+    }
+  }
+
+  // ── 4. TRADITIONAL IRA ──
+  if (!taxIsZero) {
+    const iraRemaining = r.iraMax - Math.max(0, getVal('iraContrib'));
+    if (iraRemaining > 0 && r.deductibleIRA > 0) {
+      const centsIRA = Math.round(r.marginalRate * 100);
+      tips.push({
+        icon:'📈', impact:'medium-impact', value:centsIRA,
+        title:`Traditional IRA — $${iraRemaining.toLocaleString()} of Deductible Room`,
+        desc:`Your IRA is fully or partially deductible at your income level. Each dollar contributed saves ${centsIRA}¢ in federal taxes at your ${margPct}% rate. You can contribute up to the $${r.iraMax.toLocaleString()} limit as late as the April tax filing deadline — not December 31 — giving you extra time.`,
+        badge:`~${fmt(iraRemaining * r.marginalRate)} potential savings`, badgeColor:'green'
+      });
+    } else if (r.marginalRate <= 0.22 && iraRemaining > 0) {
+      tips.push({
+        icon:'📈', impact:'info', value:25,
+        title:`Consider Roth IRA — You're in the ${margPct}% Bracket`,
+        desc:`At your income level, a Roth IRA (no deduction now, but all withdrawals tax-free) is often the better long-term choice. Roth is generally preferred when your current marginal rate is 22% or below.`,
+        badge:null, badgeColor:'blue'
+      });
+    }
+  }
+
+  // ── 5. 0% LTCG ROOM ──
+  const cgRate = getCGRate(r.ordinaryTaxable, r.cgBrackets);
+  const cgRate0Threshold = r.cgBrackets[0][0];
+  const totalZeroRoom      = Math.max(0, cgRate0Threshold - r.ordinaryTaxable);
+  const additionalZeroRoom = Math.max(0, totalZeroRoom - r.preferentialIncome);
+
+  if (totalZeroRoom > 0 && additionalZeroRoom > 100) {
+    // There is still room left in the 0% bracket
+    const alreadyUsedNote = r.preferentialIncome > 100
+      ? ` You've already entered ${fmt(r.preferentialIncome)} in gains/qualified dividends, using ${Math.round(r.preferentialIncome / totalZeroRoom * 100)}% of your available ${fmt(totalZeroRoom)} zero-rate capacity.`
+      : '';
+    tips.push({
+      icon:'📊', impact:'high-impact', value:Math.round(r.cgBrackets[1][1]*100), /* savings = rate you're avoiding */
+      title:`Realize ${fmt(additionalZeroRoom)} More in LTCG Tax-Free!`,
+      desc:`You have ${fmt(additionalZeroRoom)} of remaining 0% long-term capital gains capacity this year — meaning those gains cost you 0¢ per dollar in federal taxes right now. You could sell appreciated assets held more than 1 year and realize up to ${fmt(additionalZeroRoom)} more in gains before Dec 31.${alreadyUsedNote} Consider ETFs, stocks, crypto, or real estate held long-term.`,
+      badge:`0% LTCG rate — ${fmt(additionalZeroRoom)} remaining`, badgeColor:'green'
+    });
+  } else if (totalZeroRoom > 0 && additionalZeroRoom <= 100) {
+    // 0% bracket is fully used up
+    tips.push({
+      icon:'📊', impact:'info', value:15,
+      title:`0% LTCG Bracket Fully Utilized — Great Work!`,
+      desc:`You've made full use of your ${fmt(totalZeroRoom)} zero-rate capital gains capacity this year. Any additional gains would be taxed at ${Math.round(r.cgBrackets[1][1]*100)}%. Consider holding additional appreciated positions past year-end to defer that tax into next year.`,
+      badge:`0% bracket maxed`, badgeColor:'blue'
+    });
+  }
+
+  if (r.effectiveStcg > 0 && cgRate > 0) {
+    const saving = r.effectiveStcg * (r.marginalRate - cgRate);
+    if (saving > 100) {
+      const centsDiff = Math.round((r.marginalRate - cgRate) * 100);
+      tips.push({
+        icon:'⏱️', impact:'high-impact', value:centsDiff,
+        title:`Convert Short-Term Gains to Long-Term — Save ${fmt(saving)}`,
+        desc:`You have $${Math.round(r.effectiveStcg).toLocaleString()} in short-term gains taxed at ${margPct}¢ per dollar (ordinary income rate). Assets held more than 1 year qualify for the ${Math.round(cgRate*100)}% long-term rate — saving ${centsDiff}¢ per dollar. If you can hold the position past the 1-year mark, you'd save approximately ${fmt(saving)}.`,
+        badge:`Save ~${fmt(saving)} by waiting`, badgeColor:'green'
+      });
+    }
+  }
+
+  // ── 6. BRACKET STRADDLING ──
+  if (!taxIsZero) {
+    const next = getNextBracketInfo(r.ordinaryTaxable, r.brackets);
+    if (next && next.roomToNext < 20000 && next.roomToNext > 0) {
+      tips.push({
+        icon:'🎯', impact:'medium-impact', value:55,
+        title:`Only $${Math.round(next.roomToNext).toLocaleString()} Until the ${Math.round(next.nextRate*100)}% Bracket`,
+        desc:`You're $${Math.round(next.roomToNext).toLocaleString()} away from the next tax bracket. Every dollar of income that crosses into the ${Math.round(next.nextRate*100)}% bracket costs ${Math.round(next.nextRate*100)}¢ per dollar instead of ${Math.round(r.marginalRate*100)}¢. Consider deferring income or accelerating deductions before December 31st.`,
+        badge:`${Math.round(r.marginalRate*100)}% now → ${Math.round(next.nextRate*100)}% if exceeded`, badgeColor:'yellow'
+      });
+    }
+  }
+
+  // ── 7. CHARITABLE GIVING ──
+  const charitable = Math.max(0, getVal('charitableDed'));
+  const centsCharity = Math.round(r.marginalRate * 100);
+  if (r.isItemized) {
+    // Already itemizing — every additional dollar of charity saves at marginal rate
+    if (r.grossIncome > 30000) {
+      tips.push({
+        icon:'🎁', impact:'info', value:22,
+        title:`You're Itemizing — Every Charitable Dollar Saves ${centsCharity}¢`,
+        desc:`Because you're already itemizing (your deductions exceed the $${Math.round(r.stdDeduction).toLocaleString()} standard deduction), every dollar you donate to a qualified charity directly reduces your taxable income — saving you ${centsCharity}¢ per dollar in federal taxes. Consider making any planned donations before December 31 to capture the deduction this year.`,
+        badge:`${centsCharity}¢ federal tax savings per dollar donated`, badgeColor:'blue'
+      });
+    }
+  } else if (r.totalItemized > r.stdDeduction * 0.55 && r.grossIncome > 30000) {
+    // Close to the standard deduction threshold — bunching could unlock itemization
+    const gap = r.stdDeduction - r.totalItemized;
+    // The first `gap` dollars of charity bring itemized = standard → zero tax savings.
+    // Only dollars DONATED ABOVE the gap produce savings.
+    const extraNeeded = Math.round(gap / 500 + 1) * 500; // round up to next $500 above gap
+    const bunchSavings = Math.round(extraNeeded * r.marginalRate);
+    tips.push({
+      icon:'🎁', impact:'medium-impact', value:45,
+      title:`Charitable Bunching Could Unlock Extra Deductions`,
+      desc:`Your itemized deductions ($${Math.round(r.totalItemized).toLocaleString()}) are $${Math.round(gap).toLocaleString()} short of your standard deduction ($${Math.round(r.stdDeduction).toLocaleString()}). Important: the first $${Math.round(gap).toLocaleString()} of extra donations just closes that gap — no tax savings yet. But every dollar <em>beyond</em> that gap saves ${centsCharity}¢ in federal taxes. By "bunching" two years of charitable giving into one year, you could exceed the standard deduction and start saving. A Donor-Advised Fund (DAF) makes this easy.`,
+      badge:`Donate $${Math.round(gap).toLocaleString()} to cross threshold, then ${centsCharity}¢ saved per dollar`, badgeColor:'yellow'
+    });
+  }
+
+  // ── 8. QBI STATUS ──
+  if (r.seIncome > 0) {
+    const isSSTB = document.getElementById('isSSTB').value === 'sstb';
+    const [qbiStart] = D.qbiPhaseout[r.status] || D.qbiPhaseout.single;
+    if (isSSTB && r.agi > qbiStart * 0.85 && r.agi < qbiStart * 1.25) {
+      tips.push({
+        icon:'🏢', impact:'medium-impact', value:60,
+        title:`QBI Deduction Phase-Out Risk (SSTB)`,
+        desc:`Your AGI is approaching the $${qbiStart.toLocaleString()} QBI phase-out threshold for your business type. Increasing SEP-IRA, Solo 401(k), or HSA contributions to reduce your AGI below this line could preserve your full 20% QBI deduction — worth ${fmt(r.seIncome * 0.20 * r.marginalRate)} in tax savings (effectively saving ${Math.round(r.marginalRate*100)}¢ on every dollar of protected QBI).`,
+        badge:`Protecting ${fmt(r.seIncome * 0.20)} QBI deduction`, badgeColor:'yellow'
+      });
+    } else if (r.qbiDeduction > 0) {
+      tips.push({
+        icon:'🏢', impact:'info', value:20,
+        title:`QBI Deduction (§199A) Active: ${fmt(r.qbiDeduction)} Applied`,
+        desc:`Your 20% Qualified Business Income deduction is reducing taxable income by $${Math.round(r.qbiDeduction).toLocaleString()}. To preserve it, avoid actions that would reclassify SE income as wages (e.g., paying yourself a very high W-2 salary from an S-corp without reviewing QBI impact).`,
+        badge:null, badgeColor:'blue'
+      });
+    }
+  }
+
+  // ── 9. NIIT ──
+  if (r.niit > 0) {
+    tips.push({
+      icon:'⚠️', impact:'medium-impact', value:50,
+      title:`Net Investment Income Tax (NIIT) Applies: ${fmt(r.niit)}`,
+      desc:`An additional 3.8% NIIT applies to your investment income because your MAGI exceeds $${(D.niitThreshold[r.status] || 200000).toLocaleString()} — costing you 3.8¢ per dollar of investment income above that threshold. Strategies to reduce it: contribute more to tax-deferred accounts, shift to tax-exempt municipal bonds, or defer investment income to a lower-income year.`,
+      badge:`${fmt(r.niit)} additional tax applied`, badgeColor:'yellow'
+    });
+  }
+
+  // ── 10. TAX-LOSS HARVESTING + CRYPTO (combined) ──
+  if (r.grossIncome > 40000 && !taxIsZero) {
+    const hasCrypto = r.effectiveStcg > 0 || r.effectiveLtcg > 0;
+    const cryptoNote = hasCrypto
+      ? ` <strong>Crypto bonus:</strong> Unlike stocks, the IRS wash-sale rule does NOT currently apply to crypto — you can sell a position at a loss and immediately rebuy the same asset to lock in the loss. Short-term crypto gains are taxed at your ${margPct}% ordinary rate; long-term gains at ${Math.round(cgRate*100)}%. Keep detailed cost-basis records.`
+      : ` If you hold crypto, note that the IRS wash-sale rule does NOT apply to digital assets — you can harvest losses and immediately rebuy, unlike stocks.`;
+    tips.push({
+      icon:'📉', impact:'info', value:20,
+      title:`Tax-Loss Harvesting & Crypto Planning — Before December 31st`,
+      desc:`Review your portfolio for positions at a loss. Selling them locks in losses that offset capital gains dollar-for-dollar, and up to $3,000 of net losses can reduce your ordinary income (worth ~${fmt(3000 * r.marginalRate)} in federal tax savings). Unused losses carry forward indefinitely to future years.${cryptoNote}`,
+      badge:`Up to $3,000 ordinary income offset`, badgeColor:'blue'
+    });
+  }
+
+  // ── 11. CAPITAL LOSS OFFSET IN USE ──
+  if (r.capitalLossOffset > 0) {
+    tips.push({
+      icon:'✅', impact:'info', value:15,
+      title:`$${Math.round(r.capitalLossOffset).toLocaleString()} Capital Loss Offsetting Ordinary Income`,
+      desc:`Your net capital losses are reducing your ordinary income by $${Math.round(r.capitalLossOffset).toLocaleString()} (the $3,000 annual limit). Excess losses beyond $3,000 carry forward to future years — keep track of this carryforward amount on your prior return.`,
+      badge:null, badgeColor:'blue'
+    });
+  }
+
+  // ── 12. SENIOR BONUS ──
+  if (r.age >= 65 && r.seniorBonus > 0) {
+    tips.push({
+      icon:'👴', impact:'info', value:10,
+      title:`Senior Bonus Deduction Applied: ${fmt(r.seniorBonus)}`,
+      desc:`Under the One Big Beautiful Bill Act (2025), taxpayers 65 and older receive an income-based bonus deduction of up to $6,000 ($12,000 for MFJ couples), applied whether you itemize or take the standard deduction. Your $${Math.round(r.seniorBonus).toLocaleString()} deduction is included in your estimate above.`,
+      badge:null, badgeColor:'blue'
+    });
+  }
+
+  // ── 13. UNDERPAYMENT RISK (enhanced: W-4 + 110% safe harbor) ──
+  if (r.netTax > 1000 && r.totalWithholding < r.netTax * 0.90) {
+    const deficit90 = Math.round(r.netTax * 0.90 - r.totalWithholding);
+    // High-income safe harbor: if prior-year tax was above threshold, 110% applies
+    const highIncomeHarbor = r.agi > 150000;
+    const harborNote = highIncomeHarbor
+      ? ` For taxpayers with AGI above $150,000, the IRS also accepts withholding equal to <strong>110% of your prior year's tax liability</strong> as an alternative safe harbor — which may be easier to hit than 90% of this year's projected tax.`
+      : '';
+    const paycheckTip = r.w2Wages > 0
+      ? ` If you're a W-2 employee, the fastest fix is to increase withholding on your W-4 (Step 4c — "Extra withholding") for your remaining paychecks — this avoids needing to make a separate payment.`
+      : '';
+    tips.push({
+      icon:'🔔', impact:'medium-impact', value:40,
+      title:`Underpayment Penalty Risk — Action Needed`,
+      desc:`Your withholding + estimated payments ($${Math.round(r.totalWithholding).toLocaleString()}) are tracking below the IRS safe harbor. Without action, you may owe a penalty on top of your tax bill. Two ways to fix it before year-end: (1) Make a Q4 estimated payment by January 15, ${r.year + 1}; (2) ${r.w2Wages > 0 ? 'Increase your W-4 withholding (Step 4c) on remaining paychecks — any extra withheld counts as paid evenly throughout the year, which is more favorable than a lump estimated payment.' : 'Ask your employer or payer to increase withholding if possible.'}${harborNote}`,
+      badge:`Pay ~${fmt(deficit90)} more to reach 90% safe harbor`, badgeColor:'yellow'
+    });
+  }
+
+  // ── 14. RENTAL / REAL ESTATE ──
+  if (r.rentalIncome > 0) {
+    tips.push({
+      icon:'🏠', impact:'info', value:18,
+      title:`Maximize Rental Property Deductions`,
+      desc:`Ensure you're capturing all deductible rental expenses: depreciation (27.5-year schedule for residential property), repairs and maintenance, property management fees, insurance premiums, mortgage interest, and advertising. Depreciation alone often creates a paper loss even when cash flow is positive.`,
+      badge:null, badgeColor:'blue'
+    });
+  }
+
+  // ── 15. BUSINESS EXPENSE ACCELERATION ──
+  if (r.seIncome > 0 && r.seRevenue > 0 && !taxIsZero) {
+    const bizType = r.bizType || 'general';
+    const marginalBizRate = r.marginalRate + 0.0765; // income tax + SE tax savings
+    // Suggest 15% of net profit as reasonable additional spend, capped at $50k
+    const suggestedSpend = Math.min(Math.round(r.seIncome * 0.15 / 500) * 500, 50000);
+    if (suggestedSpend >= 500) {
+      const savingsPerK = Math.round(marginalBizRate * 1000);
+      const totalSavings = Math.round(marginalBizRate * suggestedSpend);
+      // Business-type specific expense ideas
+      const expenseIdeas = {
+        consulting:    ['home office upgrade / standing desk', 'professional coaching or mastermind group', 'website redesign or CRM software', 'online courses or certifications', 'client meeting travel or conferences'],
+        technology:    ['new laptop, monitors, or development equipment (§179 immediate deduction)', 'cloud services or software subscriptions', 'cybersecurity tools', 'professional conferences (airfare + hotel = 100%)', 'home office equipment'],
+        healthcare:    ['medical equipment or supplies', 'professional liability insurance', 'continuing education or CME credits', 'EHR or practice management software', 'professional association dues'],
+        legal:         ['legal research software (Westlaw, LexisNexis)', 'professional development / CLE credits', 'client entertainment (50% deductible)', 'case management software', 'professional liability insurance'],
+        creative:      ['camera, lighting, or audio equipment (§179 deduction)', 'editing software subscriptions (Adobe CC, DaVinci)', 'studio rental or props', 'portfolio website redesign', 'photography/videography workshops'],
+        retail:        ['inventory management software', 'shipping supplies or equipment', 'e-commerce platform fees (prepay annually for discount)', 'marketing and advertising spend', 'business vehicle expenses'],
+        construction:  ['tools, equipment, or machinery (§179 immediate deduction)', 'work vehicle expenses or mileage', 'safety equipment and PPE', 'professional licensing or bonding', 'project management software'],
+        food:          ['commercial kitchen equipment (§179)', 'POS system upgrade', 'food safety certifications', 'catering supplies', 'marketing and menu redesign'],
+        realestate:    ['MLS dues, association fees, and E&O insurance', 'marketing materials and photography', 'CRM and transaction management software', 'professional development (designations, courses)', 'vehicle mileage for showings and client meetings'],
+        transportation:['vehicle maintenance and repairs (business use %)', 'GPS and dash cam equipment', 'fuel (business portion)', 'vehicle washing and detailing (business use %)', 'rideshare app fees and commissions'],
+        general:       ['home office (dedicated space — $5/sq ft simplified method or actual expenses)', `business vehicle mileage (${r.year === 2026 ? '72.5' : '70'}¢/mile for ${r.year})`, 'software and tech tools', 'professional development and courses', 'marketing and advertising']
+      };
+      const ideas = expenseIdeas[bizType] || expenseIdeas.general;
+      const ideaList = ideas.slice(0, 5).map(i => `• ${i}`).join('<br>');
+      const centsBiz = Math.round(marginalBizRate * 100);
+      tips.push({
+        icon:'🧾', impact:'high-impact', value:centsBiz,
+        title:`Accelerate Business Expenses Before Dec 31 — Save ~${fmt(totalSavings)}`,
+        desc:`Every $1,000 of deductible business expenses saves you ~$${savingsPerK} — that's ${centsBiz}¢ per dollar spent on legitimate business needs, because it reduces both income AND self-employment tax simultaneously. This is your highest savings-rate strategy. Spending an additional ${fmt(suggestedSpend)} on planned purchases before year-end could save ~${fmt(totalSavings)}. Only spend on things you actually need — the goal is to accelerate timing, not spend for the sake of it. <em>Note: increasing expenses also reduces your QBI deduction slightly, so actual savings may be a few dollars less than the headline figure — but this is still the top value-per-dollar strategy.</em><br><br><strong>Expense ideas for your business type:</strong><br>${ideaList}<br><br>💡 Remember: <strong>Section 179</strong> lets you immediately deduct the full cost of qualifying equipment (computers, vehicles, machinery) in the year of purchase.`,
+        badge:`~${centsBiz}¢ saved per dollar spent`, badgeColor:'green'
+      });
+    }
+  }
+
+  // ── NEW-A. MEDICAL EXPENSE BUNCHING ──
+  {
+    const medicalRaw = Math.max(0, getVal('medicalExpenses'));
+    const medFloor   = r.agi * 0.075;
+    const medGap     = medFloor - medicalRaw; // positive = below threshold, negative = already deducting
+    if (medicalRaw > 0 && medGap > 0 && medGap < medFloor * 0.6) {
+      // Close to threshold — bunching could unlock a deduction
+      const centsM = Math.round(r.marginalRate * 100);
+      tips.push({
+        icon:'🏥', impact:'medium-impact', value:centsM - 1, // just below IRA/HSA same-rate tips
+        title:`Medical Expense Bunching — $${Math.round(medGap).toLocaleString()} From Deductible`,
+        desc:`Only unreimbursed medical expenses above 7.5% of your AGI ($${Math.round(medFloor).toLocaleString()}) are deductible. You've entered $${Math.round(medicalRaw).toLocaleString()} — just $${Math.round(medGap).toLocaleString()} below the threshold. If you have any planned or elective medical, dental, or vision procedures, timing them all into this calendar year could push you over the floor and make those expenses partially deductible. Once past the threshold, each additional dollar of medical spending saves you ${centsM}¢ in federal taxes.<br><br>Examples of acceleratable medical spending: elective dental work, glasses or contacts, hearing aids, physical therapy, specialist visits, or prepaying prescriptions.`,
+        badge:`$${Math.round(medGap).toLocaleString()} more needed to unlock medical deduction`, badgeColor:'yellow'
+      });
+    } else if (medicalRaw > 0 && r.medDeductible > 0) {
+      // Already deducting some medical expenses
+      const centsM = Math.round(r.marginalRate * 100);
+      tips.push({
+        icon:'🏥', impact:'info', value:12,
+        title:`Medical Deduction Active — Capture Every Qualifying Expense`,
+        desc:`You've crossed the 7.5% AGI floor and are deducting $${Math.round(r.medDeductible).toLocaleString()} in medical expenses. Every additional dollar of unreimbursed medical spending above the floor saves you ${centsM}¢ in taxes. Don't forget: premiums you pay directly (not through payroll), dental and vision, prescriptions, mileage to appointments (21¢/mile for medical travel in 2025), and long-term care insurance premiums (age-based limits apply).`,
+        badge:`${centsM}¢ savings per dollar above the floor`, badgeColor:'blue'
+      });
+    }
+  }
+
+  // ── NEW-B. SE INCOME TIMING ──
+  if (r.seIncome > 0 && !taxIsZero) {
+    const next = getNextBracketInfo(r.ordinaryTaxable, r.brackets);
+    const prevBracket = r.brackets.find((b, i) => i > 0 && r.ordinaryTaxable <= b[0] && r.ordinaryTaxable > (r.brackets[i-1]?.[0] || 0));
+    const roomDownward = prevBracket ? r.ordinaryTaxable - (r.brackets.indexOf(prevBracket) > 0 ? r.brackets[r.brackets.indexOf(prevBracket)-1][0] : 0) : null;
+    if (next && next.roomToNext < 15000) {
+      // Close to going UP — consider deferring income to next year
+      tips.push({
+        icon:'📅', impact:'medium-impact', value:Math.round((next.nextRate - r.marginalRate)*100) + 20,
+        title:`Defer Business Income to ${r.year + 1} — Stay in the ${margPct}% Bracket`,
+        desc:`You're only $${Math.round(next.roomToNext).toLocaleString()} away from the ${Math.round(next.nextRate*100)}% bracket. As a self-employed person, you have a powerful lever most W-2 employees don't: you can control when you invoice clients and when you receive payment. Holding invoices until January 1st keeps that income out of this year's return and buys you an entire year before it's taxed. The rate difference of ${Math.round((next.nextRate - r.marginalRate)*100)}¢ per dollar above the line is real money.`,
+        badge:`Delay invoicing to avoid ${Math.round(next.nextRate*100)}% on the excess`, badgeColor:'yellow'
+      });
+    } else if (next && next.nextRate > 0) {
+      // Well below next bracket — consider pulling next year's income into this year
+      const roomToUse = Math.min(next.roomToNext * 0.5, 20000);
+      if (roomToUse > 2000) {
+        tips.push({
+          icon:'📅', impact:'info', value:10,
+          title:`Accelerate Income Into ${r.year} — Room in Your ${margPct}% Bracket`,
+          desc:`You have meaningful room remaining in your current ${margPct}% bracket before reaching the next rate. If you expect a higher-income ${r.year + 1}, consider sending invoices and collecting payment before December 31st. Income received this year is taxed at your current ${margPct}% rate — potentially less than what you'd pay next year.`,
+          badge:null, badgeColor:'blue'
+        });
+      }
+    }
+  }
+
+  // ── NEW-C. BACKDOOR ROTH IRA ──
+  {
+    const rothLimits = D.rothPhaseout ? (D.rothPhaseout[r.status] || D.rothPhaseout.single) : null;
+    const iraPhaseoutEnd = (() => {
+      if (r.status === 'mfj') return getChecked('spouseCovered') || getChecked('coveredByPlan') ? D.iraPhaseout.coveredMfj[1] : D.iraPhaseout.notCoveredSpouseMfj[1];
+      return D.iraPhaseout.coveredSingle[1];
+    })();
+    const rothDisallowed = rothLimits && r.agi >= rothLimits[1];
+    const iraNotDeductible = r.deductibleIRA === 0;
+    if (rothDisallowed && iraNotDeductible && r.iraMax > 0) {
+      tips.push({
+        icon:'🔄', impact:'info', value:18,
+        title:`Backdoor Roth IRA — Strategy for High Earners`,
+        desc:`Your income is above the Roth IRA contribution limit ($${rothLimits[1].toLocaleString()} for ${r.status === 'mfj' ? 'married filing jointly' : 'single'} filers in ${r.year}), and your Traditional IRA contribution is not deductible at your income level. The <strong>Backdoor Roth</strong> strategy lets you work around this: contribute $${r.iraMax.toLocaleString()} to a non-deductible Traditional IRA, then immediately convert it to a Roth IRA. The conversion is essentially tax-free since you already paid tax on those dollars.<br><br>⚠️ <strong>Important pro-rata rule:</strong> If you have other existing pre-tax IRA balances (SEP-IRA, SIMPLE IRA, rollover IRA), the conversion may be partially taxable. Consult a tax professional before executing this strategy.`,
+        badge:`$${r.iraMax.toLocaleString()} into Roth via backdoor`, badgeColor:'blue'
+      });
+    }
+  }
+
+  // ── NEW-D. QUALIFIED CHARITABLE DISTRIBUTIONS (QCDs) ──
+  if (r.age >= 70 && D.qcdLimit) {
+    const qcdLimit = D.qcdLimit;
+    tips.push({
+      icon:'🎗️', impact:'info', value:22,
+      title:`Qualified Charitable Distributions (QCDs) — Age 70½ Benefit`,
+      desc:`At age 70½ or older, you can donate up to $${qcdLimit.toLocaleString()} per year directly from your IRA to a qualified charity — and it <strong>never appears in your AGI</strong>. This is more powerful than a regular deduction: it reduces AGI directly, which can lower your Medicare IRMAA premiums, reduce Social Security income taxation, and prevent other deductions from phasing out. If you're subject to Required Minimum Distributions (RMDs starting at age 73), a QCD can satisfy your RMD with no income recognition at all. Ask your IRA custodian about a direct QCD transfer — you cannot withdraw the money first.`,
+      badge:`Up to $${qcdLimit.toLocaleString()} donated tax-free from IRA`, badgeColor:'blue'
+    });
+  }
+
+  // ── 16. SALT WORKAROUND ──
+  if (getVal('saltPaid') > 10000 && (r.seIncome > 0)) {
+    tips.push({
+      icon:'🗺️', impact:'medium-impact', value:35,
+      title:`SALT Cap Workaround for Business Owners`,
+      desc:`If you own a pass-through business (S-corp, partnership, LLC taxed as partnership), many states offer a Pass-Through Entity Tax (PTET) election — the entity pays state tax at the entity level and takes a full federal deduction, bypassing your personal $10,000 SALT cap. Each dollar of state tax shifted to the entity level saves ${Math.round(r.marginalRate*100)}¢ in federal income tax. Ask your CPA about your state's PTET option.`,
+      badge:`Potentially unlocks full state tax deduction`, badgeColor:'yellow'
+    });
+  }
+
+  if (tips.length === 0) {
+    tips.push({
+      icon:'✅', impact:'info', value:0,
+      title:`Enter Details Above to See Your Personalized Strategies`,
+      desc:'Fill in your income, deductions, and retirement contributions above to unlock specific planning recommendations.',
+      badge:null, badgeColor:'blue'
+    });
+  }
+
+  // Sort: high-impact first, then medium-impact, then info — within each tier by value desc
+  const tierOrder = { 'high-impact': 0, 'medium-impact': 1, 'caution': 1, 'info': 2 };
+  tips.sort((a, b) => {
+    const tierA = tierOrder[a.impact] ?? 2;
+    const tierB = tierOrder[b.impact] ?? 2;
+    if (tierA !== tierB) return tierA - tierB;
+    return (b.value || 0) - (a.value || 0);
+  });
+
+  return tips;
+}
+
+// ════════════════════════════════════════
+// UI UPDATE
+// ════════════════════════════════════════
+function updateUI(r) {
+  // ── Big number ──
+  const bal = r.balance;
+  const refEl = document.getElementById('refundAmount');
+  refEl.className = 'refund-amount ' + (bal >= 0 ? 'refund' : 'due');
+  refEl.textContent = (bal >= 0 ? '+' : '−') + '$' + Math.abs(Math.round(bal)).toLocaleString();
+  document.getElementById('refundLabel').textContent = bal >= 0 ? 'Estimated Federal Refund' : 'Estimated Federal Tax Due';
+  document.getElementById('yearLabel').textContent   = r.year + ' Federal Tax Estimate';
+
+  // ── Key metrics ──
+  document.getElementById('grossIncomeDisplay').textContent = fmt(r.grossIncome);
+  document.getElementById('agiDisplay').textContent         = fmt(r.agi);
+  document.getElementById('marginalRateDisplay').textContent = Math.round(r.marginalRate*100) + '%';
+  document.getElementById('effectiveRateDisplay').textContent = fmtPct(r.effectiveRate);
+
+  // ── Breakdown ──
+  const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  set('br_gross',     fmt(r.grossIncome));
+  set('br_aboveLine', r.aboveLineDeductions > 0 ? '−' + fmt(r.aboveLineDeductions) : '$0');
+  set('br_agi',       fmt(r.agi));
+  document.getElementById('br_deductionLabel').textContent = r.deductionLabel;
+  set('br_deduction', '−' + fmt(r.effDeduction));
+  set('br_qbi',       r.qbiDeduction > 0 ? '−' + fmt(r.qbiDeduction) : '$0');
+  document.getElementById('br_qbiRow').style.display = r.qbiDeduction > 0 ? '' : 'none';
+  set('br_taxable',   fmt(r.taxableIncome));
+  set('br_ordTax',    fmt(r.ordinaryTax));
+  set('br_cgTax',     fmt(r.cgTax));
+  document.getElementById('br_cgTaxRow').style.display  = r.cgTax > 0 ? '' : 'none';
+  set('br_amt',       fmt(r.amtAdd));
+  document.getElementById('br_amtRow').style.display    = r.amtAdd > 0 ? '' : 'none';
+  set('br_niit',      fmt(r.niit));
+  document.getElementById('br_niitRow').style.display   = r.niit > 0 ? '' : 'none';
+  set('br_seTax',     fmt(r.seTax));
+  document.getElementById('br_seTaxRow').style.display  = r.seTax > 0 ? '' : 'none';
+  set('br_addlTax',   fmt(r.additionalTaxes));
+  document.getElementById('br_addlTaxRow').style.display = r.additionalTaxes > 0 ? '' : 'none';
+
+  // Business section displays
+  const seProfitRow = document.getElementById('seProfitRow');
+  const seRevenue = r.seRevenue || 0;
+  if (seRevenue > 0) {
+    if (seProfitRow) seProfitRow.style.display = '';
+    const seProfitEl = document.getElementById('seProfitDisplay');
+    if (seProfitEl) seProfitEl.textContent = fmt(r.seIncome);
+  } else {
+    if (seProfitRow) seProfitRow.style.display = 'none';
+  }
+  // ── Inline validation warnings ──
+  const qualDivWarn = document.getElementById('qualDivWarning');
+  if (qualDivWarn) {
+    const rawQual = Math.max(0, getVal('qualifiedDividends'));
+    const rawOrd  = Math.max(0, getVal('ordDividends'));
+    qualDivWarn.style.display = (rawQual > rawOrd && rawOrd > 0) ? '' : 'none';
+  }
+  const bizLossWarn = document.getElementById('bizLossWarning');
+  if (bizLossWarn) {
+    const rev = Math.max(0, getVal('seRevenue'));
+    const exp = Math.max(0, getVal('seExpenses'));
+    bizLossWarn.style.display = (exp > rev && rev > 0) ? '' : 'none';
+  }
+  const seTaxDisplayEl = document.getElementById('seTaxDisplay');
+  if (seTaxDisplayEl) seTaxDisplayEl.textContent = r.seTax > 0 ? fmt(r.seTax) : '$0';
+  const qbiEl = document.getElementById('qbiDisplay');
+  if (qbiEl) {
+    if (r.seIncome > 0 && r.qbiDeduction > 0) {
+      qbiEl.textContent = `${fmt(r.qbiDeduction)} — 20% of net profit, reducing your taxable income`;
+      qbiEl.style.color = 'var(--success)';
+    } else if (r.seIncome > 0 && r.qbiDeduction === 0) {
+      qbiEl.textContent = `$0 — Phased out due to income level or SSTB restriction`;
+      qbiEl.style.color = 'var(--danger)';
+    } else {
+      qbiEl.textContent = `$0 — Enter business revenue to calculate`;
+      qbiEl.style.color = 'var(--gray-500)';
+    }
+  }
+  // Update businessCard visibility
+  const bizCard = document.getElementById('businessCard');
+  if (bizCard) bizCard.style.display = seRevenue > 0 || getVal('seExpenses') > 0 ? '' : '';
+
+  set('br_totalTax',  fmt(r.netTax));
+  const creds = r.totalCredits;
+  set('br_credits', creds > 0 ? '−' + fmt(creds) : '$0');
+  document.getElementById('br_creditsRow').style.display = creds > 0 ? '' : 'none';
+  set('br_withholding', r.totalWithholding > 0 ? '−' + fmt(r.totalWithholding) : '$0');
+  set('br_balance',     (bal >= 0 ? '' : '−') + fmt(Math.abs(bal)));
+  document.getElementById('br_balanceLabel').textContent = bal >= 0 ? 'Estimated Refund' : 'Balance Due';
+
+  // ── Deduction winner ──
+  document.getElementById('itemizedTotalDisplay').textContent = fmt(r.totalItemized);
+  const dw = document.getElementById('deductionWinner');
+  const dwTxt = document.getElementById('deductionWinnerText');
+  {
+    const bonus = r.seniorBonus > 0 ? ` + $${Math.round(r.seniorBonus).toLocaleString()} senior bonus` : '';
+    const stdTotal = r.stdDeduction + r.seniorBonus;
+    const diff = Math.abs(r.totalItemized - stdTotal);
+    const diffTax = Math.round(diff * r.marginalRate);
+    const isOverride = (r.isItemized && !r.naturallyItemized) || (!r.isItemized && r.naturallyItemized);
+
+    if (r.isItemized && !isOverride) {
+      // Itemized naturally wins — straightforward
+      dw.className = 'deduction-winner itemized';
+      dwTxt.textContent = `✓ Using itemized ($${Math.round(r.totalItemized).toLocaleString()}) — saves $${diffTax} in tax vs. standard ($${Math.round(stdTotal).toLocaleString()})`;
+    } else if (r.isItemized && isOverride) {
+      // Override: forced itemized even though standard is better — costs money
+      dw.className = 'deduction-winner override';
+      dwTxt.textContent = `⚠️ Override active: using itemized ($${Math.round(r.totalItemized).toLocaleString()}) — costs ~$${diffTax} more in tax vs. standard ($${Math.round(stdTotal).toLocaleString()})`;
+    } else if (!r.isItemized && !isOverride) {
+      // Standard naturally wins — straightforward
+      dw.className = 'deduction-winner std';
+      dwTxt.textContent = `✓ Standard deduction ($${Math.round(stdTotal).toLocaleString()}${bonus}) is higher than itemized ($${Math.round(r.totalItemized).toLocaleString()})`;
+    } else {
+      // Override: forced standard even though itemized is better — costs money
+      dw.className = 'deduction-winner override';
+      dwTxt.textContent = `⚠️ Override active: using standard ($${Math.round(stdTotal).toLocaleString()}${bonus}) — costs ~$${diffTax} more in tax vs. itemized ($${Math.round(r.totalItemized).toLocaleString()})`;
+    }
+  }
+
+  // ── SE tax display ──
+  document.getElementById('seTaxDeductDisplay').textContent = fmt(r.deductibleSeTax);
+
+  // ── Limit hints ──
+  document.getElementById('k401LimitHint').textContent  = `${r.year} limit: $${r.k401Max.toLocaleString()}`;
+  document.getElementById('iraLimitHint').textContent   = `${r.year} limit: $${r.iraMax.toLocaleString()}`;
+  document.getElementById('hsaLimitHint').textContent   = r.hsaCoverage !== 'none'
+    ? `${r.year} limit: $${r.hsaMax.toLocaleString()} (${r.hsaCoverage})`
+    : 'Requires High Deductible Health Plan (HDHP)';
+  document.getElementById('sepIRALimitHint').textContent = r.seIncome > 0
+    ? `Your max contribution & deduction: $${Math.round(r.sepIRAMax).toLocaleString()} — calculated as 25% of your $${Math.round(r.seIncome).toLocaleString()} net SE profit (absolute ceiling: $${r.D.retirement.sepIraMax.toLocaleString()})`
+    : 'Available only for self-employed individuals — enter business revenue above to calculate your limit';
+
+  // ── Bracket bars ──
+  const barsEl = document.getElementById('bracketBars');
+  if (!r.bracketBreakdown || r.bracketBreakdown.length === 0) {
+    barsEl.innerHTML = '<div style="font-size:11px;color:var(--gray-400);">Enter income to see bracket breakdown.</div>';
+  } else {
+    const maxInc = r.ordinaryTaxable;
+    const colors = ['#dbeafe','#bfdbfe','#93c5fd','#60a5fa','#3b82f6','#2563eb','#1d4ed8'];
+    barsEl.innerHTML = r.bracketBreakdown.map((b, i) => `
+      <div class="bracket-bar-row">
+        <div class="bracket-bar-label">${Math.round(b.rate*100)}%</div>
+        <div class="bracket-bar-bg">
+          <div class="bracket-bar-fill" style="width:${Math.min(100, b.income/maxInc*100)}%;background:${colors[i]||colors[6]};"></div>
+        </div>
+        <div class="bracket-bar-amt">${fmt(b.income)}</div>
+      </div>`).join('');
+  }
+
+  // ── CG card ──
+  const cgCard = document.getElementById('cgRateCard');
+  if (r.preferentialIncome > 0) {
+    cgCard.style.display = '';
+    const cgRate = getCGRate(r.ordinaryTaxable, r.cgBrackets);
+    const niiteNote = r.niit > 0 ? ' + 3.8% NIIT' : '';
+    document.getElementById('cgRateBreakdown').innerHTML =
+      `LTCG / qualified dividends: <strong>${Math.round(cgRate*100)}%${niiteNote}</strong><br>` +
+      `Short-term gains: <strong>${Math.round(r.marginalRate*100)}% (ordinary rate)</strong><br>` +
+      `Preferential income total: <strong>${fmt(r.preferentialIncome)}</strong>`;
+  } else {
+    cgCard.style.display = 'none';
+  }
+
+  // ── Suggestions ──
+  const tips = generateSuggestions(r);
+  const grid = document.getElementById('suggestionsGrid');
+  grid.innerHTML = tips.map(t => `
+    <div class="suggestion-item ${t.impact}">
+      <div class="sug-icon">${t.icon}</div>
+      <div class="sug-content">
+        <div class="sug-title">${t.title}</div>
+        <div class="sug-desc">${t.desc}</div>
+      </div>
+      ${t.badge ? `<div class="sug-badge ${t.badgeColor||'green'}">${t.badge}</div>` : ''}
+    </div>`).join('');
+
+  // ── Dynamic deduction override checkboxes ──
+  const forceItemizedRow = document.getElementById('forceItemizedRow');
+  const forceStandardRow = document.getElementById('forceStandardRow');
+  if (r.naturallyItemized) {
+    // Itemized wins naturally → show "override to standard" option, hide "force itemized"
+    if (forceItemizedRow) { forceItemizedRow.style.display = 'none'; document.getElementById('forceItemized').checked = false; }
+    if (forceStandardRow) forceStandardRow.style.display = '';
+  } else {
+    // Standard wins naturally → show "force itemized" option, hide "override to standard"
+    if (forceItemizedRow) forceItemizedRow.style.display = '';
+    if (forceStandardRow) { forceStandardRow.style.display = 'none'; document.getElementById('forceStandard').checked = false; }
+  }
+
+  // ── Spouse field visibility ──
+  const isMfj = r.status === 'mfj';
+  document.getElementById('spouseAgeGroup').style.display   = isMfj ? '' : 'none';
+  document.getElementById('spouseBlindRow').style.display   = isMfj ? '' : 'none';
+  document.getElementById('spouseCoveredRow').style.display = isMfj ? '' : 'none';
+  // Clear spouse-specific values when not filing jointly to prevent stale data
+  if (!isMfj) {
+    const sa = document.getElementById('spouseAge');
+    const sb = document.getElementById('spouseBlind');
+    const sc = document.getElementById('spouseCovered');
+    if (sa) sa.value = '';
+    if (sb) sb.checked = false;
+    if (sc) sc.checked = false;
+  }
+}
+
+// ════════════════════════════════════════
+// ACCORDION & YEAR TOGGLE
+// ════════════════════════════════════════
+function toggleSection(header) {
+  const body    = header.nextElementSibling;
+  const chevron = header.querySelector('.chevron');
+  const isOpen  = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  header.classList.toggle('open', !isOpen);
+  chevron.classList.toggle('open', !isOpen);
+}
+
+function setYear(year) {
+  currentYear = year;
+  document.getElementById('btn2025').classList.toggle('active', year === 2025);
+  document.getElementById('btn2026').classList.toggle('active', year === 2026);
+  recalc();
+}
+
+// ════════════════════════════════════════
+// RECALC + DEBOUNCE
+// ════════════════════════════════════════
+let debounceTimer = null;
+function recalc() {
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(() => {
+    try {
+      const result = calculateTax();
+      updateUI(result);
+    } catch(e) { console.error('Tax calc error:', e); }
+  }, 120);
+}
+
+// ════════════════════════════════════════
+// RESULTS PAGE
+// ════════════════════════════════════════
+let lastResult = null;
+
+function showResultsPage() {
+  // Run a fresh calculation to lock in current values
+  try {
+    lastResult = calculateTax();
+    updateUI(lastResult); // keep input page in sync too
+    renderResultsPage(lastResult);
+    document.getElementById('resultsPage').style.display = 'block';
+    document.querySelector('.app-layout').style.display = 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } catch(e) { console.error('Results page error:', e); }
+}
+
+function showInputPage() {
+  document.getElementById('resultsPage').style.display = 'none';
+  document.querySelector('.app-layout').style.display = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleRpBreakdown(btn) {
+  const body    = document.getElementById('rp_breakdownBody');
+  const chevron = document.getElementById('rp_chevron');
+  const isOpen  = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  chevron.textContent = isOpen ? '▼ Show' : '▲ Hide';
+}
+
+function renderResultsPage(r) {
+  const statusLabels = { single:'Single', mfj:'Married Filing Jointly', mfs:'Married Filing Separately', hoh:'Head of Household' };
+  const today = new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
+
+  // Header
+  document.getElementById('rp_title').textContent    = r.year + ' Federal Tax Strategy Report';
+  document.getElementById('rp_subtitle').textContent = `${statusLabels[r.status] || r.status} · Generated ${today}`;
+
+  // Hero
+  const bal    = r.balance;
+  const heroEl = document.getElementById('rp_heroAmount');
+  heroEl.className = 'rp-hero-amount ' + (bal >= 0 ? 'refund' : 'due');
+  heroEl.textContent = (bal >= 0 ? '+' : '−') + '$' + Math.abs(Math.round(bal)).toLocaleString();
+  document.getElementById('rp_heroLabel').textContent = bal >= 0 ? 'Estimated Federal Refund' : 'Estimated Federal Tax Due';
+
+  // Metrics
+  document.getElementById('rp_gross').textContent    = fmt(r.grossIncome);
+  document.getElementById('rp_agi').textContent       = fmt(r.agi);
+  document.getElementById('rp_marginal').textContent  = Math.round(r.marginalRate * 100) + '%';
+  document.getElementById('rp_effective').textContent = fmtPct(r.effectiveRate);
+
+  // Breakdown table
+  const rows = [
+    ['Gross Income',             fmt(r.grossIncome),              ''],
+    ['Above-the-Line Deductions',r.aboveLineDeductions > 0 ? '−'+fmt(r.aboveLineDeductions) : '$0', 'text-success'],
+    ['Adjusted Gross Income (AGI)', fmt(r.agi),                   'fw-700'],
+    [r.deductionLabel,            '−'+fmt(r.effDeduction),        'text-success'],
+    r.qbiDeduction > 0 ? ['QBI Deduction (§199A)', '−'+fmt(r.qbiDeduction), 'text-success'] : null,
+    ['Taxable Income',            fmt(r.taxableIncome),            'fw-700'],
+    ['Ordinary Income Tax',       fmt(r.ordinaryTax),             ''],
+    r.cgTax > 0 ? ['Capital Gains Tax', fmt(r.cgTax), ''] : null,
+    r.seTax > 0 ? ['Self-Employment Tax', fmt(r.seTax), ''] : null,
+    r.amtAdd > 0 ? ['Alternative Minimum Tax', fmt(r.amtAdd), ''] : null,
+    r.niit > 0 ? ['Net Investment Income Tax (3.8%)', fmt(r.niit), ''] : null,
+    r.additionalTaxes > 0 ? ['Additional Taxes (Schedule 2)', fmt(r.additionalTaxes), ''] : null,
+    ['Total Tax Liability',       fmt(r.netTax),                  'fw-700'],
+    r.totalCredits > 0 ? ['Credits (CTC, EITC, etc.)', '−'+fmt(r.totalCredits), 'text-success'] : null,
+    r.totalWithholding > 0 ? ['Withholding & Estimated Payments', '−'+fmt(r.totalWithholding), 'text-primary'] : null,
+  ].filter(Boolean);
+
+  document.getElementById('rp_breakdownTable').innerHTML = rows.map(([label, val, cls]) =>
+    `<div class="breakdown-row${cls === 'fw-700' ? ' subtotal' : ''}">
+       <span class="row-label">${label}</span>
+       <span class="row-value ${cls||''}">${val}</span>
+     </div>`).join('') +
+    `<div class="breakdown-row total-row">
+       <span class="row-label">${bal >= 0 ? 'Estimated Refund' : 'Balance Due'}</span>
+       <span class="row-value">${(bal >= 0 ? '+' : '−') + '$' + Math.abs(Math.round(bal)).toLocaleString()}</span>
+     </div>`;
+
+  // ── Tax Savings Roadmap ──
+  const roadmap = buildRoadmap(r);
+  const roadmapSection = document.getElementById('rp_roadmapSection');
+  if (roadmap.length > 0) {
+    roadmapSection.style.display = 'block';
+    const totalSpend   = roadmap.reduce((s, i) => s + i.amount, 0);
+    const totalSavings = roadmap.reduce((s, i) => s + i.savings, 0);
+    const totalRate    = totalSpend > 0 ? totalSavings / totalSpend : 0;
+    const maxRate      = roadmap[0].rate; // highest individual rate (sorted)
+
+    document.getElementById('rp_roadmapSubtitle').textContent =
+      `Invest or spend ${fmt(totalSpend)} strategically and keep ${fmt(totalSavings)} out of the IRS's hands — deadlines vary by strategy`;
+
+    // Rate pill helper
+    function ratePill(rate) {
+      const pct = Math.round(rate * 100);
+      const cls  = rate >= 0.28 ? 'best' : rate >= 0.20 ? 'good' : 'fair';
+      return `<span class="rate-pill ${cls}">${pct}¢ per $1</span>`;
+    }
+
+    const hasSepIRA = roadmap.some(i => i.deadline && i.deadline.includes('†'));
+    document.getElementById('rp_roadmapBody').innerHTML = roadmap.map(item => {
+      const dlColor = item.deadline && item.deadline.startsWith('Apr') ? 'color:var(--primary);font-weight:600' : 'color:var(--gray-500)';
+      const dlBadge = item.deadline ? `<span style="margin-left:6px;font-size:10px;${dlColor}">by ${item.deadline}</span>` : '';
+      const noteSpan = item.note ? ` <span style="font-size:11px;color:var(--gray-400)">(${item.note})</span>` : '';
+      return `<tr>
+        <td>${item.icon} ${item.action}${dlBadge}${noteSpan}</td>
+        <td class="num">${fmt(item.amount)}</td>
+        <td class="num savings">${fmt(item.savings)}</td>
+        <td class="rate-cell">${ratePill(item.rate)}</td>
+      </tr>`;
+    }).join('') + (hasSepIRA ? `<tr><td colspan="4" style="padding:6px 16px;font-size:10px;color:var(--gray-400);">† SEP-IRA contributions may be made until Oct 15 if you file a tax extension.</td></tr>` : '');
+
+    document.getElementById('rp_roadmapFoot').innerHTML = `
+      <tr>
+        <td>💰 Total Potential Savings</td>
+        <td class="num">${fmt(totalSpend)}</td>
+        <td class="num savings">${fmt(totalSavings)}</td>
+        <td class="rate-cell">${ratePill(totalRate)}</td>
+      </tr>`;
+
+    document.getElementById('rp_roadmapBottom').innerHTML =
+      `<strong>Bottom line:</strong> Every dollar you direct into these strategies saves an average of ${Math.round(totalRate * 100)}¢ in federal taxes. Your highest-value move is ${roadmap[0].icon} ${roadmap[0].action} at ${Math.round(maxRate * 100)}¢ per dollar. Business expenses and charitable giving must be completed by <strong>December 31st</strong>. Retirement contributions (SEP-IRA, IRA, HSA) can be made until <strong>April 15th</strong> — giving you extra time to fund those after seeing your final tax picture.`;
+  } else {
+    roadmapSection.style.display = 'none';
+  }
+
+  // ── Strategies ──
+  const tips = generateSuggestions(r);
+  document.getElementById('rp_stratList').innerHTML = tips.map(t => `
+    <div class="suggestion-item ${t.impact}">
+      <div class="sug-icon">${t.icon}</div>
+      <div class="sug-content">
+        <div class="sug-title">${t.title}</div>
+        <div class="sug-desc">${t.desc}</div>
+      </div>
+      ${t.badge ? `<div class="sug-badge ${t.badgeColor||'green'}">${t.badge}</div>` : ''}
+    </div>`).join('');
+}
+
+// ════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  setupCurrencyInputs();
+  // Also listen on non-currency inputs
+  document.querySelectorAll('input[type=number], select, input[type=checkbox]').forEach(el => {
+    el.addEventListener('change', recalc);
+    el.addEventListener('input', recalc);
+  });
+  recalc();
+
+  // ── FIXED-POSITION TOOLTIP (never clipped by any container) ──
+  const _tt = document.createElement('div');
+  _tt.id = 'global-tooltip';
+  Object.assign(_tt.style, {
+    position: 'fixed', background: '#0f172a', color: '#fff',
+    padding: '8px 11px', borderRadius: '7px', fontSize: '11.5px',
+    zIndex: '99999', maxWidth: '260px', whiteSpace: 'normal',
+    lineHeight: '1.5', boxShadow: '0 4px 16px rgba(0,0,0,.28)',
+    pointerEvents: 'none', display: 'none'
+  });
+  document.body.appendChild(_tt);
+
+  function positionTooltip(e) {
+    const PAD = 10;
+    const ttW = _tt.offsetWidth || 260;
+    const ttH = _tt.offsetHeight || 80;
+    let x = e.clientX - ttW / 2;
+    let y = e.clientY - ttH - PAD;
+    // Clamp horizontally so it never leaves the viewport
+    x = Math.max(PAD, Math.min(x, window.innerWidth - ttW - PAD));
+    // If it would go above the viewport, flip below the cursor
+    if (y < PAD) y = e.clientY + PAD + 4;
+    _tt.style.left = x + 'px';
+    _tt.style.top  = y + 'px';
+  }
+
+  document.querySelectorAll('.tooltip-icon').forEach(el => {
+    el.addEventListener('mouseenter', function(e) {
+      _tt.textContent = this.dataset.tip || '';
+      _tt.style.display = 'block';
+      positionTooltip(e);
+    });
+    el.addEventListener('mousemove', positionTooltip);
+    el.addEventListener('mouseleave', () => { _tt.style.display = 'none'; });
+  });
+});
+</script>
+</body>
+</html>
