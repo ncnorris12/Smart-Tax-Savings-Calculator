@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Blue rounded square background -->
+  <rect width="64" height="64" rx="14" ry="14" fill="#1e40af"/>
+  <!-- White dollar sign -->
+  <text x="32" y="46" font-family="Arial, sans-serif" font-size="42" font-weight="bold" fill="white" text-anchor="middle">$</text>
+</svg>
