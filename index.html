@@ -1434,7 +1434,7 @@ input[type=number] { -moz-appearance: textfield; }
     <h3 style="font-size:14px; font-weight:700; color:var(--gray-900); margin-top:14px; margin-bottom:6px;">Frequently asked questions</h3>
     <p style="margin-bottom:8px;"><strong>Is this tax calculator free?</strong> Yes. The Smart Tax Savings Estimator is 100% free to use, with no ads on the calculator itself and no account required.</p>
     <p style="margin-bottom:8px;"><strong>Is my data private?</strong> All calculations run locally in your browser. Your income, deductions, and other tax information never leave your device.</p>
-    <p style="margin-bottom:8px;"><strong>Does it include state taxes?</strong> No — this is a <em>federal-only</em> tax calculator. Always consult a qualified tax professional for state tax questions and for advice specific to your return.</p>
+    <p style="margin-bottom:8px;"><strong>Does it include state taxes?</strong> No — this is a <em>federal-only</em> tax calculator. Always consult a qualified tax professional for state tax questions and for advice specific to your return. <strong>Want a state tax calculator too?</strong> The more people visit and share this page, the more we know there's real demand for a state-level version. If that's something you'd use, keep using this calculator and tell a friend — your traffic is the signal we watch.</p>
     <p style="margin-bottom:0;"><strong>Disclaimer:</strong> This estimator is provided for informational and planning purposes only. It is not tax advice. Consult a licensed CPA, Enrolled Agent, or tax attorney before making financial decisions based on these results.</p>
   </div>
 </footer>
@@ -1480,6 +1480,7 @@ input[type=number] { -moz-appearance: textfield; }
         <h2>💰 Your Tax Savings Roadmap</h2>
         <p id="rp_roadmapSubtitle">Deadlines vary — see each row below</p>
       </div>
+      <div id="rp_roadmapBanner" style="display:none; margin:0 0 16px; padding:14px 18px; background:#fef3c7; border:1px solid #f59e0b; border-left:4px solid #d97706; border-radius:8px; font-size:13px; line-height:1.55; color:#78350f;"></div>
       <table class="rp-roadmap-table">
         <thead>
           <tr>
@@ -2044,6 +2045,32 @@ function calculateTax() {
 }
 
 // ════════════════════════════════════════
+// DEADLINE STATUS — "actionable" vs "expired"
+// ════════════════════════════════════════
+// Given a deadline string ("Dec 31", "Apr 15", "Apr 15†", "Jan 15") and the
+// selected tax year, returns 'actionable' or 'expired' based on today's date.
+// Used to split roadmap + strategy recommendations into "still actionable"
+// vs "remember these for next year" sections.
+function getDeadlineStatus(deadlineStr, taxYear) {
+  if (!deadlineStr) return 'actionable';
+  const clean = String(deadlineStr).replace('†', '').trim();
+  const now = new Date();
+  if (clean.indexOf('Dec 31') === 0) {
+    // Dec 31 of the tax year itself
+    return now > new Date(taxYear, 11, 31, 23, 59, 59) ? 'expired' : 'actionable';
+  }
+  if (clean.indexOf('Apr 15') === 0 || clean.indexOf('Apr') === 0) {
+    // Apr 15 of the year AFTER the tax year (tax filing deadline)
+    return now > new Date(taxYear + 1, 3, 15, 23, 59, 59) ? 'expired' : 'actionable';
+  }
+  if (clean.indexOf('Jan 15') === 0) {
+    // Jan 15 of the year after the tax year (Q4 estimated-payment deadline)
+    return now > new Date(taxYear + 1, 0, 15, 23, 59, 59) ? 'expired' : 'actionable';
+  }
+  return 'actionable';
+}
+
+// ════════════════════════════════════════
 // TAX SAVINGS ROADMAP
 // ════════════════════════════════════════
 function buildRoadmap(r) {
@@ -2158,6 +2185,7 @@ function generateSuggestions(r) {
       tips.push({
         icon:'🏦', impact:'high-impact', value:centsK401,
         title:`Max Out Your 401(k) — $${k401Remaining.toLocaleString()} Remaining`,
+        deadline:'Dec 31',
         desc:`You can contribute $${k401Remaining.toLocaleString()} more before the ${r.year} limit of $${r.k401Max.toLocaleString()}. Each dollar you contribute saves you ${centsK401}¢ in federal taxes at your ${margPct}% marginal rate. Important: 401(k) contributions must be elected through your employer payroll by <strong>December 31st</strong> — unlike IRAs, there is no grace period into the following year. Contact your HR or benefits portal now if you want to increase your contribution for remaining paychecks.`,
         badge:`~${fmt(saving)} federal tax savings`, badgeColor:'green'
       });
@@ -2165,6 +2193,7 @@ function generateSuggestions(r) {
       tips.push({
         icon:'🏦', impact:'info', value:30,
         title:`Your Tax Is Already $0 — Perfect Time for a Roth IRA`,
+        deadline:'Apr 15',
         desc:`With little or no tax liability this year, contributing to a Roth IRA instead of a traditional account is often the smarter move. Roth contributions aren't deductible now, but all future growth and withdrawals are tax-free. Your low effective rate makes this an ideal window.`,
         badge:`0% effective rate = Roth sweet spot`, badgeColor:'blue'
       });
@@ -2180,6 +2209,7 @@ function generateSuggestions(r) {
       tips.push({
         icon:'💼', impact: saving > 2000 ? 'high-impact' : 'medium-impact', value:centsSEP,
         title:`SEP-IRA: Up to $${Math.round(r.sepIRAMax).toLocaleString()} Deductible`,
+        deadline:'Apr 15†',
         desc:`As self-employed, you can contribute up to $${Math.round(r.sepIRAMax).toLocaleString()} to a SEP-IRA (25% of net self-employment income). You've entered $${Math.round(r.sepIRA).toLocaleString()}. Each dollar contributed saves you ${centsSEP}¢ in federal income tax. Unlike most year-end strategies, SEP-IRA contributions can be made until your tax filing deadline — April 15th, or as late as October 15th if you file an extension — giving you maximum flexibility.`,
         badge:`~${fmt(remaining * r.marginalRate)} in income tax savings`, badgeColor:'green'
       });
@@ -2194,6 +2224,7 @@ function generateSuggestions(r) {
       tips.push({
         icon:'🏥', impact:'high-impact', value:200, /* triple-tax-advantage — always sorts first */
         title:`HSA: $${Math.round(remaining).toLocaleString()} of Tax-Free Savings Left`,
+        deadline:'Apr 15',
         desc:`HSAs are the only <strong>triple-tax-advantaged</strong> account: deductible now (saves ${centsHSA}¢ per dollar at your ${margPct}% rate), tax-free growth, and tax-free withdrawals for medical expenses. No other account delivers this combination. Your ${r.hsaCoverage === 'family' ? 'family' : 'self-only'} ${r.year} limit is $${r.hsaMax.toLocaleString()}. Like an IRA, direct HSA contributions can be made until April 15th of the following year — so you have until Tax Day to fund this account.`,
         badge:`~${fmt(remaining * r.marginalRate)} federal tax savings`, badgeColor:'green'
       });
@@ -2208,6 +2239,7 @@ function generateSuggestions(r) {
       tips.push({
         icon:'📈', impact:'medium-impact', value:centsIRA,
         title:`Traditional IRA — $${iraRemaining.toLocaleString()} of Deductible Room`,
+        deadline:'Apr 15',
         desc:`Your IRA is fully or partially deductible at your income level. Each dollar contributed saves ${centsIRA}¢ in federal taxes at your ${margPct}% rate. You can contribute up to the $${r.iraMax.toLocaleString()} limit as late as the April tax filing deadline — not December 31 — giving you extra time.`,
         badge:`~${fmt(iraRemaining * r.marginalRate)} potential savings`, badgeColor:'green'
       });
@@ -2215,6 +2247,7 @@ function generateSuggestions(r) {
       tips.push({
         icon:'📈', impact:'info', value:25,
         title:`Consider Roth IRA — You're in the ${margPct}% Bracket`,
+        deadline:'Apr 15',
         desc:`At your income level, a Roth IRA (no deduction now, but all withdrawals tax-free) is often the better long-term choice. Roth is generally preferred when your current marginal rate is 22% or below.`,
         badge:null, badgeColor:'blue'
       });
@@ -2235,6 +2268,7 @@ function generateSuggestions(r) {
     tips.push({
       icon:'📊', impact:'high-impact', value:Math.round(r.cgBrackets[1][1]*100), /* savings = rate you're avoiding */
       title:`Realize ${fmt(additionalZeroRoom)} More in LTCG Tax-Free!`,
+      deadline:'Dec 31',
       desc:`You have ${fmt(additionalZeroRoom)} of remaining 0% long-term capital gains capacity this year — meaning those gains cost you 0¢ per dollar in federal taxes right now. You could sell appreciated assets held more than 1 year and realize up to ${fmt(additionalZeroRoom)} more in gains before Dec 31.${alreadyUsedNote} Consider ETFs, stocks, crypto, or real estate held long-term.`,
       badge:`0% LTCG rate — ${fmt(additionalZeroRoom)} remaining`, badgeColor:'green'
     });
@@ -2268,6 +2302,7 @@ function generateSuggestions(r) {
       tips.push({
         icon:'🎯', impact:'medium-impact', value:55,
         title:`Only $${Math.round(next.roomToNext).toLocaleString()} Until the ${Math.round(next.nextRate*100)}% Bracket`,
+        deadline:'Dec 31',
         desc:`You're $${Math.round(next.roomToNext).toLocaleString()} away from the next tax bracket. Every dollar of income that crosses into the ${Math.round(next.nextRate*100)}% bracket costs ${Math.round(next.nextRate*100)}¢ per dollar instead of ${Math.round(r.marginalRate*100)}¢. Consider deferring income or accelerating deductions before December 31st.`,
         badge:`${Math.round(r.marginalRate*100)}% now → ${Math.round(next.nextRate*100)}% if exceeded`, badgeColor:'yellow'
       });
@@ -2283,6 +2318,7 @@ function generateSuggestions(r) {
       tips.push({
         icon:'🎁', impact:'info', value:22,
         title:`You're Itemizing — Every Charitable Dollar Saves ${centsCharity}¢`,
+        deadline:'Dec 31',
         desc:`Because you're already itemizing (your deductions exceed the $${Math.round(r.stdDeduction).toLocaleString()} standard deduction), every dollar you donate to a qualified charity directly reduces your taxable income — saving you ${centsCharity}¢ per dollar in federal taxes. Consider making any planned donations before December 31 to capture the deduction this year.`,
         badge:`${centsCharity}¢ federal tax savings per dollar donated`, badgeColor:'blue'
       });
@@ -2297,6 +2333,7 @@ function generateSuggestions(r) {
     tips.push({
       icon:'🎁', impact:'medium-impact', value:45,
       title:`Charitable Bunching Could Unlock Extra Deductions`,
+      deadline:'Dec 31',
       desc:`Your itemized deductions ($${Math.round(r.totalItemized).toLocaleString()}) are $${Math.round(gap).toLocaleString()} short of your standard deduction ($${Math.round(r.stdDeduction).toLocaleString()}). Important: the first $${Math.round(gap).toLocaleString()} of extra donations just closes that gap — no tax savings yet. But every dollar <em>beyond</em> that gap saves ${centsCharity}¢ in federal taxes. By "bunching" two years of charitable giving into one year, you could exceed the standard deduction and start saving. A Donor-Advised Fund (DAF) makes this easy.`,
       badge:`Donate $${Math.round(gap).toLocaleString()} to cross threshold, then ${centsCharity}¢ saved per dollar`, badgeColor:'yellow'
     });
@@ -2310,6 +2347,7 @@ function generateSuggestions(r) {
       tips.push({
         icon:'🏢', impact:'medium-impact', value:60,
         title:`QBI Deduction Phase-Out Risk (SSTB)`,
+        deadline:'Apr 15',
         desc:`Your AGI is approaching the $${qbiStart.toLocaleString()} QBI phase-out threshold for your business type. Increasing SEP-IRA, Solo 401(k), or HSA contributions to reduce your AGI below this line could preserve your full 20% QBI deduction — worth ${fmt(r.seIncome * 0.20 * r.marginalRate)} in tax savings (effectively saving ${Math.round(r.marginalRate*100)}¢ on every dollar of protected QBI).`,
         badge:`Protecting ${fmt(r.seIncome * 0.20)} QBI deduction`, badgeColor:'yellow'
       });
@@ -2342,6 +2380,7 @@ function generateSuggestions(r) {
     tips.push({
       icon:'📉', impact:'info', value:20,
       title:`Tax-Loss Harvesting & Crypto Planning — Before December 31st`,
+      deadline:'Dec 31',
       desc:`Review your portfolio for positions at a loss. Selling them locks in losses that offset capital gains dollar-for-dollar, and up to $3,000 of net losses can reduce your ordinary income (worth ~${fmt(3000 * r.marginalRate)} in federal tax savings). Unused losses carry forward indefinitely to future years.${cryptoNote}`,
       badge:`Up to $3,000 ordinary income offset`, badgeColor:'blue'
     });
@@ -2381,6 +2420,7 @@ function generateSuggestions(r) {
     tips.push({
       icon:'🔔', impact:'medium-impact', value:40,
       title:`Underpayment Penalty Risk — Action Needed`,
+      deadline:'Jan 15',
       desc:`Your withholding + estimated payments ($${Math.round(r.totalWithholding).toLocaleString()}) are tracking below the IRS safe harbor. Without action, you may owe a penalty on top of your tax bill. Two ways to fix it before year-end: (1) Make a Q4 estimated payment by January 15, ${r.year + 1}; (2) ${r.w2Wages > 0 ? 'Increase your W-4 withholding (Step 4c) on remaining paychecks — any extra withheld counts as paid evenly throughout the year, which is more favorable than a lump estimated payment.' : 'Ask your employer or payer to increase withholding if possible.'}${harborNote}`,
       badge:`Pay ~${fmt(deficit90)} more to reach 90% safe harbor`, badgeColor:'yellow'
     });
@@ -2425,6 +2465,7 @@ function generateSuggestions(r) {
       tips.push({
         icon:'🧾', impact:'high-impact', value:centsBiz,
         title:`Accelerate Business Expenses Before Dec 31 — Save ~${fmt(totalSavings)}`,
+        deadline:'Dec 31',
         desc:`Every $1,000 of deductible business expenses saves you ~$${savingsPerK} — that's ${centsBiz}¢ per dollar spent on legitimate business needs, because it reduces both income AND self-employment tax simultaneously. This is your highest savings-rate strategy. Spending an additional ${fmt(suggestedSpend)} on planned purchases before year-end could save ~${fmt(totalSavings)}. Only spend on things you actually need — the goal is to accelerate timing, not spend for the sake of it. <em>Note: increasing expenses also reduces your QBI deduction slightly, so actual savings may be a few dollars less than the headline figure — but this is still the top value-per-dollar strategy.</em><br><br><strong>Expense ideas for your business type:</strong><br>${ideaList}<br><br>💡 Remember: <strong>Section 179</strong> lets you immediately deduct the full cost of qualifying equipment (computers, vehicles, machinery) in the year of purchase.`,
         badge:`~${centsBiz}¢ saved per dollar spent`, badgeColor:'green'
       });
@@ -2442,6 +2483,7 @@ function generateSuggestions(r) {
       tips.push({
         icon:'🏥', impact:'medium-impact', value:centsM - 1, // just below IRA/HSA same-rate tips
         title:`Medical Expense Bunching — $${Math.round(medGap).toLocaleString()} From Deductible`,
+        deadline:'Dec 31',
         desc:`Only unreimbursed medical expenses above 7.5% of your AGI ($${Math.round(medFloor).toLocaleString()}) are deductible. You've entered $${Math.round(medicalRaw).toLocaleString()} — just $${Math.round(medGap).toLocaleString()} below the threshold. If you have any planned or elective medical, dental, or vision procedures, timing them all into this calendar year could push you over the floor and make those expenses partially deductible. Once past the threshold, each additional dollar of medical spending saves you ${centsM}¢ in federal taxes.<br><br>Examples of acceleratable medical spending: elective dental work, glasses or contacts, hearing aids, physical therapy, specialist visits, or prepaying prescriptions.`,
         badge:`$${Math.round(medGap).toLocaleString()} more needed to unlock medical deduction`, badgeColor:'yellow'
       });
@@ -2451,6 +2493,7 @@ function generateSuggestions(r) {
       tips.push({
         icon:'🏥', impact:'info', value:12,
         title:`Medical Deduction Active — Capture Every Qualifying Expense`,
+        deadline:'Dec 31',
         desc:`You've crossed the 7.5% AGI floor and are deducting $${Math.round(r.medDeductible).toLocaleString()} in medical expenses. Every additional dollar of unreimbursed medical spending above the floor saves you ${centsM}¢ in taxes. Don't forget: premiums you pay directly (not through payroll), dental and vision, prescriptions, mileage to appointments (21¢/mile for medical travel in 2025), and long-term care insurance premiums (age-based limits apply).`,
         badge:`${centsM}¢ savings per dollar above the floor`, badgeColor:'blue'
       });
@@ -2467,6 +2510,7 @@ function generateSuggestions(r) {
       tips.push({
         icon:'📅', impact:'medium-impact', value:Math.round((next.nextRate - r.marginalRate)*100) + 20,
         title:`Defer Business Income to ${r.year + 1} — Stay in the ${margPct}% Bracket`,
+        deadline:'Dec 31',
         desc:`You're only $${Math.round(next.roomToNext).toLocaleString()} away from the ${Math.round(next.nextRate*100)}% bracket. As a self-employed person, you have a powerful lever most W-2 employees don't: you can control when you invoice clients and when you receive payment. Holding invoices until January 1st keeps that income out of this year's return and buys you an entire year before it's taxed. The rate difference of ${Math.round((next.nextRate - r.marginalRate)*100)}¢ per dollar above the line is real money.`,
         badge:`Delay invoicing to avoid ${Math.round(next.nextRate*100)}% on the excess`, badgeColor:'yellow'
       });
@@ -2477,6 +2521,7 @@ function generateSuggestions(r) {
         tips.push({
           icon:'📅', impact:'info', value:10,
           title:`Accelerate Income Into ${r.year} — Room in Your ${margPct}% Bracket`,
+          deadline:'Dec 31',
           desc:`You have meaningful room remaining in your current ${margPct}% bracket before reaching the next rate. If you expect a higher-income ${r.year + 1}, consider sending invoices and collecting payment before December 31st. Income received this year is taxed at your current ${margPct}% rate — potentially less than what you'd pay next year.`,
           badge:null, badgeColor:'blue'
         });
@@ -2497,6 +2542,7 @@ function generateSuggestions(r) {
       tips.push({
         icon:'🔄', impact:'info', value:18,
         title:`Backdoor Roth IRA — Strategy for High Earners`,
+        deadline:'Apr 15',
         desc:`Your income is above the Roth IRA contribution limit ($${rothLimits[1].toLocaleString()} for ${r.status === 'mfj' ? 'married filing jointly' : 'single'} filers in ${r.year}), and your Traditional IRA contribution is not deductible at your income level. The <strong>Backdoor Roth</strong> strategy lets you work around this: contribute $${r.iraMax.toLocaleString()} to a non-deductible Traditional IRA, then immediately convert it to a Roth IRA. The conversion is essentially tax-free since you already paid tax on those dollars.<br><br>⚠️ <strong>Important pro-rata rule:</strong> If you have other existing pre-tax IRA balances (SEP-IRA, SIMPLE IRA, rollover IRA), the conversion may be partially taxable. Consult a tax professional before executing this strategy.`,
         badge:`$${r.iraMax.toLocaleString()} into Roth via backdoor`, badgeColor:'blue'
       });
@@ -2509,6 +2555,7 @@ function generateSuggestions(r) {
     tips.push({
       icon:'🎗️', impact:'info', value:22,
       title:`Qualified Charitable Distributions (QCDs) — Age 70½ Benefit`,
+      deadline:'Dec 31',
       desc:`At age 70½ or older, you can donate up to $${qcdLimit.toLocaleString()} per year directly from your IRA to a qualified charity — and it <strong>never appears in your AGI</strong>. This is more powerful than a regular deduction: it reduces AGI directly, which can lower your Medicare IRMAA premiums, reduce Social Security income taxation, and prevent other deductions from phasing out. If you're subject to Required Minimum Distributions (RMDs starting at age 73), a QCD can satisfy your RMD with no income recognition at all. Ask your IRA custodian about a direct QCD transfer — you cannot withdraw the money first.`,
       badge:`Up to $${qcdLimit.toLocaleString()} donated tax-free from IRA`, badgeColor:'blue'
     });
@@ -2519,6 +2566,7 @@ function generateSuggestions(r) {
     tips.push({
       icon:'🗺️', impact:'medium-impact', value:35,
       title:`SALT Cap Workaround for Business Owners`,
+      deadline:'Dec 31',
       desc:`If you own a pass-through business (S-corp, partnership, LLC taxed as partnership), many states offer a Pass-Through Entity Tax (PTET) election — the entity pays state tax at the entity level and takes a full federal deduction, bypassing your personal $10,000 SALT cap. Each dollar of state tax shifted to the entity level saves ${Math.round(r.marginalRate*100)}¢ in federal income tax. Ask your CPA about your state's PTET option.`,
       badge:`Potentially unlocks full state tax deduction`, badgeColor:'yellow'
     });
@@ -2543,6 +2591,48 @@ function generateSuggestions(r) {
   });
 
   return tips;
+}
+
+// ════════════════════════════════════════
+// RENDER SUGGESTIONS — splits into
+// "still actionable" and "remember for next year"
+// based on each tip's deadline vs today's date.
+// Used by both the input page and the results page.
+// ════════════════════════════════════════
+function renderSuggestionsSplit(tips, taxYear) {
+  const renderTip = t => `
+    <div class="suggestion-item ${t.impact}">
+      <div class="sug-icon">${t.icon}</div>
+      <div class="sug-content">
+        <div class="sug-title">${t.title}</div>
+        <div class="sug-desc">${t.desc}</div>
+      </div>
+      ${t.badge ? `<div class="sug-badge ${t.badgeColor||'green'}">${t.badge}</div>` : ''}
+    </div>`;
+
+  const actionable = tips.filter(t => getDeadlineStatus(t.deadline, taxYear) === 'actionable');
+  const expired    = tips.filter(t => getDeadlineStatus(t.deadline, taxYear) === 'expired');
+
+  // Normal case — no expired items
+  if (expired.length === 0) {
+    return actionable.map(renderTip).join('');
+  }
+
+  const nextYear = taxYear + 1;
+  let html = '';
+
+  if (actionable.length > 0) {
+    html += `<div style="margin:4px 0 2px; padding:10px 14px; background:#ecfdf5; border-left:4px solid #10b981; border-radius:6px; color:#065f46; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.04em;">✓ Still actionable — act on these now</div>`;
+    html += actionable.map(renderTip).join('');
+  }
+
+  html += `<div style="margin:18px 0 2px; padding:12px 14px; background:#fef3c7; border-left:4px solid #d97706; border-radius:6px; color:#78350f; font-size:13px; line-height:1.5;">
+    <div style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; margin-bottom:4px;">⏰ Remember these for ${nextYear}</div>
+    <div>The deadlines for the strategies below have already passed for ${taxYear}. You can't act on them now, but keep them in mind so you can put them to work before year-end ${nextYear}.</div>
+  </div>`;
+  html += expired.map(renderTip).join('');
+
+  return html;
 }
 
 // ════════════════════════════════════════
@@ -2712,15 +2802,7 @@ function updateUI(r) {
   // ── Suggestions ──
   const tips = generateSuggestions(r);
   const grid = document.getElementById('suggestionsGrid');
-  grid.innerHTML = tips.map(t => `
-    <div class="suggestion-item ${t.impact}">
-      <div class="sug-icon">${t.icon}</div>
-      <div class="sug-content">
-        <div class="sug-title">${t.title}</div>
-        <div class="sug-desc">${t.desc}</div>
-      </div>
-      ${t.badge ? `<div class="sug-badge ${t.badgeColor||'green'}">${t.badge}</div>` : ''}
-    </div>`).join('');
+  grid.innerHTML = renderSuggestionsSplit(tips, r.year);
 
   // ── Dynamic deduction override checkboxes ──
   const forceItemizedRow = document.getElementById('forceItemizedRow');
@@ -2870,13 +2952,6 @@ function renderResultsPage(r) {
   const roadmapSection = document.getElementById('rp_roadmapSection');
   if (roadmap.length > 0) {
     roadmapSection.style.display = 'block';
-    const totalSpend   = roadmap.reduce((s, i) => s + i.amount, 0);
-    const totalSavings = roadmap.reduce((s, i) => s + i.savings, 0);
-    const totalRate    = totalSpend > 0 ? totalSavings / totalSpend : 0;
-    const maxRate      = roadmap[0].rate; // highest individual rate (sorted)
-
-    document.getElementById('rp_roadmapSubtitle').textContent =
-      `Invest or spend ${fmt(totalSpend)} strategically and keep ${fmt(totalSavings)} out of the IRS's hands — deadlines vary by strategy`;
 
     // Rate pill helper
     function ratePill(rate) {
@@ -2885,8 +2960,8 @@ function renderResultsPage(r) {
       return `<span class="rate-pill ${cls}">${pct}¢ per $1</span>`;
     }
 
-    const hasSepIRA = roadmap.some(i => i.deadline && i.deadline.includes('†'));
-    document.getElementById('rp_roadmapBody').innerHTML = roadmap.map(item => {
+    // Row renderer
+    function renderItemRow(item) {
       const dlColor = item.deadline && item.deadline.startsWith('Apr') ? 'color:var(--primary);font-weight:600' : 'color:var(--gray-500)';
       const dlBadge = item.deadline ? `<span style="margin-left:6px;font-size:10px;${dlColor}">by ${item.deadline}</span>` : '';
       const noteSpan = item.note ? ` <span style="font-size:11px;color:var(--gray-400)">(${item.note})</span>` : '';
@@ -2896,33 +2971,115 @@ function renderResultsPage(r) {
         <td class="num savings">${fmt(item.savings)}</td>
         <td class="rate-cell">${ratePill(item.rate)}</td>
       </tr>`;
-    }).join('') + (hasSepIRA ? `<tr><td colspan="4" style="padding:6px 16px;font-size:10px;color:var(--gray-400);">† SEP-IRA contributions may be made until Oct 15 if you file a tax extension.</td></tr>` : '');
+    }
 
-    document.getElementById('rp_roadmapFoot').innerHTML = `
-      <tr>
-        <td>💰 Total Potential Savings</td>
-        <td class="num">${fmt(totalSpend)}</td>
-        <td class="num savings">${fmt(totalSavings)}</td>
-        <td class="rate-cell">${ratePill(totalRate)}</td>
-      </tr>`;
+    // Split into actionable vs expired based on today's date and selected tax year
+    const actionable = roadmap.filter(i => getDeadlineStatus(i.deadline, r.year) === 'actionable');
+    const expired    = roadmap.filter(i => getDeadlineStatus(i.deadline, r.year) === 'expired');
 
-    document.getElementById('rp_roadmapBottom').innerHTML =
-      `<strong>Bottom line:</strong> Every dollar you direct into these strategies saves an average of ${Math.round(totalRate * 100)}¢ in federal taxes. Your highest-value move is ${roadmap[0].icon} ${roadmap[0].action} at ${Math.round(maxRate * 100)}¢ per dollar. Business expenses and charitable giving must be completed by <strong>December 31st</strong>. Retirement contributions (SEP-IRA, IRA, HSA) can be made until <strong>April 15th</strong> — giving you extra time to fund those after seeing your final tax picture.`;
+    const sumSpend   = arr => arr.reduce((s, i) => s + i.amount,  0);
+    const sumSavings = arr => arr.reduce((s, i) => s + i.savings, 0);
+
+    const actSpend   = sumSpend(actionable);
+    const actSavings = sumSavings(actionable);
+    const actRate    = actSpend > 0 ? actSavings / actSpend : 0;
+
+    const expSpend   = sumSpend(expired);
+    const expSavings = sumSavings(expired);
+    const expRate    = expSpend > 0 ? expSavings / expSpend : 0;
+
+    const hasSepIRA    = roadmap.some(i => i.deadline && i.deadline.includes('†'));
+    const banner       = document.getElementById('rp_roadmapBanner');
+    const subtitle     = document.getElementById('rp_roadmapSubtitle');
+    const nextYear     = r.year + 1;
+
+    // Build grouped table body
+    let bodyHTML = '';
+
+    if (expired.length === 0) {
+      // ─── Case A: Everything still actionable (normal path) ───
+      banner.style.display = 'none';
+      subtitle.textContent = `Invest or spend ${fmt(actSpend)} strategically and keep ${fmt(actSavings)} out of the IRS's hands — deadlines vary by strategy`;
+
+      bodyHTML = actionable.map(renderItemRow).join('');
+    } else if (actionable.length === 0) {
+      // ─── Case C: Everything expired ───
+      banner.style.display = 'block';
+      banner.innerHTML = `⏰ <strong>The deadlines for every ${r.year} tax-saving move below have already passed.</strong> You can't act on these for ${r.year}, but they're great reminders for your ${nextYear} planning — come back to this calculator before year-end ${nextYear} to put them to work.`;
+      subtitle.textContent = `Lessons from ${r.year} — remember these for ${nextYear}`;
+
+      bodyHTML =
+        `<tr class="rp-roadmap-group-header"><td colspan="4" style="padding:10px 16px;background:#f3f4f6;font-size:12px;font-weight:700;color:var(--gray-600);text-transform:uppercase;letter-spacing:.04em;border-top:2px solid var(--gray-200);">⏰ Remember these for ${nextYear}</td></tr>` +
+        expired.map(renderItemRow).join('') +
+        `<tr class="rp-roadmap-subtotal"><td style="padding:10px 16px;font-weight:600;color:var(--gray-600);">Total savings missed for ${r.year}</td>
+          <td class="num" style="font-weight:600;color:var(--gray-600);">${fmt(expSpend)}</td>
+          <td class="num savings" style="font-weight:600;color:var(--gray-600);">${fmt(expSavings)}</td>
+          <td class="rate-cell">${ratePill(expRate)}</td></tr>`;
+    } else {
+      // ─── Case B: Mixed — some still actionable, some expired ───
+      banner.style.display = 'block';
+      banner.innerHTML = `⏰ <strong>Some of your ${r.year} tax-saving deadlines have already passed.</strong> Below, you'll see what you can still act on now — followed by a "Remember for ${nextYear}" section so those missed moves don't slip by again next year.`;
+      subtitle.textContent = `Some ${r.year} deadlines have passed — here's what's still actionable, plus what to remember for ${nextYear}`;
+
+      bodyHTML =
+        `<tr class="rp-roadmap-group-header"><td colspan="4" style="padding:10px 16px;background:#ecfdf5;font-size:12px;font-weight:700;color:#065f46;text-transform:uppercase;letter-spacing:.04em;border-top:2px solid #a7f3d0;">✓ Still actionable</td></tr>` +
+        actionable.map(renderItemRow).join('') +
+        `<tr class="rp-roadmap-subtotal"><td style="padding:10px 16px;font-weight:600;color:#065f46;">Subtotal — still actionable</td>
+          <td class="num" style="font-weight:600;color:#065f46;">${fmt(actSpend)}</td>
+          <td class="num savings" style="font-weight:600;color:#065f46;">${fmt(actSavings)}</td>
+          <td class="rate-cell">${ratePill(actRate)}</td></tr>` +
+        `<tr class="rp-roadmap-group-header"><td colspan="4" style="padding:14px 16px 10px;background:#f3f4f6;font-size:12px;font-weight:700;color:var(--gray-600);text-transform:uppercase;letter-spacing:.04em;border-top:2px solid var(--gray-200);">⏰ Remember these for ${nextYear}</td></tr>` +
+        expired.map(renderItemRow).join('') +
+        `<tr class="rp-roadmap-subtotal"><td style="padding:10px 16px;font-weight:600;color:var(--gray-600);">Subtotal — missed for ${r.year}</td>
+          <td class="num" style="font-weight:600;color:var(--gray-600);">${fmt(expSpend)}</td>
+          <td class="num savings" style="font-weight:600;color:var(--gray-600);">${fmt(expSavings)}</td>
+          <td class="rate-cell">${ratePill(expRate)}</td></tr>`;
+    }
+
+    if (hasSepIRA && actionable.some(i => i.deadline && i.deadline.includes('†'))) {
+      bodyHTML += `<tr><td colspan="4" style="padding:6px 16px;font-size:10px;color:var(--gray-400);">† SEP-IRA contributions may be made until Oct 15 if you file a tax extension.</td></tr>`;
+    }
+
+    document.getElementById('rp_roadmapBody').innerHTML = bodyHTML;
+
+    // Grand-total footer (only for Case A normal, to avoid repetition of subtotals in mixed/expired cases)
+    if (expired.length === 0) {
+      document.getElementById('rp_roadmapFoot').innerHTML = `
+        <tr>
+          <td>💰 Total Potential Savings</td>
+          <td class="num">${fmt(actSpend)}</td>
+          <td class="num savings">${fmt(actSavings)}</td>
+          <td class="rate-cell">${ratePill(actRate)}</td>
+        </tr>`;
+    } else {
+      document.getElementById('rp_roadmapFoot').innerHTML = '';
+    }
+
+    // Bottom line — tailored to the three cases
+    const bottomEl = document.getElementById('rp_roadmapBottom');
+    if (expired.length === 0) {
+      const topItem = actionable[0];
+      const maxRate = topItem.rate;
+      bottomEl.innerHTML =
+        `<strong>Bottom line:</strong> Every dollar you direct into these strategies saves an average of ${Math.round(actRate * 100)}¢ in federal taxes. Your highest-value move is ${topItem.icon} ${topItem.action} at ${Math.round(maxRate * 100)}¢ per dollar. Business expenses and charitable giving must be completed by <strong>December 31st</strong>. Retirement contributions (SEP-IRA, IRA, HSA) can be made until <strong>April 15th</strong> — giving you extra time to fund those after seeing your final tax picture.`;
+    } else if (actionable.length === 0) {
+      bottomEl.innerHTML =
+        `<strong>Bottom line:</strong> You missed roughly ${fmt(expSavings)} in federal tax savings for ${r.year} — but don't beat yourself up. The bigger win is knowing about these strategies <em>before</em> year-end ${nextYear}. Bookmark this calculator, run your numbers again in Q4 ${nextYear}, and act on the Dec 31 items while there's still time. Retirement contributions (IRA, HSA, SEP-IRA) stay open until April 15, ${nextYear + 1}.`;
+    } else {
+      const topItem = actionable[0];
+      const maxRate = topItem.rate;
+      bottomEl.innerHTML =
+        `<strong>Bottom line:</strong> You still have ${fmt(actSavings)} in federal tax savings within reach for ${r.year} — focus there first. Your highest-value move right now is ${topItem.icon} ${topItem.action} at ${Math.round(maxRate * 100)}¢ per dollar. The ${fmt(expSavings)} in the "Remember for ${nextYear}" section below is money you couldn't act on this time — come back to the calculator before year-end ${nextYear} so it doesn't happen again.`;
+    }
   } else {
     roadmapSection.style.display = 'none';
+    const banner = document.getElementById('rp_roadmapBanner');
+    if (banner) banner.style.display = 'none';
   }
 
   // ── Strategies ──
   const tips = generateSuggestions(r);
-  document.getElementById('rp_stratList').innerHTML = tips.map(t => `
-    <div class="suggestion-item ${t.impact}">
-      <div class="sug-icon">${t.icon}</div>
-      <div class="sug-content">
-        <div class="sug-title">${t.title}</div>
-        <div class="sug-desc">${t.desc}</div>
-      </div>
-      ${t.badge ? `<div class="sug-badge ${t.badgeColor||'green'}">${t.badge}</div>` : ''}
-    </div>`).join('');
+  document.getElementById('rp_stratList').innerHTML = renderSuggestionsSplit(tips, r.year);
 }
 
 // ════════════════════════════════════════
