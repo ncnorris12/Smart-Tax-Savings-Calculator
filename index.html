@@ -1403,15 +1403,15 @@ input[type=number] { -moz-appearance: textfield; }
 
 </div><!-- end app-layout -->
 
-<!-- DISCLAIMER -->
-<div style="max-width:1200px; margin:0 auto; padding:0 16px;">
+<!-- DISCLAIMER (hidden on results page) -->
+<div id="mainDisclaimer" style="max-width:1200px; margin:0 auto; padding:0 16px;">
   <div class="disclaimer">
     <strong>Disclaimer:</strong> This estimator is for informational and planning purposes only. It provides a federal tax estimate based on simplified rules and may not reflect every deduction, credit, or situation applicable to your return. Always consult a qualified tax professional before making financial decisions. State taxes are not included.
   </div>
 </div>
 
-<!-- ══════════════════ SEO CONTENT FOOTER ══════════════════ -->
-<footer class="seo-footer" style="max-width:1200px; margin:0 auto 0; padding:20px 16px; font-size:13px; line-height:1.6; color:var(--gray-700);">
+<!-- ══════════════════ SEO CONTENT FOOTER (hidden on results page) ══════════════════ -->
+<footer id="seoFooter" class="seo-footer" style="max-width:1200px; margin:0 auto 0; padding:20px 16px; font-size:13px; line-height:1.6; color:var(--gray-700);">
   <div style="background:#fff; border:1px solid var(--gray-200); border-radius:var(--radius); box-shadow:var(--shadow); padding:20px 22px;">
     <h2 style="font-size:16px; font-weight:700; color:var(--gray-900); margin-bottom:10px;">About this free tax strategy calculator (2025 &amp; 2026)</h2>
     <p style="margin-bottom:10px;">The <strong>Smart Tax Savings Estimator</strong> is a free, browser-based <strong>tax strategy calculator</strong> that does more than estimate your refund — it generates a <strong>personalized plan to reduce your tax bill</strong> for 2025 and 2026. No sign-up, no email, no data collection — everything runs privately in your browser.</p>
@@ -2879,6 +2879,9 @@ function showResultsPage() {
     renderResultsPage(lastResult);
     document.getElementById('resultsPage').style.display = 'block';
     document.querySelector('.app-layout').style.display = 'none';
+    // Hide the main-page disclaimer and SEO footer so they don't show above the results
+    document.getElementById('mainDisclaimer').style.display = 'none';
+    document.getElementById('seoFooter').style.display = 'none';
     window.scrollTo({ top: 0, behavior: 'smooth' });
   } catch(e) { console.error('Results page error:', e); }
 }
@@ -2886,6 +2889,9 @@ function showResultsPage() {
 function showInputPage() {
   document.getElementById('resultsPage').style.display = 'none';
   document.querySelector('.app-layout').style.display = '';
+  // Restore the main-page disclaimer and SEO footer
+  document.getElementById('mainDisclaimer').style.display = '';
+  document.getElementById('seoFooter').style.display = '';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
