@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Smart Tax Savings Estimator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: rgb(241, 245, 249);
+            font-family: -apple-system, system-ui, "Segoe UI", Roboto, sans-serif;
+            color: rgb(30, 41, 59);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, rgb(30, 58, 138) 0%, rgb(30, 64, 175) 60%, rgb(37, 99, 235) 100%);
+            color: white;
+            padding: 14px 24px;
+            box-shadow: 0 2px 12px rgba(30,64,175,0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .header-title h1 {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+
+        .header-title p {
+            font-size: 11px;
+            opacity: 0.7;
+            margin-top: 1px;
+        }
+
+        header nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 13px;
+            opacity: 0.8;
+        }
+
+        header nav a:hover {
+            opacity: 1;
+        }
+
+        .nav-dropdown { position: relative; }
+        .nav-dropdown .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            padding: 8px 0;
+            min-width: 180px;
+            margin-top: 8px;
+            z-index: 1000;
+            list-style: none;
+        }
+        .nav-dropdown.open .dropdown-menu { display: block; }
+        .dropdown-menu li a {
+            display: block;
+            padding: 8px 16px;
+            color: #1e293b;
+            text-decoration: none;
+            font-size: 13px;
+            border-bottom: none;
+        }
+        .dropdown-menu li a:hover { background: #f1f5f9; opacity: 1; }
+
+        main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        .page-header {
+            margin-bottom: 48px;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: rgb(30, 41, 59);
+        }
+
+        .page-header .subtitle {
+            font-size: 18px;
+            color: rgb(71, 85, 105);
+            font-weight: 500;
+        }
+
+        .section {
+            background: white;
+            border-radius: 10px;
+            padding: 32px;
+            margin-bottom: 28px;
+            box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 4px;
+        }
+
+        .section h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 18px;
+            color: rgb(30, 41, 59);
+        }
+
+        .section p {
+            font-size: 15px;
+            line-height: 1.7;
+            color: rgb(51, 65, 85);
+            margin-bottom: 16px;
+        }
+
+        .section p:last-child {
+            margin-bottom: 0;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-top: 16px;
+        }
+
+        .feature-list li {
+            font-size: 15px;
+            color: rgb(51, 65, 85);
+            margin-bottom: 12px;
+            padding-left: 24px;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .feature-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: rgb(37, 99, 235);
+            font-weight: bold;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 24px;
+        }
+
+        .calculator-card {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(30, 64, 175, 0.05) 100%);
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            border-radius: 10px;
+            padding: 24px;
+            text-align: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .calculator-card:hover:not(.disabled) {
+            transform: translateY(-2px);
+            box-shadow: rgba(37, 99, 235, 0.15) 0px 4px 12px;
+            border-color: rgba(37, 99, 235, 0.4);
+        }
+
+        .calculator-card h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: rgb(30, 41, 59);
+        }
+
+        .calculator-card p {
+            font-size: 13px;
+            color: rgb(71, 85, 105);
+            margin: 0;
+        }
+
+        .calculator-card.disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            background: linear-gradient(135deg, rgba(148, 163, 184, 0.05) 0%, rgba(100, 116, 139, 0.05) 100%);
+            border-color: rgba(148, 163, 184, 0.2);
+        }
+
+        .calculator-card.disabled h3 {
+            color: rgb(100, 116, 139);
+        }
+
+        .calculator-card a {
+            text-decoration: none;
+            color: inherit;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .disclaimer {
+            background: rgba(241, 245, 249, 0.8);
+            border-left: 4px solid rgb(37, 99, 235);
+            padding: 20px;
+            margin-top: 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 24px;
+            color: rgb(100, 116, 139);
+            font-size: 13px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .header-top {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .page-header h1 {
+                font-size: 28px;
+            }
+
+            .page-header .subtitle {
+                font-size: 16px;
+            }
+
+            .section {
+                padding: 24px;
+            }
+
+            .section h2 {
+                font-size: 20px;
+            }
+
+            main {
+                padding: 24px 16px;
+            }
+
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 12px 16px;
+            }
+
+            .page-header h1 {
+                font-size: 24px;
+            }
+
+            .page-header .subtitle {
+                font-size: 14px;
+            }
+
+            .section {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+
+            .section h2 {
+                font-size: 18px;
+            }
+
+            main {
+                padding: 20px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-top">
+            <div class="header-title">
+                <h1>Smart Tax Savings Estimator</h1>
+                <p>About This Tool</p>
+            </div>
+            <nav>
+                <ul style="display:flex;gap:20px;list-style:none;margin:0;padding:0;">
+                    <li><a href="/" style="color:white;text-decoration:none;font-size:13px;opacity:0.8;">Federal Calculator</a></li>
+                    <li class="nav-dropdown" style="position:relative;">
+                        <a href="#" style="color:white;text-decoration:none;font-size:13px;opacity:0.8;" onclick="event.preventDefault();this.parentElement.classList.toggle('open');">States ▾</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="california-tax-calculator.html">California</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="about.html" style="color:white;text-decoration:none;font-size:13px;opacity:0.95;border-bottom:2px solid rgba(255,255,255,0.8);padding-bottom:2px;">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="page-header">
+            <h1>Smart Tax Savings Estimator</h1>
+            <p class="subtitle">About This Tool</p>
+        </div>
+
+        <section class="section">
+            <h2>What Is the Smart Tax Savings Estimator?</h2>
+            <p>A free, private tax strategy calculator that gives you a personalized plan to reduce your tax bill for 2025 and 2026. No sign-up, no email, no data collection — everything runs privately in your browser.</p>
+            <p>Most tax calculators just tell you what you owe. This one tells you what to do about it.</p>
+        </section>
+
+        <section class="section">
+            <h2>What Can You Calculate?</h2>
+            <ul class="feature-list">
+                <li>Federal income tax refund or balance due for 2025 and 2026</li>
+                <li>State income tax estimates (California available now, more states coming)</li>
+                <li>Effective and marginal tax brackets (federal and state)</li>
+                <li>Tax savings from HSA, 401(k), Traditional IRA, and pre-tax contributions</li>
+                <li>QBI deduction for sole proprietors, LLCs, and S-corp pass-through income</li>
+                <li>Capital gains tax on long-term and qualified dividend income</li>
+                <li>Year-end tax planning strategies personalized to your situation</li>
+            </ul>
+        </section>
+
+        <section class="section">
+            <h2>How It Works</h2>
+            <p>Built on the IRS 2025 tax brackets and the 2026 brackets under the One Big Beautiful Bill Act (OBBB), plus state-specific tax codes. The calculator models retirement contributions, business deductions, investment income, and credits — then surfaces personalized year-end tax planning strategies based on your specific situation.</p>
+            <p>All calculations happen in your browser. Nothing is sent to any server.</p>
+        </section>
+
+        <section class="section">
+            <h2>Privacy & Security</h2>
+            <p>Your data never leaves your browser. There are no accounts, no cookies tracking you, no analytics collecting your financial information.</p>
+            <p>The only data storage used is your browser's localStorage, which keeps your tax profile available between the federal and state calculators on the same device. You can clear this anytime through your browser settings.</p>
+        </section>
+
+        <section class="section">
+            <h2>Our Calculators</h2>
+            <div class="calculator-grid">
+                <div class="calculator-card">
+                    <a href="/">
+                        <h3>Federal Tax Calculator</h3>
+                        <p>2025 & 2026 tax estimates</p>
+                    </a>
+                </div>
+                <div class="calculator-card">
+                    <a href="california-tax-calculator.html">
+                        <h3>California State Tax</h3>
+                        <p>CA income tax estimates</p>
+                    </a>
+                </div>
+                <div class="calculator-card disabled">
+                    <h3>More States Coming</h3>
+                    <p>Additional state calculators</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Disclaimer</h2>
+            <div class="disclaimer">
+                <p>This estimator is for informational and planning purposes only. It provides tax estimates based on simplified rules and may not reflect every deduction, credit, or situation applicable to your return. Tax figures reflect the latest available IRS and state tax authority guidance. Always consult a qualified tax professional before making financial decisions.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Smart Tax Savings Estimator. All rights reserved.</p>
+    </footer>
+    <script>
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.nav-dropdown')) {
+        document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('open'));
+      }
+    });
+    </script>
+</body>
+</html>

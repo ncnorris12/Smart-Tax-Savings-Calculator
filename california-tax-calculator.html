@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>California State Tax Calculator | Smart Tax Savings Estimator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --primary: #1e40af;
+  --primary-light: #dbeafe;
+  --primary-mid: #3b82f6;
+  --primary-dark: #1e3a8a;
+  --success: #059669;
+  --success-light: #d1fae5;
+  --danger: #dc2626;
+  --danger-light: #fee2e2;
+  --warning: #d97706;
+  --warning-light: #fef3c7;
+  --purple: #7c3aed;
+  --purple-light: #ede9fe;
+  --gray-50: #f8fafc;
+  --gray-100: #f1f5f9;
+  --gray-200: #e2e8f0;
+  --gray-300: #cbd5e1;
+  --gray-400: #94a3b8;
+  --gray-500: #64748b;
+  --gray-600: #475569;
+  --gray-700: #334155;
+  --gray-800: #1e293b;
+  --gray-900: #0f172a;
+  --radius: 10px;
+  --shadow: 0 1px 4px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.10);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--gray-100);
+  color: var(--gray-800);
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+/* ── REMOVE NUMBER SPINNERS ── */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+input[type=number] { -moz-appearance: textfield; }
+
+/* ── HEADER ── */
+.site-header {
+  background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 60%, #2563eb 100%);
+  color: white;
+  padding: 14px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(30,64,175,0.3);
+}
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.header-title h1 { font-size: 18px; font-weight: 700; letter-spacing: -0.3px; }
+.header-title p  { font-size: 11px; opacity: 0.7; margin-top: 1px; }
+
+/* ── TAX PROFILE BANNER (step 1) ── */
+.profile-banner {
+  background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  color: white;
+  margin-bottom: 0;
+}
+.profile-banner-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.7;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.profile-banner-label .step-badge {
+  background: rgba(255,255,255,0.2);
+  padding: 1px 8px;
+  border-radius: 20px;
+  font-size: 9px;
+}
+.profile-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  align-items: center;
+}
+.profile-field label {
+  font-size: 11px;
+  opacity: 0.75;
+  margin-bottom: 5px;
+  display: block;
+}
+.year-toggle-form {
+  display: inline-flex;
+  background: rgba(255,255,255,0.15);
+  border-radius: 8px;
+  padding: 3px;
+}
+.ytf-btn {
+  padding: 7px 20px;
+  border: none;
+  background: transparent;
+  color: rgba(255,255,255,0.65);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 700;
+  transition: all 0.18s;
+  letter-spacing: -0.3px;
+}
+.ytf-btn.active { background: white; color: var(--primary); }
+.profile-select {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: white;
+  border-radius: 7px;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  width: 100%;
+}
+.profile-select option { color: var(--gray-800); background: white; }
+
+/* ── LAYOUT ── */
+.app-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 16px;
+  align-items: start;
+}
+.input-column {
+  grid-column: 1;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-right: 16px;
+}
+.results-column {
+  grid-column: 2;
+  grid-row: 1;
+  position: sticky;
+  top: 66px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.suggestions-section {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  margin-top: 8px;
+}
+.disclaimer-row {
+  grid-column: 1 / -1;
+  grid-row: 0;
+}
+
+/* ── CARDS / ACCORDIONS ── */
+.card {
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  cursor: pointer;
+  user-select: none;
+  border-bottom: 1px solid transparent;
+  transition: background 0.15s;
+}
+.card-header:hover { background: var(--gray-50); }
+.card-header.open { border-bottom-color: var(--gray-200); }
+.card-header-left { display: flex; align-items: center; gap: 10px; }
+.card-icon {
+  width: 32px; height: 32px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; flex-shrink: 0;
+}
+.card-icon.blue   { background: var(--primary-light); }
+.card-icon.green  { background: var(--success-light); }
+.card-icon.yellow { background: var(--warning-light); }
+.card-icon.purple { background: var(--purple-light); }
+.card-icon.red    { background: var(--danger-light); }
+.card-header h2 { font-size: 14px; font-weight: 600; color: var(--gray-800); }
+.card-header .section-hint { font-size: 11px; color: var(--gray-500); margin-top: 1px; }
+.chevron { transition: transform 0.2s; color: var(--gray-400); font-size: 12px; }
+.chevron.open { transform: rotate(180deg); }
+.card-body { padding: 16px; display: none; }
+.card-body.open { display: block; }
+
+/* ── FORM ELEMENTS ── */
+.form-grid   { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+.form-group  { display: flex; flex-direction: column; gap: 4px; }
+.form-group.full { grid-column: 1 / -1; }
+.form-label {
+  font-size: 12px; font-weight: 500; color: var(--gray-600);
+  display: flex; align-items: center; gap: 4px;
+}
+.tooltip-icon {
+  width: 14px; height: 14px; background: var(--gray-300); border-radius: 50%;
+  font-size: 9px; color: white; display: inline-flex; align-items: center;
+  justify-content: center; cursor: help; position: relative; flex-shrink: 0;
+}
+.form-input {
+  padding: 8px 10px;
+  border: 1px solid var(--gray-300);
+  border-radius: 7px;
+  font-size: 13px;
+  color: var(--gray-800);
+  transition: border-color 0.15s, box-shadow 0.15s;
+  width: 100%;
+  background: white;
+}
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary-mid);
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.12);
+}
+.form-input.currency { padding-left: 22px; }
+.input-wrap { position: relative; }
+.input-prefix {
+  position: absolute; left: 9px; top: 50%; transform: translateY(-50%);
+  color: var(--gray-500); font-size: 13px; pointer-events: none;
+}
+.form-select {
+  padding: 8px 10px; border: 1px solid var(--gray-300); border-radius: 7px;
+  font-size: 13px; color: var(--gray-800); background: white; width: 100%; cursor: pointer;
+}
+.form-select:focus { outline: none; border-color: var(--primary-mid); }
+.form-checkbox-row {
+  display: flex; align-items: center; gap: 8px; margin-top: 4px;
+  padding: 8px 10px; background: var(--gray-50); border-radius: 7px;
+  border: 1px solid var(--gray-200);
+}
+.form-checkbox-row input[type="checkbox"] { width: 15px; height: 15px; cursor: pointer; accent-color: var(--primary); }
+.form-checkbox-row label { font-size: 12px; color: var(--gray-700); cursor: pointer; }
+.computed-field {
+  padding: 8px 10px; background: var(--gray-100); border: 1px solid var(--gray-200);
+  border-radius: 7px; font-size: 13px; color: var(--gray-600); font-style: italic;
+}
+.section-divider {
+  font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px;
+  color: var(--gray-500); margin: 16px 0 10px; padding-bottom: 6px;
+  border-bottom: 1px solid var(--gray-200);
+}
+.limit-hint { font-size: 11px; color: var(--primary); margin-top: 2px; }
+.itemized-total-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 12px; background: var(--gray-50); border-radius: 7px;
+  border: 1px solid var(--gray-200); margin-top: 12px;
+}
+.itemized-total-row .label { font-size: 12px; color: var(--gray-600); }
+.itemized-total-row .value { font-size: 14px; font-weight: 700; color: var(--gray-800); }
+.deduction-winner {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 12px; border-radius: 7px; font-size: 12px; font-weight: 600; margin-top: 8px;
+}
+.deduction-winner.std      { background: var(--primary-light); color: var(--primary); }
+.deduction-winner.itemized { background: var(--success-light); color: var(--success); }
+.deduction-winner.override { background: var(--warning-light); color: var(--warning); }
+
+/* ── RESULTS PANEL ── */
+.results-card {
+  background: white; border-radius: var(--radius);
+  box-shadow: var(--shadow-md); overflow: hidden;
+}
+.results-header { padding: 16px; background: var(--gray-800); color: white; }
+.results-header h3 {
+  font-size: 11px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.8px; opacity: 0.65; margin-bottom: 4px;
+}
+.refund-amount { font-size: 36px; font-weight: 800; letter-spacing: -1px; line-height: 1; }
+.refund-amount.refund { color: #34d399; }
+.refund-amount.due    { color: #f87171; }
+.refund-label { font-size: 13px; opacity: 0.65; margin-top: 4px; }
+.key-metrics {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+  background: var(--gray-200); border-bottom: 1px solid var(--gray-200);
+}
+.metric-cell { background: white; padding: 10px 12px; }
+.metric-label {
+  font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--gray-500); font-weight: 600;
+}
+.metric-value { font-size: 16px; font-weight: 700; color: var(--gray-800); margin-top: 2px; }
+.metric-value.rate { color: var(--primary); }
+.breakdown-table { width: 100%; font-size: 12px; }
+.breakdown-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 7px 16px; border-bottom: 1px solid var(--gray-100);
+}
+.breakdown-row:last-child { border-bottom: none; }
+.breakdown-row.subtotal    { background: var(--gray-50); font-weight: 600; }
+.breakdown-row.total-row   { background: var(--gray-800); color: white; font-weight: 700; font-size: 13px; }
+.breakdown-row.credit-row  { color: var(--success); }
+.breakdown-row.withholding-row { color: var(--primary); }
+.breakdown-row .row-value  { font-weight: 600; }
+.bracket-vis { padding: 12px 16px; border-top: 1px solid var(--gray-200); }
+.bracket-vis-title {
+  font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--gray-500); font-weight: 600; margin-bottom: 8px;
+}
+.bracket-bar-wrap { display: flex; flex-direction: column; gap: 4px; }
+.bracket-bar-row  { display: flex; align-items: center; gap: 6px; }
+.bracket-bar-label { font-size: 10px; color: var(--gray-600); width: 28px; text-align: right; }
+.bracket-bar-bg {
+  flex: 1; height: 10px; background: var(--gray-100); border-radius: 3px; overflow: hidden;
+}
+.bracket-bar-fill { height: 100%; border-radius: 3px; transition: width 0.4s ease; }
+.bracket-bar-amt  { font-size: 10px; color: var(--gray-500); width: 55px; text-align: right; }
+
+/* ── PLANNING SUGGESTIONS — LIST LAYOUT ── */
+.suggestions-header { padding: 20px 0 12px; }
+.suggestions-header h2 { font-size: 18px; font-weight: 700; color: var(--gray-800); }
+.suggestions-header p  { font-size: 13px; color: var(--gray-500); margin-top: 3px; }
+.suggestion-list {
+  display: flex; flex-direction: column; gap: 8px; padding-bottom: 40px;
+}
+.suggestion-item {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 14px 18px; background: white; border-radius: var(--radius);
+  box-shadow: var(--shadow); border-left: 4px solid var(--gray-300);
+  transition: box-shadow 0.15s;
+}
+.suggestion-item:hover { box-shadow: var(--shadow-md); }
+.suggestion-item.high-impact  { border-left-color: var(--success); }
+.suggestion-item.medium-impact{ border-left-color: var(--purple); }
+.suggestion-item.info         { border-left-color: var(--primary-mid); }
+.suggestion-item.caution      { border-left-color: var(--purple); }
+.sug-icon    { font-size: 22px; line-height: 1; flex-shrink: 0; margin-top: 2px; }
+.sug-content { flex: 1; min-width: 0; }
+.sug-title   { font-size: 13px; font-weight: 700; color: var(--gray-800); }
+.sug-desc    { font-size: 12px; color: var(--gray-600); margin-top: 4px; line-height: 1.55; }
+.sug-badge {
+  flex-shrink: 0; font-size: 11px; font-weight: 700;
+  padding: 4px 12px; border-radius: 20px; white-space: nowrap;
+  align-self: center; margin-left: 8px;
+}
+.sug-badge.green  { background: var(--success-light); color: var(--success); }
+.sug-badge.blue   { background: var(--primary-light); color: var(--primary); }
+.sug-badge.yellow { background: var(--purple-light); color: var(--purple); }
+.sug-badge.red    { background: var(--purple-light); color: var(--purple); }
+.no-suggestions {
+  text-align: center; padding: 32px; color: var(--gray-400);
+  background: white; border-radius: var(--radius); font-size: 13px;
+}
+
+/* ── PAYROLL NOTE (attached to 401k / HSA fields) ── */
+.payroll-note {
+  display: flex; align-items: center; gap: 6px;
+  margin-top: 4px; padding: 4px 8px 4px 10px;
+  background: var(--gray-50); border-left: 2px solid var(--gray-300);
+  border-radius: 0 5px 5px 0; font-size: 11px; color: var(--gray-500);
+}
+.payroll-note input[type="checkbox"] {
+  width: 13px; height: 13px; cursor: pointer;
+  accent-color: var(--gray-600); flex-shrink: 0;
+}
+.payroll-note label { cursor: pointer; line-height: 1.3; }
+
+/* ── STRATEGY LEGEND ── */
+.strat-legend {
+  display: flex; flex-wrap: wrap; gap: 6px 16px;
+  margin-bottom: 14px; font-size: 11px; color: var(--gray-500);
+}
+.legend-key { display: flex; align-items: center; gap: 5px; }
+.legend-dot {
+  display: inline-block; width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+}
+.legend-dot.green  { background: var(--success); }
+.legend-dot.purple { background: var(--purple); }
+.legend-dot.blue   { background: var(--primary-mid); }
+
+/* ── DISCLAIMER ── */
+.disclaimer {
+  background: var(--warning-light); border: 1px solid #fcd34d;
+  border-radius: var(--radius); padding: 10px 16px; font-size: 11px;
+  color: var(--warning); line-height: 1.5; margin-bottom: 4px;
+}
+.disclaimer strong { font-weight: 700; }
+
+/* ── DATA NOTE ── */
+.data-note {
+  font-size: 11px; color: var(--gray-500); padding: 8px 16px;
+  border-top: 1px solid var(--gray-100); background: var(--gray-50); line-height: 1.5;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 800px) {
+  .app-layout { grid-template-columns: 1fr; padding: 12px; }
+  .input-column { padding-right: 0; }
+  .results-column { position: static; grid-column: 1; grid-row: auto; }
+  .suggestions-section { grid-column: 1; }
+  .form-grid { grid-template-columns: 1fr; }
+  .profile-grid { grid-template-columns: 1fr; }
+  .sug-badge { display: none; }
+}
+@media (max-width: 500px) {
+  .form-grid-3 { grid-template-columns: 1fr 1fr; }
+}
+
+/* ── UTILS ── */
+.text-success { color: var(--success); }
+.text-danger  { color: var(--danger); }
+.text-primary { color: var(--primary); }
+.fw-700 { font-weight: 700; }
+.mt-8  { margin-top: 8px; }
+.mt-12 { margin-top: 12px; }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--gray-100); }
+::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: 3px; }
+
+/* ── CALCULATE BUTTON ── */
+.calc-btn-wrap {
+  padding: 8px 0 4px;
+}
+.calc-btn {
+  width: 100%;
+  padding: 18px 24px;
+  background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 60%, #2563eb 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 4px 20px rgba(30,64,175,0.35);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.calc-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(30,64,175,0.45);
+}
+.calc-btn:active { transform: translateY(0); }
+.calc-btn-sub {
+  font-size: 12px;
+  opacity: 0.7;
+  font-weight: 400;
+  margin-top: 3px;
+  text-align: center;
+}
+
+/* ── RESULTS PAGE ── */
+#resultsPage { display: none; }
+
+/* Nav links */
+.site-header nav a:hover { opacity: 1 !important; }
+.nav-dropdown.open .dropdown-menu { display: block !important; }
+.dropdown-menu li a:hover { background: var(--gray-100); }
+.mt-8 { margin-top: 8px; }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════ HEADER ══════════════════ -->
+<header class="site-header">
+  <div class="header-top">
+    <div class="header-title">
+      <h1>Smart Tax Savings Estimator</h1>
+      <p>California State Tax Calculator · personalized plan to reduce your state tax bill · 2025</p>
+    </div>
+    <nav>
+      <ul style="display:flex;gap:20px;list-style:none;margin:0;padding:0;">
+        <li><a href="/" style="color:white;text-decoration:none;font-size:13px;opacity:0.8;">Federal Calculator</a></li>
+        <li class="nav-dropdown" style="position:relative;">
+          <a href="#" style="color:white;text-decoration:none;font-size:13px;opacity:0.95;border-bottom:2px solid rgba(255,255,255,0.8);padding-bottom:2px;" onclick="event.preventDefault();this.parentElement.classList.toggle('open');">States ▾</a>
+          <ul class="dropdown-menu" style="display:none;position:absolute;top:100%;left:0;background:white;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,0.15);padding:8px 0;min-width:180px;margin-top:8px;z-index:1000;">
+            <li><a href="california-tax-calculator.html" style="display:block;padding:8px 16px;color:#1e293b;text-decoration:none;font-size:13px;">California</a></li>
+          </ul>
+        </li>
+        <li><a href="about.html" style="color:white;text-decoration:none;font-size:13px;opacity:0.8;">About</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- ══════════════════ PROFILE SYNC BANNER ══════════════════ -->
+<div id="syncBanner" style="display:none; max-width:1200px; margin:12px auto 0; padding:0 16px;">
+  <div style="background:linear-gradient(135deg,var(--primary-light),#e0e7ff); border:1px solid rgba(30,64,175,0.2); border-radius:var(--radius); padding:14px 20px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+    <div style="display:flex; align-items:center; gap:10px;">
+      <span style="font-size:20px;">🔄</span>
+      <div>
+        <div style="font-size:13px; font-weight:600; color:var(--primary-dark);">Federal tax profile detected</div>
+        <div style="font-size:12px; color:var(--gray-600);">Would you like to import your income, deductions, and filing status from the federal calculator?</div>
+      </div>
+    </div>
+    <div style="display:flex; gap:8px; flex-shrink:0;">
+      <button onclick="acceptProfile()" style="padding:8px 18px; background:var(--primary); color:white; border:none; border-radius:7px; font-size:13px; font-weight:600; cursor:pointer;">Accept</button>
+      <button onclick="declineProfile()" style="padding:8px 18px; background:white; color:var(--gray-600); border:1px solid var(--gray-300); border-radius:7px; font-size:13px; font-weight:600; cursor:pointer;">Decline</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ MAIN LAYOUT ══════════════════ -->
+<div class="app-layout">
+
+  <!-- ════════════════ LEFT: INPUT COLUMN ════════════════ -->
+  <div class="input-column">
+
+    <!-- ── STEP 1: TAX PROFILE BANNER ── -->
+    <div class="profile-banner">
+      <div class="profile-banner-label">
+        📋 Step 1 — Start Here
+        <span class="step-badge">Required</span>
+      </div>
+      <div class="profile-grid">
+        <div class="profile-field">
+          <label>Tax Year</label>
+          <div class="year-toggle-form">
+            <button class="ytf-btn active" onclick="setYear(2025)" id="btn2025">2025</button>
+            <button class="ytf-btn" onclick="setYear(2026)" id="btn2026">2026</button>
+          </div>
+        </div>
+        <div class="profile-field">
+          <label>Filing Status</label>
+          <select class="profile-select" id="filingStatus" onchange="recalc()">
+            <option value="single">Single</option>
+            <option value="mfj">Married Filing Jointly</option>
+            <option value="mfs">Married Filing Separately</option>
+            <option value="hoh">Head of Household</option>
+          </select>
+        </div>
+        <div class="profile-field">
+          <label>CA Residency Status</label>
+          <select class="profile-select" id="residencyStatus" onchange="updateResidency(this.value)">
+            <option value="full-year">Full-Year Resident</option>
+            <option value="part-year">Part-Year Resident</option>
+            <option value="nonresident">Nonresident</option>
+          </select>
+        </div>
+      </div>
+      <div id="partYearFields" style="display:none;margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.15);">
+        <div class="form-grid" style="color:white;">
+          <div class="form-group">
+            <label style="color:rgba(255,255,255,0.75);font-size:11px;">CA Residency Start</label>
+            <input type="date" id="residencyStart" onchange="recalc()" style="padding:7px 10px;border-radius:6px;border:1px solid rgba(255,255,255,0.25);background:rgba(255,255,255,0.1);color:white;font-size:13px;">
+          </div>
+          <div class="form-group">
+            <label style="color:rgba(255,255,255,0.75);font-size:11px;">CA Residency End</label>
+            <input type="date" id="residencyEnd" onchange="recalc()" style="padding:7px 10px;border-radius:6px;border:1px solid rgba(255,255,255,0.25);background:rgba(255,255,255,0.1);color:white;font-size:13px;">
+          </div>
+        </div>
+      </div>
+      <div id="nonresidentField" style="display:none;margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.15);">
+        <label style="color:rgba(255,255,255,0.75);font-size:11px;display:block;margin-bottom:6px;">% of Income from CA Sources</label>
+        <input type="number" id="caSourcePercent" value="50" min="0" max="100" onchange="recalc()" style="padding:7px 10px;border-radius:6px;border:1px solid rgba(255,255,255,0.25);background:rgba(255,255,255,0.1);color:white;font-size:13px;width:100%;">
+      </div>
+    </div>
+
+    <!-- ── SECTION 1: PERSONAL INFO ── -->
+    <div class="card">
+      <div class="card-header open" onclick="toggleSection(this)">
+        <div class="card-header-left">
+          <div class="card-icon blue">👤</div>
+          <div><h2>Personal Information</h2><div class="section-hint">Age, dependents &amp; coverage</div></div>
+        </div>
+        <span class="chevron open">▼</span>
+      </div>
+      <div class="card-body open">
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Your Age</label>
+            <input class="form-input" type="number" id="age" min="18" max="120" onchange="recalc()">
+          </div>
+          <div class="form-group" id="spouseAgeGroup">
+            <label class="form-label">Spouse Age</label>
+            <input class="form-input" type="number" id="spouseAge" min="18" max="120" onchange="recalc()">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Qualifying Children (under 17)</label>
+            <input class="form-input" type="number" id="numChildren" value="0" min="0" max="20" onchange="recalc()">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Other Dependents</label>
+            <input class="form-input" type="number" id="numDependents" value="0" min="0" max="20" onchange="recalc()">
+          </div>
+        </div>
+        <div style="margin-top:12px; display:flex; flex-wrap:wrap; gap:8px;">
+          <div class="form-checkbox-row">
+            <input type="checkbox" id="isBlind" onchange="recalc()">
+            <label for="isBlind">You are blind / legally blind</label>
+          </div>
+          <div class="form-checkbox-row" id="spouseBlindRow">
+            <input type="checkbox" id="spouseBlind" onchange="recalc()">
+            <label for="spouseBlind">Spouse is blind</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SECTION 2: INCOME ── -->
+    <div class="card">
+      <div class="card-header open" onclick="toggleSection(this)">
+        <div class="card-header-left">
+          <div class="card-icon green">💰</div>
+          <div><h2>Income Sources</h2><div class="section-hint">Wages, investments &amp; more</div></div>
+        </div>
+        <span class="chevron open">▼</span>
+      </div>
+      <div class="card-body open">
+
+        <div class="section-divider">W-2 / Employment Income</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">W-2 Wages &amp; Salary</label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="w2Wages" placeholder="0" data-currency onchange="recalc()">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">CA State Tax Withheld (W-2 Box 17)</label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="caWithholding" placeholder="0" data-currency onchange="recalc()">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">CA SDI Withheld</label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="caSDI" placeholder="0" data-currency onchange="recalc()">
+            </div>
+          </div>
+        </div>
+
+        <div class="section-divider" style="margin-top:16px;">Investment &amp; Passive Income</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Short-Term Capital Gains</label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="stcg" placeholder="0" data-currency onchange="recalc()">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Long-Term Capital Gains</label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="ltcg" placeholder="0" data-currency onchange="recalc()">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Capital Loss Carryforward</label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="capitalLoss" placeholder="0" data-currency onchange="recalc()">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Qualified Dividends</label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="qualifiedDiv" placeholder="0" data-currency onchange="recalc()">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Ordinary Dividends</label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="ordDiv" placeholder="0" data-currency onchange="recalc()">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Interest Income</label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="interest" placeholder="0" data-currency onchange="recalc()">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Rental Income</label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="rental" placeholder="0" data-currency onchange="recalc()">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Other Income</label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="otherInc" placeholder="0" data-currency onchange="recalc()">
+            </div>
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Estimated CA Tax Payments Made</label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="estimatedPay" placeholder="0" data-currency onchange="recalc()">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SECTION 3: BUSINESS & SELF-EMPLOYMENT ── -->
+    <div class="card">
+      <div class="card-header open" onclick="toggleSection(this)">
+        <div class="card-header-left">
+          <div class="card-icon yellow">🏢</div>
+          <div><h2>Business &amp; Self-Employment</h2><div class="section-hint">Business income &amp; expenses</div></div>
+        </div>
+        <span class="chevron open">▼</span>
+      </div>
+      <div class="card-body open">
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Business Type</label>
+            <select class="form-select" id="bizType" onchange="recalc()">
+              <option value="">None</option>
+              <option value="sole">Sole Proprietor / Freelancer</option>
+              <option value="partnership">Partnership</option>
+              <option value="scorp">S-Corporation</option>
+              <option value="ccorp">C-Corporation</option>
+            </select>
+          </div>
+          <div></div>
+          <div class="form-group">
+            <label class="form-label">Gross Revenue</label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="seRevenue" placeholder="0" data-currency onchange="recalc()">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Total Expenses</label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="seExpenses" placeholder="0" data-currency onchange="recalc()">
+            </div>
+          </div>
+          <div class="form-group full">
+            <label class="form-label" style="opacity:0.7;font-style:italic;">Net Profit (calculated)</label>
+            <div class="computed-field" id="netProfit">$0</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SECTION 4: RETIREMENT & TAX-ADVANTAGED SAVINGS ── -->
+    <div class="card">
+      <div class="card-header open" onclick="toggleSection(this)">
+        <div class="card-header-left">
+          <div class="card-icon purple">🏦</div>
+          <div><h2>Retirement &amp; Tax-Advantaged Savings</h2><div class="section-hint">401(k), IRA, HSA</div></div>
+        </div>
+        <span class="chevron open">▼</span>
+      </div>
+      <div class="card-body open">
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">401(k) / 403(b) Contributions</label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="k401" placeholder="0" data-currency onchange="recalc()">
+            </div>
+            <div class="payroll-note">
+              <input type="checkbox" id="k401through" onchange="recalc()">
+              <label for="k401through">Through payroll (pre-tax)</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Traditional IRA Contributions</label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="ira" placeholder="0" data-currency onchange="recalc()">
+            </div>
+          </div>
+          <div class="form-group full">
+            <label class="form-label">HSA Contributions</label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="hsa" placeholder="0" data-currency onchange="recalc()">
+            </div>
+            <div class="payroll-note">
+              <input type="checkbox" id="hsathrough" onchange="recalc()">
+              <label for="hsathrough">Through payroll (pre-tax)</label>
+            </div>
+            <div style="background:#fef3c7;border:1px solid #fcd34d;border-radius:7px;padding:8px 12px;margin-top:8px;font-size:11px;color:#d97706;line-height:1.4;">
+              ⚠️ <strong>California does NOT allow HSA deductions.</strong> HSA contributions are added back to your CA taxable income.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SECTION 5: CALIFORNIA DEDUCTIONS ── -->
+    <div class="card">
+      <div class="card-header open" onclick="toggleSection(this)">
+        <div class="card-header-left">
+          <div class="card-icon blue">✂️</div>
+          <div><h2>California Deductions</h2><div class="section-hint">Standard vs. itemized</div></div>
+        </div>
+        <span class="chevron open">▼</span>
+      </div>
+      <div class="card-body open">
+        <div class="section-divider">Itemized Deductions</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Mortgage Interest</label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="mortgage" placeholder="0" data-currency onchange="recalc()">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">CA Real Property Tax</label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="propertyTax" placeholder="0" data-currency onchange="recalc()">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Charitable Contributions</label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="charitable" placeholder="0" data-currency onchange="recalc()">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Medical Expenses (over 7.5% AGI)</label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="medical" placeholder="0" data-currency onchange="recalc()">
+            </div>
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Other Itemized Deductions</label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="otherDed" placeholder="0" data-currency onchange="recalc()">
+            </div>
+          </div>
+        </div>
+        <div class="itemized-total-row">
+          <span class="label">Total Itemized Deductions</span>
+          <span class="value" id="totalItemized">$0</span>
+        </div>
+        <div class="deduction-winner" id="deductionWinner">
+          <span>📌</span>
+          <span id="deductionWinnerText">Standard deduction: $5,540</span>
+        </div>
+        <!-- forceItemized: shown when standard naturally wins -->
+        <div class="form-checkbox-row mt-8" id="forceItemizedRow">
+          <input type="checkbox" id="forceItemized" onchange="recalc()">
+          <label for="forceItemized">Override: force use of itemized deductions (unusual — only if required)</label>
+        </div>
+        <!-- forceStandard: shown when itemized naturally wins -->
+        <div class="form-checkbox-row mt-8" id="forceStandardRow" style="display:none;">
+          <input type="checkbox" id="forceStandard" onchange="recalc()">
+          <label for="forceStandard">Override: use standard deduction instead — simplifies filing even if itemized is slightly higher</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SECTION 6: CALIFORNIA TAX CREDITS ── -->
+    <div class="card">
+      <div class="card-header open" onclick="toggleSection(this)">
+        <div class="card-header-left">
+          <div class="card-icon red">⭐</div>
+          <div><h2>California Tax Credits</h2><div class="section-hint">Child care, renter's, EITC &amp; more</div></div>
+        </div>
+        <span class="chevron open">▼</span>
+      </div>
+      <div class="card-body open">
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Child &amp; Dependent Care Credit</label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="depCareCredit" placeholder="0" data-currency onchange="recalc()">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Renter's Credit</label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="renterCredit" placeholder="0" data-currency onchange="recalc()">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">CA EITC (Earned Income Tax Credit)</label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="caEITC" placeholder="0" data-currency onchange="recalc()">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">College Access Credit</label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="collegeCredit" placeholder="0" data-currency onchange="recalc()">
+            </div>
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Other CA Credits</label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="otherCredits" placeholder="0" data-currency onchange="recalc()">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SECTION 7: STRATEGIES ── -->
+    <div style="margin-top:20px;">
+      <div class="suggestions-header">
+        <h2>💡 California Tax Strategies</h2>
+        <p>Personalized recommendations based on your tax situation</p>
+      </div>
+      <ul class="suggestion-list" id="strategyList"></ul>
+    </div>
+
+    <!-- ── DISCLAIMER ── -->
+    <div class="disclaimer">
+      <strong>Disclaimer:</strong> This calculator estimates your California state tax only. Results are based on 2025 CA tax law and may not reflect all deductions, credits, or situation-specific rules. Consult a tax professional for accurate planning. Does not include federal taxes—use our Federal Calculator for complete analysis.
+    </div>
+  </div>
+
+  <!-- ════════════════ RIGHT: RESULTS COLUMN ════════════════ -->
+  <div class="results-column">
+    <div class="results-card">
+      <div class="results-header">
+        <h3>2025 CALIFORNIA TAX ESTIMATE</h3>
+      </div>
+
+      <div style="padding:16px;border-bottom:1px solid var(--gray-200);text-align:center;">
+        <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.8px;opacity:0.65;margin-bottom:4px;font-weight:600;color:var(--gray-500);">Estimated Result</div>
+        <div class="refund-amount" id="refundAmt">$0</div>
+        <div class="refund-label" id="refundLabel">Refund</div>
+      </div>
+
+      <div class="key-metrics">
+        <div class="metric-cell">
+          <div class="metric-label">CA Gross Income</div>
+          <div class="metric-value" id="metricGross">$0</div>
+        </div>
+        <div class="metric-cell">
+          <div class="metric-label">CA Marginal Rate</div>
+          <div class="metric-value rate" id="metricMargin">—</div>
+        </div>
+        <div class="metric-cell">
+          <div class="metric-label">CA AGI</div>
+          <div class="metric-value" id="metricAGI">$0</div>
+        </div>
+        <div class="metric-cell">
+          <div class="metric-label">CA Effective Rate</div>
+          <div class="metric-value rate" id="metricEffective">—</div>
+        </div>
+      </div>
+
+      <div class="breakdown-table">
+        <div class="breakdown-row">
+          <span>CA Gross Income</span>
+          <span class="row-value" id="br-gross">$0</span>
+        </div>
+        <div class="breakdown-row">
+          <span>Above-the-Line Adjustments</span>
+          <span class="row-value" id="br-adjust">$0</span>
+        </div>
+        <div class="breakdown-row subtotal">
+          <span>CA AGI</span>
+          <span class="row-value" id="br-agi">$0</span>
+        </div>
+        <div class="breakdown-row">
+          <span id="dedLabel">Deduction (Standard)</span>
+          <span class="row-value" id="br-ded">$0</span>
+        </div>
+        <div class="breakdown-row subtotal">
+          <span>CA Taxable Income</span>
+          <span class="row-value" id="br-taxable">$0</span>
+        </div>
+        <div class="breakdown-row">
+          <span>Regular CA Income Tax</span>
+          <span class="row-value" id="br-tax">$0</span>
+        </div>
+        <div class="breakdown-row">
+          <span>Mental Health Services Tax (1%)</span>
+          <span class="row-value" id="br-mhst">$0</span>
+        </div>
+        <div class="breakdown-row">
+          <span>CA State Disability Insurance (SDI)</span>
+          <span class="row-value" id="br-sdi">$0</span>
+        </div>
+        <div class="breakdown-row total-row">
+          <span>Total CA Tax Liability</span>
+          <span class="row-value" id="br-total">$0</span>
+        </div>
+        <div class="breakdown-row credit-row">
+          <span>CA Tax Credits</span>
+          <span class="row-value" id="br-credits">($0)</span>
+        </div>
+        <div class="breakdown-row withholding-row">
+          <span>CA Tax Withheld</span>
+          <span class="row-value" id="br-withheld">($0)</span>
+        </div>
+        <div class="breakdown-row withholding-row">
+          <span>Estimated Payments</span>
+          <span class="row-value" id="br-estimated">($0)</span>
+        </div>
+        <div class="breakdown-row total-row">
+          <span>CA Refund / Amount Owed</span>
+          <span class="row-value" id="br-refund">$0</span>
+        </div>
+      </div>
+
+      <div class="bracket-vis">
+        <div class="bracket-vis-title">Your Tax Bracket</div>
+        <div class="bracket-bar-wrap">
+          <div class="bracket-bar-row">
+            <div class="bracket-bar-label" id="bracketPct">1%</div>
+            <div class="bracket-bar-bg">
+              <div class="bracket-bar-fill" id="bracketFill" style="width:0%;background:linear-gradient(90deg,#10b981,#3b82f6,#ef4444);"></div>
+            </div>
+            <div class="bracket-bar-amt">CA Income</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="data-note">
+        Results are estimates based on simplified rules. Consult a tax professional for your specific situation.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// CA Tax Calculator v2025
+// Matches federal calculator design exactly
+
+const calc = {
+  taxYear: 2025,
+  filingStatus: 'single',
+  residencyStatus: 'full-year',
+  deductionMethod: 'std',
+
+  stdDeds: {
+    single: 5540, mfj: 11080, mfs: 5540, hoh: 11080
+  },
+
+  brackets: {
+    single: [
+      {min:0, max:10756, rate:0.01},
+      {min:10756, max:25499, rate:0.02},
+      {min:25499, max:40245, rate:0.04},
+      {min:40245, max:55866, rate:0.06},
+      {min:55866, max:70612, rate:0.08},
+      {min:70612, max:360659, rate:0.093},
+      {min:360659, max:432791, rate:0.103},
+      {min:432791, max:721314, rate:0.113},
+      {min:721314, max:Infinity, rate:0.123}
+    ],
+    mfj: [
+      {min:0, max:21512, rate:0.01},
+      {min:21512, max:50998, rate:0.02},
+      {min:50998, max:80490, rate:0.04},
+      {min:80490, max:111732, rate:0.06},
+      {min:111732, max:141224, rate:0.08},
+      {min:141224, max:721318, rate:0.093},
+      {min:721318, max:865582, rate:0.103},
+      {min:865582, max:1442628, rate:0.113},
+      {min:1442628, max:Infinity, rate:0.123}
+    ],
+    mfs: [
+      {min:0, max:10756, rate:0.01},
+      {min:10756, max:25499, rate:0.02},
+      {min:25499, max:40245, rate:0.04},
+      {min:40245, max:55866, rate:0.06},
+      {min:55866, max:70612, rate:0.08},
+      {min:70612, max:360659, rate:0.093},
+      {min:360659, max:432791, rate:0.103},
+      {min:432791, max:721314, rate:0.113},
+      {min:721314, max:Infinity, rate:0.123}
+    ],
+    hoh: [
+      {min:0, max:21527, rate:0.01},
+      {min:21527, max:51000, rate:0.02},
+      {min:51000, max:65744, rate:0.04},
+      {min:65744, max:81364, rate:0.06},
+      {min:81364, max:96111, rate:0.08},
+      {min:96111, max:490493, rate:0.093},
+      {min:490493, max:588593, rate:0.103},
+      {min:588593, max:980987, rate:0.113},
+      {min:980987, max:Infinity, rate:0.123}
+    ]
+  },
+
+  getFieldValue(id) {
+    const el = document.getElementById(id);
+    if (!el) return 0;
+    if (el.type === 'checkbox') return el.checked;
+    if (el.type === 'number') return parseFloat(el.value) || 0;
+    const val = el.value.replace(/[\$,]/g, '');
+    return parseFloat(val) || 0;
+  },
+
+  setFieldValue(id, val) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (el.type === 'checkbox') el.checked = val;
+    else el.value = val;
+  },
+
+  formatCurr(val) {
+    return new Intl.NumberFormat('en-US', {style:'currency',currency:'USD',minimumFractionDigits:0,maximumFractionDigits:0}).format(val);
+  },
+
+  calcTax(income, status) {
+    if (income <= 0) return 0;
+    const br = this.brackets[status] || this.brackets.single;
+    let tax = 0;
+    for (let b of br) {
+      if (income > b.min) {
+        const amt = Math.min(income, b.max) - b.min;
+        tax += amt * b.rate;
+      }
+    }
+    return tax;
+  },
+
+  getMarginal(income, status) {
+    const br = this.brackets[status] || this.brackets.single;
+    for (let b of br) {
+      if (income >= b.min && income < b.max) {
+        return (b.rate * 100).toFixed(1);
+      }
+    }
+    return '12.3';
+  },
+
+  recalc() {
+    this.filingStatus = document.getElementById('filingStatus').value || 'single';
+    this.residencyStatus = document.getElementById('residencyStatus').value || 'full-year';
+
+    // Get all inputs
+    const w2 = this.getFieldValue('w2Wages');
+    const stcg = this.getFieldValue('stcg');
+    const ltcg = this.getFieldValue('ltcg');
+    const closs = this.getFieldValue('capitalLoss');
+    const qdiv = this.getFieldValue('qualifiedDiv');
+    const odiv = this.getFieldValue('ordDiv');
+    const int = this.getFieldValue('interest');
+    const rental = this.getFieldValue('rental');
+    const other = this.getFieldValue('otherInc');
+    const seRev = this.getFieldValue('seRevenue');
+    const seExp = this.getFieldValue('seExpenses');
+    const k401 = this.getFieldValue('k401');
+    const ira = this.getFieldValue('ira');
+    const hsa = this.getFieldValue('hsa');
+
+    // Gross income
+    let gross = w2 + stcg + ltcg + Math.max(0, qdiv + odiv - closs) + int + rental + other + Math.max(0, seRev - seExp);
+
+    // Residency proration
+    if (this.residencyStatus === 'part-year') {
+      const start = document.getElementById('residencyStart').value;
+      const end = document.getElementById('residencyEnd').value;
+      if (start && end) {
+        const d1 = new Date(start);
+        const d2 = new Date(end);
+        const days = (d2 - d1) / (1000*60*60*24);
+        const ratio = Math.min(days / 365, 1);
+        gross *= ratio;
+      }
+    } else if (this.residencyStatus === 'nonresident') {
+      const pct = (this.getFieldValue('caSourcePercent') || 50) / 100;
+      gross *= pct;
+    }
+
+    // AGI (HSA is added back in CA)
+    const agi = Math.max(0, gross - k401 - ira + hsa);
+
+    // Deduction — federal-style comparison
+    const stdDed = this.stdDeds[this.filingStatus] || 5540;
+    const mort = this.getFieldValue('mortgage');
+    const ptax = this.getFieldValue('propertyTax');
+    const char = this.getFieldValue('charitable');
+    const med = Math.max(0, this.getFieldValue('medical') - agi * 0.075);
+    const otherD = this.getFieldValue('otherDed');
+    const totalItemized = mort + ptax + char + med + otherD;
+    document.getElementById('totalItemized').textContent = this.formatCurr(totalItemized);
+
+    const forceItemized = document.getElementById('forceItemized').checked;
+    const forceStandard = document.getElementById('forceStandard').checked;
+    const naturallyItemized = totalItemized > stdDed;
+    let isItemized;
+    if (forceItemized) isItemized = true;
+    else if (forceStandard) isItemized = false;
+    else isItemized = naturallyItemized;
+
+    const ded = isItemized ? totalItemized : stdDed;
+
+    const taxable = Math.max(0, agi - ded);
+
+    // Regular tax
+    const regTax = this.calcTax(taxable, this.filingStatus);
+
+    // MHST (1% over $1M)
+    const mhst = taxable > 1000000 ? (taxable - 1000000) * 0.01 : 0;
+
+    // SDI (1.1% on W2 wages, no cap 2025)
+    const sdi = w2 * 0.011;
+
+    // Total liability
+    const totalLiab = regTax + mhst + sdi;
+
+    // Credits
+    const credits = this.getFieldValue('depCareCredit') + this.getFieldValue('renterCredit') +
+                    this.getFieldValue('caEITC') + this.getFieldValue('collegeCredit') +
+                    this.getFieldValue('otherCredits');
+
+    // Tax after credits
+    const taxAfter = Math.max(0, totalLiab - credits);
+
+    // Payments
+    const wheld = this.getFieldValue('caWithholding');
+    const est = this.getFieldValue('estimatedPay');
+    const paid = wheld + est;
+
+    // Refund/owed
+    const refund = paid - taxAfter;
+
+    // Update UI
+    document.getElementById('br-gross').textContent = this.formatCurr(gross);
+    document.getElementById('br-adjust').textContent = this.formatCurr(Math.max(0, -k401 - ira + hsa));
+    document.getElementById('br-agi').textContent = this.formatCurr(agi);
+    document.getElementById('dedLabel').textContent = isItemized ? 'Deduction (Itemized)' : 'Deduction (Standard)';
+    document.getElementById('br-ded').textContent = this.formatCurr(ded);
+    document.getElementById('br-taxable').textContent = this.formatCurr(taxable);
+    document.getElementById('br-tax').textContent = this.formatCurr(regTax);
+    document.getElementById('br-mhst').textContent = this.formatCurr(mhst);
+    document.getElementById('br-sdi').textContent = this.formatCurr(sdi);
+    document.getElementById('br-total').textContent = this.formatCurr(totalLiab);
+    document.getElementById('br-credits').textContent = '(' + this.formatCurr(credits) + ')';
+    document.getElementById('br-withheld').textContent = '(' + this.formatCurr(wheld) + ')';
+    document.getElementById('br-estimated').textContent = '(' + this.formatCurr(est) + ')';
+
+    // Refund row
+    const refEl = document.getElementById('br-refund');
+    const amtEl = document.getElementById('refundAmt');
+    const lblEl = document.getElementById('refundLabel');
+    if (refund >= 0) {
+      refEl.textContent = this.formatCurr(refund);
+      amtEl.textContent = this.formatCurr(refund);
+      amtEl.className = 'refund-amount refund';
+      lblEl.textContent = 'Refund';
+    } else {
+      refEl.textContent = this.formatCurr(Math.abs(refund));
+      amtEl.textContent = this.formatCurr(Math.abs(refund));
+      amtEl.className = 'refund-amount due';
+      lblEl.textContent = 'Amount Owed';
+    }
+
+    // Metrics
+    document.getElementById('metricGross').textContent = this.formatCurr(gross);
+    document.getElementById('metricAGI').textContent = this.formatCurr(agi);
+    document.getElementById('metricMargin').textContent = this.getMarginal(taxable, this.filingStatus) + '%';
+    const effRate = taxable > 0 ? ((taxAfter / taxable) * 100).toFixed(2) : '0.00';
+    document.getElementById('metricEffective').textContent = effRate + '%';
+
+    // Bracket viz
+    const br = this.brackets[this.filingStatus] || this.brackets.single;
+    let pct = 0;
+    for (let b of br) {
+      if (taxable >= b.max) {
+        pct += (b.max - b.min) * b.rate;
+      } else if (taxable >= b.min) {
+        pct += (taxable - b.min) * b.rate;
+        break;
+      }
+    }
+    const maxRate = 0.123; // 12.3%
+    const fillPct = Math.min(pct / maxRate * 100, 100);
+    document.getElementById('bracketFill').style.width = fillPct + '%';
+    document.getElementById('bracketPct').textContent = this.getMarginal(taxable, this.filingStatus) + '%';
+
+    // Deduction winner display (federal pattern)
+    const dw = document.getElementById('deductionWinner');
+    const dwTxt = document.getElementById('deductionWinnerText');
+    const diff = Math.abs(totalItemized - stdDed);
+    const margRate = parseFloat(this.getMarginal(taxable, this.filingStatus)) / 100;
+    const diffTax = Math.round(diff * margRate);
+    const isOverride = (isItemized && !naturallyItemized) || (!isItemized && naturallyItemized);
+
+    if (isItemized && !isOverride) {
+      dw.className = 'deduction-winner itemized';
+      dwTxt.textContent = `✓ Using itemized ($${Math.round(totalItemized).toLocaleString()}) — saves $${diffTax} in tax vs. standard ($${Math.round(stdDed).toLocaleString()})`;
+    } else if (isItemized && isOverride) {
+      dw.className = 'deduction-winner override';
+      dwTxt.textContent = `⚠️ Override active: using itemized ($${Math.round(totalItemized).toLocaleString()}) — costs ~$${diffTax} more in tax vs. standard ($${Math.round(stdDed).toLocaleString()})`;
+    } else if (!isItemized && !isOverride) {
+      dw.className = 'deduction-winner std';
+      dwTxt.textContent = `✓ Standard deduction ($${Math.round(stdDed).toLocaleString()}) is higher than itemized ($${Math.round(totalItemized).toLocaleString()})`;
+    } else {
+      dw.className = 'deduction-winner override';
+      dwTxt.textContent = `⚠️ Override active: using standard ($${Math.round(stdDed).toLocaleString()}) — costs ~$${diffTax} more in tax vs. itemized ($${Math.round(totalItemized).toLocaleString()})`;
+    }
+
+    // Toggle override checkboxes (federal pattern)
+    const forceItemizedRow = document.getElementById('forceItemizedRow');
+    const forceStandardRow = document.getElementById('forceStandardRow');
+    if (naturallyItemized) {
+      if (forceItemizedRow) { forceItemizedRow.style.display = 'none'; document.getElementById('forceItemized').checked = false; }
+      if (forceStandardRow) forceStandardRow.style.display = '';
+    } else {
+      if (forceItemizedRow) forceItemizedRow.style.display = '';
+      if (forceStandardRow) { forceStandardRow.style.display = 'none'; document.getElementById('forceStandard').checked = false; }
+    }
+
+    // Suggestions
+    this.updateSuggestions(gross, agi, seRev - seExp, taxable);
+
+    // Save to localStorage
+    this.saveProfile();
+  },
+
+  saveProfile() {
+    const profile = {
+      // Use federal-compatible field names for cross-page sync
+      filingStatus: this.filingStatus,
+      age: this.getFieldValue('age'),
+      spouseAge: this.getFieldValue('spouseAge'),
+      numChildren: this.getFieldValue('numChildren'),
+      numDependents: this.getFieldValue('numDependents'),
+      isBlind: this.getFieldValue('isBlind'),
+      spouseBlind: this.getFieldValue('spouseBlind'),
+      w2Wages: this.getFieldValue('w2Wages'),
+      stcg: this.getFieldValue('stcg'),
+      ltcg: this.getFieldValue('ltcg'),
+      capitalLossCarryforward: this.getFieldValue('capitalLoss'),
+      qualifiedDividends: this.getFieldValue('qualifiedDiv'),
+      ordDividends: this.getFieldValue('ordDiv'),
+      interestIncome: this.getFieldValue('interest'),
+      rentalIncome: this.getFieldValue('rental'),
+      otherIncome: this.getFieldValue('otherInc'),
+      bizType: this.getFieldValue('bizType'),
+      seRevenue: this.getFieldValue('seRevenue'),
+      seExpenses: this.getFieldValue('seExpenses'),
+      k401Contrib: this.getFieldValue('k401'),
+      iraContrib: this.getFieldValue('ira'),
+      hsaContrib: this.getFieldValue('hsa'),
+      mortgageInterest: this.getFieldValue('mortgage'),
+      charitableDed: this.getFieldValue('charitable'),
+      medicalExpenses: this.getFieldValue('medical'),
+      propertyTax: this.getFieldValue('propertyTax')
+    };
+    try { localStorage.setItem('taxProfile', JSON.stringify(profile)); } catch(e) {}
+  },
+
+  updateSuggestions(gross, agi, seIncome, taxable) {
+    const list = document.getElementById('strategyList');
+    list.innerHTML = '';
+    const sugg = [];
+
+    if (gross > 100000) {
+      sugg.push({high:true, title:'Maximize Retirement Savings', desc:'At CA rates of 9.3-12.3%, each dollar in 401(k)/IRA saves significantly in state taxes.'});
+    }
+    if (seIncome > 50000) {
+      sugg.push({high:true, title:'S-Corp Election', desc:'An S-Corp can reduce SDI (1.1%) by distributing profits, not wages.'});
+    }
+    if (this.getFieldValue('stcg') > 0 || this.getFieldValue('ltcg') > 0) {
+      sugg.push({high:true, title:'Capital Gains Strategy', desc:'CA taxes gains at full rates (no preferential treatment). Plan realization timing.'});
+    }
+    if (this.getFieldValue('hsa') > 0) {
+      sugg.push({high:false, title:'HSA Reconsideration', desc:'CA taxes HSA contributions, reducing their benefit. Verify strategy still makes sense.'});
+    }
+    if (agi < 50000) {
+      sugg.push({high:false, title:'CA Renter\'s Credit', desc:'Up to $60 for singles, $120 for MFJ with qualifying income and rent.'});
+    }
+    if (agi > 150000 && this.getFieldValue('charitable') < agi * 0.05) {
+      sugg.push({high:false, title:'Charitable Bunching', desc:'At high marginal rates, consider bunching multi-year giving in one year.'});
+    }
+
+    sugg.forEach(s => {
+      const li = document.createElement('li');
+      li.className = 'suggestion-item ' + (s.high ? 'high-impact' : 'info');
+      li.innerHTML = `<div class="sug-icon">${s.high ? '⭐' : 'ℹ️'}</div>
+        <div class="sug-content"><div class="sug-title">${s.title}</div><div class="sug-desc">${s.desc}</div></div>`;
+      list.appendChild(li);
+    });
+  }
+};
+
+function toggleSection(hdr) {
+  const card = hdr.parentElement;
+  card.classList.toggle('open');
+  hdr.classList.toggle('open');
+  hdr.querySelector('.chevron').classList.toggle('open');
+  card.querySelector('.card-body').classList.toggle('open');
+}
+
+function setYear(yr) {
+  calc.taxYear = yr;
+  document.getElementById('btn2025').classList.toggle('active', yr === 2025);
+  document.getElementById('btn2026').classList.toggle('active', yr === 2026);
+  recalc();
+}
+
+function updateResidency(status) {
+  calc.residencyStatus = status;
+  document.getElementById('partYearFields').style.display = status === 'part-year' ? 'block' : 'none';
+  document.getElementById('nonresidentField').style.display = status === 'nonresident' ? 'block' : 'none';
+  recalc();
+}
+
+// setDeductionMethod removed — now uses federal-style deduction-winner with forceItemized/forceStandard checkboxes
+
+function recalc() {
+  // Update net profit
+  const seProfitDisp = Math.max(0, calc.getFieldValue('seRevenue') - calc.getFieldValue('seExpenses'));
+  document.getElementById('netProfit').textContent = calc.formatCurr(seProfitDisp);
+
+  // Toggle spouse fields
+  const showSpouse = ['mfj', 'mfs'].includes(calc.filingStatus);
+  document.getElementById('spouseAgeGroup').style.display = showSpouse ? 'block' : 'none';
+  document.getElementById('spouseBlindRow').style.display = showSpouse ? 'flex' : 'none';
+
+  // Main calculation
+  calc.recalc();
+}
+
+// ══════════════════ LOCAL STORAGE PROFILE SYNC ══════════════════
+// Map federal field IDs → CA field IDs
+const FIELD_MAP = {
+  filingStatus: 'filingStatus',
+  age: 'age',
+  spouseAge: 'spouseAge',
+  numChildren: 'numChildren',
+  numDependents: 'numDependents',
+  isBlind: 'isBlind',
+  spouseBlind: 'spouseBlind',
+  w2Wages: 'w2Wages',
+  stcg: 'stcg',
+  ltcg: 'ltcg',
+  capitalLossCarryforward: 'capitalLoss',
+  qualifiedDividends: 'qualifiedDiv',
+  ordDividends: 'ordDiv',
+  interestIncome: 'interest',
+  rentalIncome: 'rental',
+  otherIncome: 'otherInc',
+  bizType: 'bizType',
+  seRevenue: 'seRevenue',
+  seExpenses: 'seExpenses',
+  k401Contrib: 'k401',
+  iraContrib: 'ira',
+  hsaContrib: 'hsa',
+  mortgageInterest: 'mortgage',
+  charitableDed: 'charitable',
+  medicalExpenses: 'medical'
+};
+
+function formatCurrencyField(el) {
+  const val = parseFloat(String(el.value).replace(/[\$,]/g, '')) || 0;
+  el.value = val ? val.toLocaleString() : '';
+}
+
+function acceptProfile() {
+  try {
+    const profile = JSON.parse(localStorage.getItem('taxProfile'));
+    if (!profile) return;
+
+    // Map and populate fields
+    for (const [fedKey, caKey] of Object.entries(FIELD_MAP)) {
+      if (profile[fedKey] === undefined && profile[caKey] === undefined) continue;
+      const val = profile[fedKey] !== undefined ? profile[fedKey] : profile[caKey];
+      const el = document.getElementById(caKey);
+      if (!el) continue;
+
+      if (el.tagName === 'SELECT') {
+        el.value = val;
+        el.dispatchEvent(new Event('change'));
+      } else if (el.type === 'checkbox') {
+        el.checked = !!val;
+      } else {
+        // Currency field — set raw value then format
+        const numVal = typeof val === 'string' ? parseFloat(val.replace(/[\$,]/g, '')) : val;
+        if (numVal && numVal > 0) {
+          el.value = numVal;
+          formatCurrencyField(el);
+        }
+      }
+    }
+
+    // Trigger recalculation
+    recalc();
+  } catch(e) {
+    console.error('Profile load error:', e);
+  }
+
+  document.getElementById('syncBanner').style.display = 'none';
+}
+
+function declineProfile() {
+  document.getElementById('syncBanner').style.display = 'none';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Set initial filing status
+  calc.filingStatus = 'single';
+  recalc();
+
+  // Check for saved federal profile and show sync banner
+  try {
+    const saved = localStorage.getItem('taxProfile');
+    if (saved) {
+      const profile = JSON.parse(saved);
+      // Show banner only if profile has meaningful data
+      const hasData = profile.w2Wages > 0 || profile.seRevenue > 0 || profile.stcg > 0 || profile.ltcg > 0 || profile.interestIncome > 0;
+      if (hasData) {
+        document.getElementById('syncBanner').style.display = 'block';
+      }
+    }
+  } catch(e) {}
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.nav-dropdown')) {
+      document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('open'));
+    }
+  });
+
+  // Initialize currency formatting
+  document.querySelectorAll('[data-currency]').forEach(el => {
+    el.addEventListener('blur', function() {
+      const val = parseFloat(this.value.replace(/[\$,]/g, '')) || 0;
+      this.value = val ? val.toLocaleString() : '';
+    });
+    el.addEventListener('focus', function() {
+      this.value = this.value.replace(/[^\d.-]/g, '');
+    });
+  });
+});
+</script>
+
+</body>
+</html>

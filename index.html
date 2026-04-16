@@ -696,6 +696,11 @@ input[type=number] { -moz-appearance: textfield; }
   .rp-hero-amount { font-size: 42px; }
   .rp-strat-header { flex-direction: column; gap: 2px; }
 }
+
+/* Nav links */
+.site-header nav a:hover { opacity: 1 !important; }
+.nav-dropdown.open .dropdown-menu { display: block !important; }
+.dropdown-menu li a:hover { background: #f1f5f9; }
 </style>
 </head>
 <body>
@@ -707,6 +712,18 @@ input[type=number] { -moz-appearance: textfield; }
       <h1>Smart Tax Savings Estimator</h1>
       <p>Free tax strategy calculator · personalized plan to reduce your tax bill · 2025 &amp; 2026</p>
     </div>
+    <nav>
+      <ul style="display:flex;gap:20px;list-style:none;margin:0;padding:0;">
+        <li><a href="/" style="color:white;text-decoration:none;font-size:13px;opacity:0.95;border-bottom:2px solid rgba(255,255,255,0.8);padding-bottom:2px;">Federal Calculator</a></li>
+        <li class="nav-dropdown" style="position:relative;">
+          <a href="#" style="color:white;text-decoration:none;font-size:13px;opacity:0.8;" onclick="event.preventDefault();this.parentElement.classList.toggle('open');">States ▾</a>
+          <ul class="dropdown-menu" style="display:none;position:absolute;top:100%;left:0;background:white;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,0.15);padding:8px 0;min-width:180px;margin-top:8px;z-index:1000;">
+            <li><a href="california-tax-calculator.html" style="display:block;padding:8px 16px;color:#1e293b;text-decoration:none;font-size:13px;">California</a></li>
+          </ul>
+        </li>
+        <li><a href="about.html" style="color:white;text-decoration:none;font-size:13px;opacity:0.8;">About</a></li>
+      </ul>
+    </nav>
   </div>
 </header>
 
@@ -3136,6 +3153,57 @@ document.addEventListener('DOMContentLoaded', () => {
     el.addEventListener('mouseleave', () => { _tt.style.display = 'none'; });
   });
 });
+
+
+// ══════════════════ DROPDOWN CLOSE ON OUTSIDE CLICK ══════════════════
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.nav-dropdown')) {
+    document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('open'));
+  }
+});
+
+// ══════════════════ LOCAL STORAGE TAX PROFILE SYNC ══════════════════
+// Shared fields between federal and state calculators
+const SHARED_PROFILE_FIELDS = [
+  'filingStatus','age','spouseAge','numChildren','numDependents',
+  'isBlind','spouseBlind','w2Wages','stcg','ltcg',
+  'capitalLossCarryforward','qualifiedDividends','ordDividends',
+  'interestIncome','bondInterest','rentalIncome','otherIncome',
+  'bizType','seRevenue','seExpenses','k401Contrib','iraContrib',
+  'hsaContrib','mortgageInterest','charitableDed','medicalExpenses'
+];
+
+function saveToTaxProfile() {
+  const profile = {};
+  SHARED_PROFILE_FIELDS.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (el.type === 'checkbox') profile[id] = el.checked;
+    else if (el.tagName === 'SELECT') profile[id] = el.value;
+    else profile[id] = el.value === '' ? 0 : (isNaN(el.value) ? el.value : parseFloat(el.value));
+  });
+  try { localStorage.setItem('taxProfile', JSON.stringify(profile)); } catch(e) {}
+}
+
+// Attach listeners to all shared fields
+document.addEventListener('DOMContentLoaded', function() {
+  SHARED_PROFILE_FIELDS.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('input', saveToTaxProfile);
+    el.addEventListener('change', saveToTaxProfile);
+  });
+});
+
+// Also hook into recalc if it exists
+const _origRecalc = typeof recalc === 'function' ? recalc : null;
+if (_origRecalc) {
+  window.recalc = function() {
+    _origRecalc.apply(this, arguments);
+    saveToTaxProfile();
+  };
+}
+
 </script>
 </body>
 </html>
