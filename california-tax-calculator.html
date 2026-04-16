@@ -597,13 +597,20 @@ input[type=number] { -moz-appearance: textfield; }
             <input class="form-input" type="number" id="spouseAge" min="18" max="120" onchange="recalc()">
           </div>
           <div class="form-group">
-            <label class="form-label">Qualifying Children (under 17)</label>
+            <label class="form-label">Qualifying Children (under 17)
+              <span class="tooltip-icon" data-tip="California does NOT have a per-child tax credit like the federal $2,200 CTC. CA has a Young Child Tax Credit (YCTC) and CalEITC for very low incomes. This field syncs with your federal profile.">?</span>
+            </label>
             <input class="form-input" type="number" id="numChildren" value="0" min="0" max="20" onchange="recalc()">
           </div>
           <div class="form-group">
-            <label class="form-label">Other Dependents</label>
+            <label class="form-label">Other Dependents
+              <span class="tooltip-icon" data-tip="Used for profile sync with the federal calculator. CA does not have a direct credit for other dependents like the federal $500 ODC.">?</span>
+            </label>
             <input class="form-input" type="number" id="numDependents" value="0" min="0" max="20" onchange="recalc()">
           </div>
+        </div>
+        <div class="data-note" style="margin-top:8px; font-size:11px; color:var(--gray-500);">
+          ℹ️ California does not have a per-child tax credit like the federal CTC ($2,200/child). CA offers the Young Child Tax Credit (YCTC) and CalEITC for qualifying low-income filers — enter those in the Credits section below if applicable.
         </div>
         <div style="margin-top:12px; display:flex; flex-wrap:wrap; gap:8px;">
           <div class="form-checkbox-row">
@@ -779,32 +786,40 @@ input[type=number] { -moz-appearance: textfield; }
       <div class="card-body open">
         <div class="form-grid">
           <div class="form-group">
-            <label class="form-label">401(k) / 403(b) Contributions</label>
+            <label class="form-label">401(k) / 403(b) Contributions
+              <span class="tooltip-icon" data-tip="Enter YOUR OWN pre-tax contributions only — do NOT include your employer's matching contributions. Only the amount you personally elect to contribute reduces your taxable income.">?</span>
+            </label>
             <div class="input-wrap">
               <span class="input-prefix">$</span>
               <input class="form-input currency" type="text" inputmode="decimal" id="k401" placeholder="0" data-currency onchange="recalc()">
             </div>
+            <div class="limit-hint" id="k401LimitHint">2025 limit: $23,500</div>
             <div class="payroll-note">
-              <input type="checkbox" id="k401through" onchange="recalc()">
-              <label for="k401through">Through payroll (pre-tax)</label>
+              <input type="checkbox" id="k401through" checked onchange="recalc()">
+              <label for="k401through">↑ This 401(k)/403(b) amount is already withheld from my paycheck — not included in W-2 Box 1 wages (most employees)</label>
             </div>
           </div>
           <div class="form-group">
-            <label class="form-label">Traditional IRA Contributions</label>
+            <label class="form-label">Traditional IRA Contributions
+              <span class="tooltip-icon" data-tip="Traditional IRA contributions may be deductible for CA purposes. The same federal limits apply. Deductibility may be affected if you or your spouse have an employer retirement plan.">?</span>
+            </label>
             <div class="input-wrap">
               <span class="input-prefix">$</span>
               <input class="form-input currency" type="text" inputmode="decimal" id="ira" placeholder="0" data-currency onchange="recalc()">
             </div>
+            <div class="limit-hint" id="iraLimitHint">2025 limit: $7,000</div>
           </div>
           <div class="form-group full">
-            <label class="form-label">HSA Contributions</label>
+            <label class="form-label">HSA Contributions
+              <span class="tooltip-icon" data-tip="California does NOT recognize HSA tax benefits. Unlike the federal return, HSA contributions are added back to your CA taxable income. The amount here is used to correctly calculate your CA AGI.">?</span>
+            </label>
             <div class="input-wrap">
               <span class="input-prefix">$</span>
               <input class="form-input currency" type="text" inputmode="decimal" id="hsa" placeholder="0" data-currency onchange="recalc()">
             </div>
             <div class="payroll-note">
-              <input type="checkbox" id="hsathrough" onchange="recalc()">
-              <label for="hsathrough">Through payroll (pre-tax)</label>
+              <input type="checkbox" id="hsathrough" checked onchange="recalc()">
+              <label for="hsathrough">↑ This HSA amount is already withheld from my paycheck — not included in W-2 Box 1 wages (most employees)</label>
             </div>
             <div style="background:#fef3c7;border:1px solid #fcd34d;border-radius:7px;padding:8px 12px;margin-top:8px;font-size:11px;color:#d97706;line-height:1.4;">
               ⚠️ <strong>California does NOT allow HSA deductions.</strong> HSA contributions are added back to your CA taxable income.
@@ -1176,9 +1191,19 @@ const calc = {
     const other = this.getFieldValue('otherInc');
     const seRev = this.getFieldValue('seRevenue');
     const seExp = this.getFieldValue('seExpenses');
-    const k401 = this.getFieldValue('k401');
+    const k401Raw = this.getFieldValue('k401');
     const ira = this.getFieldValue('ira');
-    const hsa = this.getFieldValue('hsa');
+    const hsaRaw = this.getFieldValue('hsa');
+
+    // Through-payroll logic (matches federal):
+    // If checked = already excluded from W-2 Box 1, don't subtract again
+    // If unchecked = not yet excluded, subtract as above-the-line deduction
+    const k401ThroughPayroll = document.getElementById('k401through').checked;
+    const hsaThroughPayroll = document.getElementById('hsathrough').checked;
+    const k401ForCalc = k401ThroughPayroll ? 0 : k401Raw;
+    // HSA: CA does NOT allow HSA deduction. If through payroll (excluded from W-2),
+    // we must ADD it back. If NOT through payroll, it's already in gross, so no add-back needed.
+    const hsaAddBack = hsaThroughPayroll ? hsaRaw : 0;
 
     // Gross income
     let gross = w2 + stcg + ltcg + Math.max(0, qdiv + odiv - closs) + int + rental + other + Math.max(0, seRev - seExp);
@@ -1199,8 +1224,8 @@ const calc = {
       gross *= pct;
     }
 
-    // AGI (HSA is added back in CA)
-    const agi = Math.max(0, gross - k401 - ira + hsa);
+    // AGI: subtract 401k/IRA (if not already excluded), add back HSA (CA disallows HSA deduction)
+    const agi = Math.max(0, gross - k401ForCalc - ira + hsaAddBack);
 
     // Deduction — federal-style comparison
     const stdDed = this.stdDeds[this.filingStatus] || 5540;
@@ -1254,7 +1279,7 @@ const calc = {
 
     // Update UI
     document.getElementById('br-gross').textContent = this.formatCurr(gross);
-    document.getElementById('br-adjust').textContent = this.formatCurr(Math.max(0, -k401 - ira + hsa));
+    document.getElementById('br-adjust').textContent = this.formatCurr(k401ForCalc + ira - hsaAddBack);
     document.getElementById('br-agi').textContent = this.formatCurr(agi);
     document.getElementById('dedLabel').textContent = isItemized ? 'Deduction (Itemized)' : 'Deduction (Standard)';
     document.getElementById('br-ded').textContent = this.formatCurr(ded);
@@ -1316,16 +1341,16 @@ const calc = {
 
     if (isItemized && !isOverride) {
       dw.className = 'deduction-winner itemized';
-      dwTxt.textContent = `✓ Using itemized ($${Math.round(totalItemized).toLocaleString()}) — saves $${diffTax} in tax vs. standard ($${Math.round(stdDed).toLocaleString()})`;
+      dwTxt.textContent = `✓ Using itemized ($${Math.round(totalItemized).toLocaleString()}) — saves $${diffTax.toLocaleString()} in tax vs. standard ($${Math.round(stdDed).toLocaleString()})`;
     } else if (isItemized && isOverride) {
       dw.className = 'deduction-winner override';
-      dwTxt.textContent = `⚠️ Override active: using itemized ($${Math.round(totalItemized).toLocaleString()}) — costs ~$${diffTax} more in tax vs. standard ($${Math.round(stdDed).toLocaleString()})`;
+      dwTxt.textContent = `⚠️ Override active: using itemized ($${Math.round(totalItemized).toLocaleString()}) — costs ~$${diffTax.toLocaleString()} more in tax vs. standard ($${Math.round(stdDed).toLocaleString()})`;
     } else if (!isItemized && !isOverride) {
       dw.className = 'deduction-winner std';
       dwTxt.textContent = `✓ Standard deduction ($${Math.round(stdDed).toLocaleString()}) is higher than itemized ($${Math.round(totalItemized).toLocaleString()})`;
     } else {
       dw.className = 'deduction-winner override';
-      dwTxt.textContent = `⚠️ Override active: using standard ($${Math.round(stdDed).toLocaleString()}) — costs ~$${diffTax} more in tax vs. itemized ($${Math.round(totalItemized).toLocaleString()})`;
+      dwTxt.textContent = `⚠️ Override active: using standard ($${Math.round(stdDed).toLocaleString()}) — costs ~$${diffTax.toLocaleString()} more in tax vs. itemized ($${Math.round(totalItemized).toLocaleString()})`;
     }
 
     // Toggle override checkboxes (federal pattern)
@@ -1438,14 +1463,37 @@ function updateResidency(status) {
 // setDeductionMethod removed — now uses federal-style deduction-winner with forceItemized/forceStandard checkboxes
 
 function recalc() {
-  // Update net profit
-  const seProfitDisp = Math.max(0, calc.getFieldValue('seRevenue') - calc.getFieldValue('seExpenses'));
-  document.getElementById('netProfit').textContent = calc.formatCurr(seProfitDisp);
+  // Read filing status from DOM FIRST (before calc.recalc uses it)
+  calc.filingStatus = document.getElementById('filingStatus').value || 'single';
 
   // Toggle spouse fields
   const showSpouse = ['mfj', 'mfs'].includes(calc.filingStatus);
   document.getElementById('spouseAgeGroup').style.display = showSpouse ? 'block' : 'none';
   document.getElementById('spouseBlindRow').style.display = showSpouse ? 'flex' : 'none';
+  // Clear spouse values when not applicable
+  if (!showSpouse) {
+    const sa = document.getElementById('spouseAge');
+    const sb = document.getElementById('spouseBlind');
+    if (sa) sa.value = '';
+    if (sb) sb.checked = false;
+  }
+
+  // Update contribution limit hints based on age
+  const age = parseInt(document.getElementById('age').value) || 0;
+  const yr = calc.taxYear || 2025;
+  const k401Base = 23500;
+  const k401Catch = age >= 50 ? 7500 : 0;
+  const k401Super = (age >= 60 && age <= 63) ? 11250 - k401Catch : 0; // Super catch-up
+  const k401Max = k401Base + k401Catch + k401Super;
+  const iraBase = 7000;
+  const iraCatch = age >= 50 ? 1000 : 0;
+  const iraMax = iraBase + iraCatch;
+  document.getElementById('k401LimitHint').textContent = yr + ' limit: $' + k401Max.toLocaleString() + (k401Catch + k401Super > 0 ? ' (includes catch-up)' : '');
+  document.getElementById('iraLimitHint').textContent = yr + ' limit: $' + iraMax.toLocaleString() + (iraCatch > 0 ? ' (includes catch-up)' : '');
+
+  // Update net profit
+  const seProfitDisp = Math.max(0, calc.getFieldValue('seRevenue') - calc.getFieldValue('seExpenses'));
+  document.getElementById('netProfit').textContent = calc.formatCurr(seProfitDisp);
 
   // Main calculation
   calc.recalc();
@@ -1504,11 +1552,12 @@ function acceptProfile() {
       } else if (el.type === 'checkbox') {
         el.checked = !!val;
       } else {
-        // Currency field — set raw value then format
-        const numVal = typeof val === 'string' ? parseFloat(val.replace(/[\$,]/g, '')) : val;
-        if (numVal && numVal > 0) {
+        // Currency or number field — parse from string or number, then format
+        let numVal = val;
+        if (typeof val === 'string') numVal = parseFloat(val.replace(/[\$,]/g, ''));
+        if (typeof numVal === 'number' && !isNaN(numVal) && numVal > 0) {
           el.value = numVal;
-          formatCurrencyField(el);
+          if (el.hasAttribute('data-currency')) formatCurrencyField(el);
         }
       }
     }
@@ -1536,13 +1585,53 @@ document.addEventListener('DOMContentLoaded', () => {
     const saved = localStorage.getItem('taxProfile');
     if (saved) {
       const profile = JSON.parse(saved);
+      // Parse values that may be formatted strings like "155,000"
+      const parseVal = (v) => {
+        if (typeof v === 'number') return v;
+        if (typeof v === 'string') return parseFloat(v.replace(/[\$,]/g, '')) || 0;
+        return 0;
+      };
       // Show banner only if profile has meaningful data
-      const hasData = profile.w2Wages > 0 || profile.seRevenue > 0 || profile.stcg > 0 || profile.ltcg > 0 || profile.interestIncome > 0;
+      const hasData = parseVal(profile.w2Wages) > 0 || parseVal(profile.seRevenue) > 0 ||
+                      parseVal(profile.stcg) > 0 || parseVal(profile.ltcg) > 0 ||
+                      parseVal(profile.interestIncome) > 0 || parseVal(profile.rentalIncome) > 0 ||
+                      parseVal(profile.qualifiedDividends) > 0 || parseVal(profile.otherIncome) > 0;
       if (hasData) {
         document.getElementById('syncBanner').style.display = 'block';
       }
     }
   } catch(e) {}
+
+  // Tooltip support
+  const _tt = document.createElement('div');
+  Object.assign(_tt.style, {
+    position: 'fixed', background: '#0f172a', color: '#fff',
+    padding: '8px 11px', borderRadius: '7px', fontSize: '11.5px',
+    zIndex: '99999', maxWidth: '260px', whiteSpace: 'normal',
+    lineHeight: '1.5', boxShadow: '0 4px 16px rgba(0,0,0,.28)',
+    pointerEvents: 'none', display: 'none'
+  });
+  document.body.appendChild(_tt);
+  function positionTooltip(e) {
+    const PAD = 10;
+    const ttW = _tt.offsetWidth || 260;
+    const ttH = _tt.offsetHeight || 80;
+    let x = e.clientX - ttW / 2;
+    let y = e.clientY - ttH - PAD;
+    x = Math.max(PAD, Math.min(x, window.innerWidth - ttW - PAD));
+    if (y < PAD) y = e.clientY + PAD + 4;
+    _tt.style.left = x + 'px';
+    _tt.style.top  = y + 'px';
+  }
+  document.querySelectorAll('.tooltip-icon').forEach(el => {
+    el.addEventListener('mouseenter', function(e) {
+      _tt.textContent = this.dataset.tip || '';
+      _tt.style.display = 'block';
+      positionTooltip(e);
+    });
+    el.addEventListener('mousemove', positionTooltip);
+    el.addEventListener('mouseleave', () => { _tt.style.display = 'none'; });
+  });
 
   // Close dropdown when clicking outside
   document.addEventListener('click', function(e) {
