@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>California State Tax Calculator | Smart Tax Savings Estimator</title>
-    <meta name="description" content="Free California state income tax calculator for 2025. Estimate your CA tax liability, see bracket breakdowns, and find state-specific savings strategies. No sign-up required.">
-    <link rel="canonical" href="https://smarttaxsavingscalculator.com/california-tax-calculator.html">
-    <meta property="og:title" content="California Tax Calculator - Smart Tax Savings Estimator">
-    <meta property="og:description" content="Free California state income tax calculator. Estimate your CA tax liability and find state-specific savings strategies.">
+  <title>Indiana State Tax Calculator | Smart Tax Savings Estimator</title>
+    <meta name="description" content="Free Indiana state income tax calculator for 2025 and 2026. Estimate your IN state tax plus county tax (LIT) for all 92 counties, see exemption breakdowns, and find Indiana-specific savings strategies. No sign-up required.">
+    <link rel="canonical" href="https://smarttaxsavingscalculator.com/indiana-tax-calculator.html">
+    <meta property="og:title" content="Indiana Tax Calculator - Smart Tax Savings Estimator">
+    <meta property="og:description" content="Free Indiana state income tax calculator with all 92 county LIT rates and savings strategies.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://smarttaxsavingscalculator.com/california-tax-calculator.html">
+    <meta property="og:url" content="https://smarttaxsavingscalculator.com/indiana-tax-calculator.html">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="California Tax Calculator - Smart Tax Savings Estimator">
-    <meta name="twitter:description" content="Free California state income tax calculator with bracket breakdowns and savings strategies.">
+    <meta name="twitter:title" content="Indiana Tax Calculator - Smart Tax Savings Estimator">
+    <meta name="twitter:description" content="Free Indiana state income tax calculator with all 92 county LIT rates and savings strategies.">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
 :root {
@@ -278,20 +278,13 @@ input[type=number] { -moz-appearance: textfield; }
   border-bottom: 1px solid var(--gray-200);
 }
 .limit-hint { font-size: 11px; color: var(--primary); margin-top: 2px; }
-.itemized-total-row {
+.deduction-total-row {
   display: flex; justify-content: space-between; align-items: center;
   padding: 10px 12px; background: var(--gray-50); border-radius: 7px;
   border: 1px solid var(--gray-200); margin-top: 12px;
 }
-.itemized-total-row .label { font-size: 12px; color: var(--gray-600); }
-.itemized-total-row .value { font-size: 14px; font-weight: 700; color: var(--gray-800); }
-.deduction-winner {
-  display: flex; align-items: center; gap: 8px;
-  padding: 10px 12px; border-radius: 7px; font-size: 12px; font-weight: 600; margin-top: 8px;
-}
-.deduction-winner.std      { background: var(--primary-light); color: var(--primary); }
-.deduction-winner.itemized { background: var(--success-light); color: var(--success); }
-.deduction-winner.override { background: var(--warning-light); color: var(--warning); }
+.deduction-total-row .label { font-size: 12px; color: var(--gray-600); }
+.deduction-total-row .value { font-size: 14px; font-weight: 700; color: var(--gray-800); }
 
 /* ── RESULTS PANEL ── */
 .results-card {
@@ -329,19 +322,16 @@ input[type=number] { -moz-appearance: textfield; }
 .breakdown-row.credit-row  { color: var(--success); }
 .breakdown-row.withholding-row { color: var(--primary); }
 .breakdown-row .row-value  { font-weight: 600; }
-.bracket-vis { padding: 12px 16px; border-top: 1px solid var(--gray-200); }
-.bracket-vis-title {
+.combined-rate-vis { padding: 12px 16px; border-top: 1px solid var(--gray-200); }
+.combined-rate-title {
   font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px;
   color: var(--gray-500); font-weight: 600; margin-bottom: 8px;
 }
-.bracket-bar-wrap { display: flex; flex-direction: column; gap: 4px; }
-.bracket-bar-row  { display: flex; align-items: center; gap: 6px; }
-.bracket-bar-label { font-size: 10px; color: var(--gray-600); width: 28px; text-align: right; }
-.bracket-bar-bg {
-  flex: 1; height: 10px; background: var(--gray-100); border-radius: 3px; overflow: hidden;
-}
-.bracket-bar-fill { height: 100%; border-radius: 3px; transition: width 0.4s ease; }
-.bracket-bar-amt  { font-size: 10px; color: var(--gray-500); width: 55px; text-align: right; }
+.rate-stack { display: flex; height: 28px; border-radius: 5px; overflow: hidden; background: var(--gray-100); }
+.rate-stack-state { background: var(--primary); display: flex; align-items: center; justify-content: center; color: white; font-size: 11px; font-weight: 700; }
+.rate-stack-county { background: var(--purple); display: flex; align-items: center; justify-content: center; color: white; font-size: 11px; font-weight: 700; }
+.rate-legend { display: flex; gap: 14px; margin-top: 8px; font-size: 10px; color: var(--gray-600); }
+.rate-legend-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 5px; vertical-align: middle; }
 
 /* ── PLANNING SUGGESTIONS — LIST LAYOUT ── */
 .suggestions-header { padding: 20px 0 12px; }
@@ -373,13 +363,12 @@ input[type=number] { -moz-appearance: textfield; }
 .sug-badge.green  { background: var(--success-light); color: var(--success); }
 .sug-badge.blue   { background: var(--primary-light); color: var(--primary); }
 .sug-badge.yellow { background: var(--purple-light); color: var(--purple); }
-.sug-badge.red    { background: var(--purple-light); color: var(--purple); }
 .no-suggestions {
   text-align: center; padding: 32px; color: var(--gray-400);
   background: white; border-radius: var(--radius); font-size: 13px;
 }
 
-/* ── PAYROLL NOTE (attached to 401k / HSA fields) ── */
+/* ── PAYROLL NOTE ── */
 .payroll-note {
   display: flex; align-items: center; gap: 6px;
   margin-top: 4px; padding: 4px 8px 4px 10px;
@@ -392,18 +381,12 @@ input[type=number] { -moz-appearance: textfield; }
 }
 .payroll-note label { cursor: pointer; line-height: 1.3; }
 
-/* ── STRATEGY LEGEND ── */
-.strat-legend {
-  display: flex; flex-wrap: wrap; gap: 6px 16px;
-  margin-bottom: 14px; font-size: 11px; color: var(--gray-500);
+/* ── 529 AUTO-CALC NOTE ── */
+.auto-credit-note {
+  background: var(--success-light); border: 1px solid #6ee7b7;
+  border-radius: 7px; padding: 8px 12px; margin-top: 8px;
+  font-size: 11px; color: var(--success); line-height: 1.4;
 }
-.legend-key { display: flex; align-items: center; gap: 5px; }
-.legend-dot {
-  display: inline-block; width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
-}
-.legend-dot.green  { background: var(--success); }
-.legend-dot.purple { background: var(--purple); }
-.legend-dot.blue   { background: var(--primary-mid); }
 
 /* ── DISCLAIMER ── */
 .disclaimer {
@@ -417,6 +400,18 @@ input[type=number] { -moz-appearance: textfield; }
 .data-note {
   font-size: 11px; color: var(--gray-500); padding: 8px 16px;
   border-top: 1px solid var(--gray-100); background: var(--gray-50); line-height: 1.5;
+}
+
+/* ── EXEMPTIONS DISPLAY ── */
+.exemption-display {
+  background: var(--primary-light); border: 1px solid #bfdbfe;
+  border-radius: 7px; padding: 10px 12px; margin-top: 10px;
+  font-size: 12px; color: var(--primary-dark); line-height: 1.5;
+}
+.exemption-display strong { font-weight: 700; }
+.exemption-line {
+  display: flex; justify-content: space-between;
+  padding: 2px 0; font-size: 11px; color: var(--gray-700);
 }
 
 /* ── RESPONSIVE ── */
@@ -444,49 +439,10 @@ input[type=number] { -moz-appearance: textfield; }
 ::-webkit-scrollbar-track { background: var(--gray-100); }
 ::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: 3px; }
 
-/* ── CALCULATE BUTTON ── */
-.calc-btn-wrap {
-  padding: 8px 0 4px;
-}
-.calc-btn {
-  width: 100%;
-  padding: 18px 24px;
-  background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 60%, #2563eb 100%);
-  color: white;
-  border: none;
-  border-radius: 12px;
-  font-size: 17px;
-  font-weight: 700;
-  letter-spacing: -0.2px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  box-shadow: 0 4px 20px rgba(30,64,175,0.35);
-  transition: transform 0.15s, box-shadow 0.15s;
-}
-.calc-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 28px rgba(30,64,175,0.45);
-}
-.calc-btn:active { transform: translateY(0); }
-.calc-btn-sub {
-  font-size: 12px;
-  opacity: 0.7;
-  font-weight: 400;
-  margin-top: 3px;
-  text-align: center;
-}
-
-/* ── RESULTS PAGE ── */
-#resultsPage { display: none; }
-
 /* Nav links */
 .site-header nav a:hover { opacity: 1 !important; }
 .nav-dropdown.open .dropdown-menu { display: block !important; }
 .dropdown-menu li a:hover { background: var(--gray-100); }
-.mt-8 { margin-top: 8px; }
   </style>
 </head>
 <body>
@@ -496,7 +452,7 @@ input[type=number] { -moz-appearance: textfield; }
   <div class="header-top">
     <div class="header-title">
       <h1>Smart Tax Savings Estimator</h1>
-      <p>California State Tax Calculator · personalized plan to reduce your state tax bill · 2025</p>
+      <p id="headerSubtitle">Indiana State Tax Calculator · personalized plan to reduce your state tax bill · 2025</p>
     </div>
     <nav>
       <ul style="display:flex;gap:20px;list-style:none;margin:0;padding:0;">
@@ -504,8 +460,8 @@ input[type=number] { -moz-appearance: textfield; }
         <li class="nav-dropdown" style="position:relative;">
           <a href="#" style="color:white;text-decoration:none;font-size:13px;opacity:0.95;border-bottom:2px solid rgba(255,255,255,0.8);padding-bottom:2px;" onclick="event.preventDefault();this.parentElement.classList.toggle('open');">States ▾</a>
           <ul class="dropdown-menu" style="display:none;position:absolute;top:100%;left:0;background:white;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,0.15);padding:8px 0;min-width:180px;margin-top:8px;z-index:1000;">
-            <li><a href="california-tax-calculator.html" style="display:block;padding:8px 16px;color:#1e293b;text-decoration:none;font-size:13px;font-weight:600;">California</a></li>
-            <li><a href="indiana-tax-calculator.html" style="display:block;padding:8px 16px;color:#1e293b;text-decoration:none;font-size:13px;">Indiana</a></li>
+            <li><a href="california-tax-calculator.html" style="display:block;padding:8px 16px;color:#1e293b;text-decoration:none;font-size:13px;">California</a></li>
+            <li><a href="indiana-tax-calculator.html" style="display:block;padding:8px 16px;color:#1e293b;text-decoration:none;font-size:13px;font-weight:600;">Indiana</a></li>
           </ul>
         </li>
         <li><a href="about.html" style="color:white;text-decoration:none;font-size:13px;opacity:0.8;">About</a></li>
@@ -561,7 +517,13 @@ input[type=number] { -moz-appearance: textfield; }
           </select>
         </div>
         <div class="profile-field">
-          <label>CA Residency Status</label>
+          <label>Indiana County of Residence (Jan 1)</label>
+          <select class="profile-select" id="county" onchange="recalc()">
+            <option value="">— Select your county —</option>
+          </select>
+        </div>
+        <div class="profile-field">
+          <label>IN Residency Status</label>
           <select class="profile-select" id="residencyStatus" onchange="updateResidency(this.value)">
             <option value="full-year">Full-Year Resident</option>
             <option value="part-year">Part-Year Resident</option>
@@ -572,18 +534,21 @@ input[type=number] { -moz-appearance: textfield; }
       <div id="partYearFields" style="display:none;margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.15);">
         <div class="form-grid" style="color:white;">
           <div class="form-group">
-            <label style="color:rgba(255,255,255,0.75);font-size:11px;">CA Residency Start</label>
+            <label style="color:rgba(255,255,255,0.75);font-size:11px;">IN Residency Start</label>
             <input type="date" id="residencyStart" onchange="recalc()" style="padding:7px 10px;border-radius:6px;border:1px solid rgba(255,255,255,0.25);background:rgba(255,255,255,0.1);color:white;font-size:13px;">
           </div>
           <div class="form-group">
-            <label style="color:rgba(255,255,255,0.75);font-size:11px;">CA Residency End</label>
+            <label style="color:rgba(255,255,255,0.75);font-size:11px;">IN Residency End</label>
             <input type="date" id="residencyEnd" onchange="recalc()" style="padding:7px 10px;border-radius:6px;border:1px solid rgba(255,255,255,0.25);background:rgba(255,255,255,0.1);color:white;font-size:13px;">
           </div>
         </div>
       </div>
       <div id="nonresidentField" style="display:none;margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.15);">
-        <label style="color:rgba(255,255,255,0.75);font-size:11px;display:block;margin-bottom:6px;">% of Income from CA Sources</label>
-        <input type="number" id="caSourcePercent" value="50" min="0" max="100" onchange="recalc()" style="padding:7px 10px;border-radius:6px;border:1px solid rgba(255,255,255,0.25);background:rgba(255,255,255,0.1);color:white;font-size:13px;width:100%;">
+        <label style="color:rgba(255,255,255,0.75);font-size:11px;display:block;margin-bottom:6px;">% of Income from Indiana Sources</label>
+        <input type="number" id="inSourcePercent" value="50" min="0" max="100" onchange="recalc()" style="padding:7px 10px;border-radius:6px;border:1px solid rgba(255,255,255,0.25);background:rgba(255,255,255,0.1);color:white;font-size:13px;width:100%;">
+        <div style="font-size:10px;color:rgba(255,255,255,0.6);margin-top:6px;line-height:1.4;">
+          Reciprocity: full-year residents of KY, MI, OH, PA, or WI working in Indiana file Form IT-40RNR — only county tax applies on Indiana wages, not state income tax.
+        </div>
       </div>
     </div>
 
@@ -592,7 +557,7 @@ input[type=number] { -moz-appearance: textfield; }
       <div class="card-header open" onclick="toggleSection(this)">
         <div class="card-header-left">
           <div class="card-icon blue">👤</div>
-          <div><h2>Personal Information</h2><div class="section-hint">Age, dependents &amp; coverage</div></div>
+          <div><h2>Personal Information</h2><div class="section-hint">Age, dependents &amp; exemption details</div></div>
         </div>
         <span class="chevron open">▼</span>
       </div>
@@ -607,30 +572,42 @@ input[type=number] { -moz-appearance: textfield; }
             <input class="form-input" type="number" id="spouseAge" min="18" max="120" onchange="recalc()">
           </div>
           <div class="form-group">
-            <label class="form-label">Qualifying Children (under 17)
-              <span class="tooltip-icon" data-tip="California does NOT have a per-child tax credit like the federal $2,200 CTC. CA has a Young Child Tax Credit (YCTC) and CalEITC for very low incomes. This field syncs with your federal profile.">?</span>
+            <label class="form-label">Qualifying Children (under 19, or 24 if student)
+              <span class="tooltip-icon" data-tip="Each qualifying child claimed as a dependent gets a $1,000 Indiana exemption. Children claimed as a dependent for the FIRST time on your IN return get an additional $1,500 exemption (total $2,500 that year).">?</span>
             </label>
             <input class="form-input" type="number" id="numChildren" value="0" min="0" max="20" onchange="recalc()">
           </div>
           <div class="form-group">
+            <label class="form-label">First-Year Dependent Children
+              <span class="tooltip-icon" data-tip="Of the children above, how many are being claimed as your dependent on your Indiana return for the FIRST time? Each qualifies for an additional $1,500 exemption beyond the $1,000 dependent exemption.">?</span>
+            </label>
+            <input class="form-input" type="number" id="firstYearChildren" value="0" min="0" max="20" onchange="recalc()">
+          </div>
+          <div class="form-group">
             <label class="form-label">Other Dependents
-              <span class="tooltip-icon" data-tip="Used for profile sync with the federal calculator. CA does not have a direct credit for other dependents like the federal $500 ODC.">?</span>
+              <span class="tooltip-icon" data-tip="Non-child dependents (qualifying relatives). Each gets the $1,000 Indiana dependent exemption.">?</span>
             </label>
             <input class="form-input" type="number" id="numDependents" value="0" min="0" max="20" onchange="recalc()">
           </div>
-        </div>
-        <div class="data-note" style="margin-top:8px; font-size:11px; color:var(--gray-500);">
-          ℹ️ California does not have a per-child tax credit like the federal CTC ($2,200/child). CA offers the Young Child Tax Credit (YCTC) and CalEITC for qualifying low-income filers — enter those in the Credits section below if applicable.
+          <div class="form-group">
+            <label class="form-label">Adopted Children (this year or prior)
+              <span class="tooltip-icon" data-tip="Each adopted child claimed as a dependent gets an ADDITIONAL $3,000 exemption on top of the regular $1,000 dependent exemption.">?</span>
+            </label>
+            <input class="form-input" type="number" id="adoptedChildren" value="0" min="0" max="20" onchange="recalc()">
+          </div>
         </div>
         <div style="margin-top:12px; display:flex; flex-wrap:wrap; gap:8px;">
           <div class="form-checkbox-row">
             <input type="checkbox" id="isBlind" onchange="recalc()">
-            <label for="isBlind">You are blind / legally blind</label>
+            <label for="isBlind">You are blind / legally blind (+$1,000 exemption)</label>
           </div>
           <div class="form-checkbox-row" id="spouseBlindRow">
             <input type="checkbox" id="spouseBlind" onchange="recalc()">
-            <label for="spouseBlind">Spouse is blind</label>
+            <label for="spouseBlind">Spouse is blind (+$1,000 exemption)</label>
           </div>
+        </div>
+        <div class="data-note" style="margin-top:8px; font-size:11px; color:var(--gray-500);">
+          ℹ️ Indiana has NO standard deduction. Tax is computed on Indiana AGI minus per-person exemptions. Most exemptions are calculated automatically below from your inputs above.
         </div>
       </div>
     </div>
@@ -656,17 +633,17 @@ input[type=number] { -moz-appearance: textfield; }
             </div>
           </div>
           <div class="form-group">
-            <label class="form-label">CA State Tax Withheld (W-2 Box 17)</label>
+            <label class="form-label">IN State Tax Withheld (W-2 Box 17)</label>
             <div class="input-wrap">
               <span class="input-prefix">$</span>
-              <input class="form-input currency" type="text" inputmode="decimal" id="caWithholding" placeholder="0" data-currency onchange="recalc()">
+              <input class="form-input currency" type="text" inputmode="decimal" id="inWithholding" placeholder="0" data-currency onchange="recalc()">
             </div>
           </div>
           <div class="form-group">
-            <label class="form-label">CA SDI Withheld</label>
+            <label class="form-label">IN County Tax Withheld (W-2 Box 19)</label>
             <div class="input-wrap">
               <span class="input-prefix">$</span>
-              <input class="form-input currency" type="text" inputmode="decimal" id="caSDI" placeholder="0" data-currency onchange="recalc()">
+              <input class="form-input currency" type="text" inputmode="decimal" id="inCountyWithholding" placeholder="0" data-currency onchange="recalc()">
             </div>
           </div>
         </div>
@@ -729,8 +706,17 @@ input[type=number] { -moz-appearance: textfield; }
               <input class="form-input currency" type="text" inputmode="decimal" id="otherInc" placeholder="0" data-currency onchange="recalc()">
             </div>
           </div>
+          <div class="form-group">
+            <label class="form-label">Social Security Benefits (in fed AGI)
+              <span class="tooltip-icon" data-tip="Indiana does NOT tax Social Security benefits. The portion of your SS that's taxed federally (and thus in your federal AGI) is fully deductible on your Indiana return. Enter the federally-taxable amount here.">?</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="socSec" placeholder="0" data-currency onchange="recalc()">
+            </div>
+          </div>
           <div class="form-group full">
-            <label class="form-label">Estimated CA Tax Payments Made</label>
+            <label class="form-label">Estimated IN Tax Payments Made</label>
             <div class="input-wrap">
               <span class="input-prefix">$</span>
               <input class="form-input currency" type="text" inputmode="decimal" id="estimatedPay" placeholder="0" data-currency onchange="recalc()">
@@ -797,7 +783,7 @@ input[type=number] { -moz-appearance: textfield; }
         <div class="form-grid">
           <div class="form-group">
             <label class="form-label">401(k) / 403(b) Contributions
-              <span class="tooltip-icon" data-tip="Enter YOUR OWN pre-tax contributions only — do NOT include your employer's matching contributions. Only the amount you personally elect to contribute reduces your taxable income.">?</span>
+              <span class="tooltip-icon" data-tip="Enter YOUR OWN pre-tax contributions only — do NOT include your employer's matching contributions. Indiana starts from federal AGI, so 401(k) contributions reduce your Indiana taxable income just like federal.">?</span>
             </label>
             <div class="input-wrap">
               <span class="input-prefix">$</span>
@@ -811,7 +797,7 @@ input[type=number] { -moz-appearance: textfield; }
           </div>
           <div class="form-group">
             <label class="form-label">Traditional IRA Contributions
-              <span class="tooltip-icon" data-tip="Traditional IRA contributions may be deductible for CA purposes. The same federal limits apply. Deductibility may be affected if you or your spouse have an employer retirement plan.">?</span>
+              <span class="tooltip-icon" data-tip="Traditional IRA contributions are deductible federally (subject to income limits if covered by a workplace plan). Indiana follows the federal AGI, so your IRA deduction flows through.">?</span>
             </label>
             <div class="input-wrap">
               <span class="input-prefix">$</span>
@@ -821,7 +807,7 @@ input[type=number] { -moz-appearance: textfield; }
           </div>
           <div class="form-group full">
             <label class="form-label">HSA Contributions
-              <span class="tooltip-icon" data-tip="California does NOT recognize HSA tax benefits. Unlike the federal return, HSA contributions are added back to your CA taxable income. The amount here is used to correctly calculate your CA AGI.">?</span>
+              <span class="tooltip-icon" data-tip="Indiana CONFORMS to the federal HSA deduction — unlike California, Indiana fully recognizes HSA tax benefits. Enter your HSA contribution amount.">?</span>
             </label>
             <div class="input-wrap">
               <span class="input-prefix">$</span>
@@ -831,124 +817,203 @@ input[type=number] { -moz-appearance: textfield; }
               <input type="checkbox" id="hsathrough" checked onchange="recalc()">
               <label for="hsathrough">↑ This HSA amount is already withheld from my paycheck — not included in W-2 Box 1 wages (most employees)</label>
             </div>
-            <div style="background:#fef3c7;border:1px solid #fcd34d;border-radius:7px;padding:8px 12px;margin-top:8px;font-size:11px;color:#d97706;line-height:1.4;">
-              ⚠️ <strong>California does NOT allow HSA deductions.</strong> HSA contributions are added back to your CA taxable income.
+            <div style="background:#d1fae5;border:1px solid #6ee7b7;border-radius:7px;padding:8px 12px;margin-top:8px;font-size:11px;color:#059669;line-height:1.4;">
+              ✓ <strong>Indiana allows HSA deductions</strong> — Indiana conforms to federal AGI, so HSA contributions reduce your Indiana taxable income.
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ── SECTION 5: CALIFORNIA DEDUCTIONS ── -->
+    <!-- ── SECTION 5: INDIANA DEDUCTIONS (Schedule 2) ── -->
     <div class="card">
       <div class="card-header open" onclick="toggleSection(this)">
         <div class="card-header-left">
           <div class="card-icon blue">✂️</div>
-          <div><h2>California Deductions</h2><div class="section-hint">Standard vs. itemized</div></div>
+          <div><h2>Indiana Deductions</h2><div class="section-hint">Schedule 2 subtractions from federal AGI</div></div>
         </div>
         <span class="chevron open">▼</span>
       </div>
       <div class="card-body open">
-        <div class="section-divider">Itemized Deductions</div>
+        <div class="data-note" style="margin-bottom:12px; background:var(--primary-light); color:var(--primary-dark); border-color:#bfdbfe;">
+          ℹ️ Indiana does <strong>not</strong> have a standard deduction. Instead, claim specific Schedule 2 subtractions and Schedule 3 exemptions. Each amount below is automatically capped at the legal limit.
+        </div>
+
+        <div class="section-divider">Common Deductions</div>
         <div class="form-grid">
           <div class="form-group">
-            <label class="form-label">Mortgage Interest</label>
+            <label class="form-label">Renter's Deduction (rent paid)
+              <span class="tooltip-icon" data-tip="Renters of an Indiana primary residence subject to property tax may deduct rent paid, up to $3,000. Enter your annual rent paid; we'll cap it at $3,000.">?</span>
+            </label>
             <div class="input-wrap">
               <span class="input-prefix">$</span>
-              <input class="form-input currency" type="text" inputmode="decimal" id="mortgage" placeholder="0" data-currency onchange="recalc()">
+              <input class="form-input currency" type="text" inputmode="decimal" id="rentPaid" placeholder="0" data-currency onchange="recalc()">
             </div>
+            <div class="limit-hint">2025/2026 cap: $3,000</div>
           </div>
           <div class="form-group">
-            <label class="form-label">CA Real Property Tax</label>
+            <label class="form-label">Active Duty Military Pay
+              <span class="tooltip-icon" data-tip="Active duty / reserve military pay is deductible up to $5,000. Enter total active military pay; we'll cap at $5,000.">?</span>
+            </label>
             <div class="input-wrap">
               <span class="input-prefix">$</span>
-              <input class="form-input currency" type="text" inputmode="decimal" id="propertyTax" placeholder="0" data-currency onchange="recalc()">
+              <input class="form-input currency" type="text" inputmode="decimal" id="activeMilPay" placeholder="0" data-currency onchange="recalc()">
             </div>
+            <div class="limit-hint">Cap: $5,000</div>
           </div>
           <div class="form-group">
-            <label class="form-label">Charitable Contributions</label>
+            <label class="form-label">Military Retirement Pay
+              <span class="tooltip-icon" data-tip="Indiana fully exempts military retirement and survivor benefits from state tax (TY 2023 onward). Enter the full amount of military retirement received.">?</span>
+            </label>
             <div class="input-wrap">
               <span class="input-prefix">$</span>
-              <input class="form-input currency" type="text" inputmode="decimal" id="charitable" placeholder="0" data-currency onchange="recalc()">
+              <input class="form-input currency" type="text" inputmode="decimal" id="milRetirement" placeholder="0" data-currency onchange="recalc()">
             </div>
+            <div class="limit-hint">100% deductible</div>
           </div>
           <div class="form-group">
-            <label class="form-label">Medical Expenses (over 7.5% AGI)</label>
+            <label class="form-label">Civil Service Annuity (age 62+)
+              <span class="tooltip-icon" data-tip="Federal civil service annuitants 62+ may deduct up to $16,000 (reduced dollar-for-dollar by Social Security received).">?</span>
+            </label>
             <div class="input-wrap">
               <span class="input-prefix">$</span>
-              <input class="form-input currency" type="text" inputmode="decimal" id="medical" placeholder="0" data-currency onchange="recalc()">
+              <input class="form-input currency" type="text" inputmode="decimal" id="civilServAnnuity" placeholder="0" data-currency onchange="recalc()">
+            </div>
+            <div class="limit-hint">Cap: $16,000 (reduced by SS)</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Disability Retirement (under 65)
+              <span class="tooltip-icon" data-tip="If permanently and totally disabled and retired on disability before age 65, deduct up to $5,200 of disability retirement income.">?</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="disabilityRet" placeholder="0" data-currency onchange="recalc()">
+            </div>
+            <div class="limit-hint">Cap: $5,200</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Unemployment Compensation Deduction
+              <span class="tooltip-icon" data-tip="Indiana allows a partial unemployment compensation deduction using a worksheet (phases out by income). Enter the deductible amount you've calculated, or leave 0.">?</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="unempDed" placeholder="0" data-currency onchange="recalc()">
             </div>
           </div>
           <div class="form-group full">
-            <label class="form-label">Other Itemized Deductions</label>
+            <label class="form-label">Other Schedule 2 Deductions
+              <span class="tooltip-icon" data-tip="Catch-all for less common deductions: human services deduction, IN partnership long-term care premiums, enterprise zone employee deduction, IN NOL, etc.">?</span>
+            </label>
             <div class="input-wrap">
               <span class="input-prefix">$</span>
               <input class="form-input currency" type="text" inputmode="decimal" id="otherDed" placeholder="0" data-currency onchange="recalc()">
             </div>
           </div>
         </div>
-        <div class="itemized-total-row">
-          <span class="label">Total Itemized Deductions</span>
-          <span class="value" id="totalItemized">$0</span>
+
+        <div class="section-divider" style="margin-top:16px;">Common Add-Backs (Schedule 1)</div>
+        <div class="form-grid">
+          <div class="form-group full">
+            <label class="form-label">Out-of-State Municipal Bond Interest
+              <span class="tooltip-icon" data-tip="Interest from non-Indiana state/local bonds (acquired after Dec 31, 2011) is tax-free federally but added back to Indiana AGI. Enter only the OOS portion.">?</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="oosMuni" placeholder="0" data-currency onchange="recalc()">
+            </div>
+          </div>
         </div>
-        <div class="deduction-winner" id="deductionWinner">
-          <span>📌</span>
-          <span id="deductionWinnerText">Standard deduction: $5,540</span>
+
+        <div class="deduction-total-row">
+          <span class="label">Total Schedule 2 Deductions (capped)</span>
+          <span class="value" id="totalDeductions">$0</span>
         </div>
-        <!-- forceItemized: shown when standard naturally wins -->
-        <div class="form-checkbox-row mt-8" id="forceItemizedRow">
-          <input type="checkbox" id="forceItemized" onchange="recalc()">
-          <label for="forceItemized">Override: force use of itemized deductions (unusual — only if required)</label>
-        </div>
-        <!-- forceStandard: shown when itemized naturally wins -->
-        <div class="form-checkbox-row mt-8" id="forceStandardRow" style="display:none;">
-          <input type="checkbox" id="forceStandard" onchange="recalc()">
-          <label for="forceStandard">Override: use standard deduction instead — simplifies filing even if itemized is slightly higher</label>
+        <div class="exemption-display" id="exemptionDisplay">
+          <div style="font-weight:700;margin-bottom:6px;">Auto-Calculated Exemptions (Schedule 3): <span id="exemptionTotal">$0</span></div>
+          <div id="exemptionBreakdown" style="font-size:11px;"></div>
         </div>
       </div>
     </div>
 
-    <!-- ── SECTION 6: CALIFORNIA TAX CREDITS ── -->
+    <!-- ── SECTION 6: INDIANA TAX CREDITS ── -->
     <div class="card">
       <div class="card-header open" onclick="toggleSection(this)">
         <div class="card-header-left">
           <div class="card-icon red">⭐</div>
-          <div><h2>California Tax Credits</h2><div class="section-hint">Child care, renter's, EITC &amp; more</div></div>
+          <div><h2>Indiana Tax Credits</h2><div class="section-hint">CollegeChoice 529, IN-EIC, Adoption &amp; more</div></div>
         </div>
         <span class="chevron open">▼</span>
       </div>
       <div class="card-body open">
         <div class="form-grid">
-          <div class="form-group">
-            <label class="form-label">Child &amp; Dependent Care Credit</label>
+          <div class="form-group full">
+            <label class="form-label">CollegeChoice 529 Contributions (this year)
+              <span class="tooltip-icon" data-tip="Indiana provides a 20% credit on contributions to an Indiana CollegeChoice 529 plan, up to $1,500 ($750 if MFS). Enter your annual contributions; the credit is computed automatically.">?</span>
+            </label>
             <div class="input-wrap">
               <span class="input-prefix">$</span>
-              <input class="form-input currency" type="text" inputmode="decimal" id="depCareCredit" placeholder="0" data-currency onchange="recalc()">
+              <input class="form-input currency" type="text" inputmode="decimal" id="ch529Contrib" placeholder="0" data-currency onchange="recalc()">
+            </div>
+            <div class="auto-credit-note">
+              ✓ Auto-calculated credit: <strong id="ch529CreditAuto">$0</strong> (20% of contributions, capped at $1,500 / $750 MFS)
             </div>
           </div>
           <div class="form-group">
-            <label class="form-label">Renter's Credit</label>
+            <label class="form-label">Federal EIC (your federal credit)
+              <span class="tooltip-icon" data-tip="Indiana's Earned Income Credit equals 10% of your federal EIC. Enter the federal EIC amount; the IN credit is computed automatically.">?</span>
+            </label>
             <div class="input-wrap">
               <span class="input-prefix">$</span>
-              <input class="form-input currency" type="text" inputmode="decimal" id="renterCredit" placeholder="0" data-currency onchange="recalc()">
+              <input class="form-input currency" type="text" inputmode="decimal" id="federalEIC" placeholder="0" data-currency onchange="recalc()">
+            </div>
+            <div class="auto-credit-note">
+              ✓ IN-EIC: <strong id="inEICAuto">$0</strong> (10% of federal)
             </div>
           </div>
           <div class="form-group">
-            <label class="form-label">CA EITC (Earned Income Tax Credit)</label>
+            <label class="form-label">Federal Adoption Credit (per child)
+              <span class="tooltip-icon" data-tip="Indiana's adoption credit equals 10% of your federal adoption credit, capped at $1,000 per adopted child.">?</span>
+            </label>
             <div class="input-wrap">
               <span class="input-prefix">$</span>
-              <input class="form-input currency" type="text" inputmode="decimal" id="caEITC" placeholder="0" data-currency onchange="recalc()">
+              <input class="form-input currency" type="text" inputmode="decimal" id="federalAdoption" placeholder="0" data-currency onchange="recalc()">
+            </div>
+            <div class="auto-credit-note">
+              ✓ IN Adoption Credit: <strong id="inAdoptionAuto">$0</strong> (10%, max $1,000/child)
             </div>
           </div>
           <div class="form-group">
-            <label class="form-label">College Access Credit</label>
+            <label class="form-label">Unified Tax Credit for the Elderly
+              <span class="tooltip-icon" data-tip="If 65+ with federal AGI below $10,000 (single) or $20,000 (joint, both 65+), file Form SC-40 for a credit of $40-$140. Enter the amount you've calculated.">?</span>
+            </label>
             <div class="input-wrap">
               <span class="input-prefix">$</span>
-              <input class="form-input currency" type="text" inputmode="decimal" id="collegeCredit" placeholder="0" data-currency onchange="recalc()">
+              <input class="form-input currency" type="text" inputmode="decimal" id="elderlyCredit" placeholder="0" data-currency onchange="recalc()">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Public School Educator Expense Credit
+              <span class="tooltip-icon" data-tip="K-12 public/charter teachers may claim up to $100 for unreimbursed classroom supplies.">?</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="educatorCredit" placeholder="0" data-currency onchange="recalc()">
+            </div>
+            <div class="limit-hint">Cap: $100</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Tax Paid to Other States
+              <span class="tooltip-icon" data-tip="Credit for income tax paid to another state on income also taxed by Indiana. Limited to the lesser of the other state's tax or Indiana's tax on that income.">?</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="form-input currency" type="text" inputmode="decimal" id="otherStateCredit" placeholder="0" data-currency onchange="recalc()">
             </div>
           </div>
           <div class="form-group full">
-            <label class="form-label">Other CA Credits</label>
+            <label class="form-label">Other Indiana Credits
+              <span class="tooltip-icon" data-tip="Catch-all: School Scholarship Credit (50% of contributions), Neighborhood Assistance, Research Expense, Headquarters Relocation, Hoosier Business Investment, etc.">?</span>
+            </label>
             <div class="input-wrap">
               <span class="input-prefix">$</span>
               <input class="form-input currency" type="text" inputmode="decimal" id="otherCredits" placeholder="0" data-currency onchange="recalc()">
@@ -961,7 +1026,7 @@ input[type=number] { -moz-appearance: textfield; }
     <!-- ── SECTION 7: STRATEGIES ── -->
     <div style="margin-top:20px;">
       <div class="suggestions-header">
-        <h2>💡 California Tax Strategies</h2>
+        <h2>💡 Indiana Tax Strategies</h2>
         <p>Personalized recommendations based on your tax situation</p>
       </div>
       <ul class="suggestion-list" id="strategyList"></ul>
@@ -969,7 +1034,7 @@ input[type=number] { -moz-appearance: textfield; }
 
     <!-- ── DISCLAIMER ── -->
     <div class="disclaimer">
-      <strong>Disclaimer:</strong> This calculator estimates your California state tax only. Results are based on 2025 CA tax law and may not reflect all deductions, credits, or situation-specific rules. Consult a tax professional for accurate planning. Does not include federal taxes—use our Federal Calculator for complete analysis.
+      <strong>Disclaimer:</strong> This calculator estimates your Indiana state and county income tax only. Results are based on 2025/2026 Indiana tax law as published by the Indiana DOR (Departmental Notice #1, IT-40 instructions) and may not reflect every deduction, credit, or situation-specific rule. County rates may change semi-annually. Consult a tax professional for filing decisions. Does not include federal taxes — use our Federal Calculator for complete analysis.
     </div>
   </div>
 
@@ -977,7 +1042,7 @@ input[type=number] { -moz-appearance: textfield; }
   <div class="results-column">
     <div class="results-card">
       <div class="results-header">
-        <h3>2025 CALIFORNIA TAX ESTIMATE</h3>
+        <h3 id="resultsHeaderTitle">2025 INDIANA TAX ESTIMATE</h3>
       </div>
 
       <div style="padding:16px;border-bottom:1px solid var(--gray-200);text-align:center;">
@@ -988,93 +1053,96 @@ input[type=number] { -moz-appearance: textfield; }
 
       <div class="key-metrics">
         <div class="metric-cell">
-          <div class="metric-label">CA Gross Income</div>
+          <div class="metric-label">IN Gross Income</div>
           <div class="metric-value" id="metricGross">$0</div>
         </div>
         <div class="metric-cell">
-          <div class="metric-label">CA Marginal Rate</div>
-          <div class="metric-value rate" id="metricMargin">—</div>
+          <div class="metric-label">Combined Rate</div>
+          <div class="metric-value rate" id="metricCombined">—</div>
         </div>
         <div class="metric-cell">
-          <div class="metric-label">CA AGI</div>
+          <div class="metric-label">Indiana AGI</div>
           <div class="metric-value" id="metricAGI">$0</div>
         </div>
         <div class="metric-cell">
-          <div class="metric-label">CA Effective Rate</div>
+          <div class="metric-label">Effective Rate</div>
           <div class="metric-value rate" id="metricEffective">—</div>
         </div>
       </div>
 
       <div class="breakdown-table">
         <div class="breakdown-row">
-          <span>CA Gross Income</span>
-          <span class="row-value" id="br-gross">$0</span>
+          <span>Federal AGI (calculated)</span>
+          <span class="row-value" id="br-fed-agi">$0</span>
         </div>
         <div class="breakdown-row">
-          <span>Above-the-Line Adjustments</span>
-          <span class="row-value" id="br-adjust">$0</span>
-        </div>
-        <div class="breakdown-row subtotal">
-          <span>CA AGI</span>
-          <span class="row-value" id="br-agi">$0</span>
+          <span>+ IN Add-Backs</span>
+          <span class="row-value" id="br-addbacks">$0</span>
         </div>
         <div class="breakdown-row">
-          <span id="dedLabel">Deduction (Standard)</span>
-          <span class="row-value" id="br-ded">$0</span>
+          <span>− IN Subtractions (Schedule 2)</span>
+          <span class="row-value" id="br-subtractions">$0</span>
         </div>
         <div class="breakdown-row subtotal">
-          <span>CA Taxable Income</span>
+          <span>Indiana AGI</span>
+          <span class="row-value" id="br-in-agi">$0</span>
+        </div>
+        <div class="breakdown-row">
+          <span>− Exemptions (Schedule 3)</span>
+          <span class="row-value" id="br-exemptions">$0</span>
+        </div>
+        <div class="breakdown-row subtotal">
+          <span>IN Taxable Income</span>
           <span class="row-value" id="br-taxable">$0</span>
         </div>
         <div class="breakdown-row">
-          <span>Regular CA Income Tax</span>
-          <span class="row-value" id="br-tax">$0</span>
+          <span id="br-state-rate-label">State Tax (3.00%)</span>
+          <span class="row-value" id="br-state-tax">$0</span>
         </div>
         <div class="breakdown-row">
-          <span>Mental Health Services Tax (1%)</span>
-          <span class="row-value" id="br-mhst">$0</span>
-        </div>
-        <div class="breakdown-row">
-          <span>CA State Disability Insurance (SDI)</span>
-          <span class="row-value" id="br-sdi">$0</span>
+          <span id="br-county-rate-label">County Tax (—)</span>
+          <span class="row-value" id="br-county-tax">$0</span>
         </div>
         <div class="breakdown-row total-row">
-          <span>Total CA Tax Liability</span>
+          <span>Total IN Tax Liability</span>
           <span class="row-value" id="br-total">$0</span>
         </div>
         <div class="breakdown-row credit-row">
-          <span>CA Tax Credits</span>
+          <span>− IN Tax Credits</span>
           <span class="row-value" id="br-credits">($0)</span>
         </div>
         <div class="breakdown-row withholding-row">
-          <span>CA Tax Withheld</span>
+          <span>− IN Tax Withheld</span>
           <span class="row-value" id="br-withheld">($0)</span>
         </div>
         <div class="breakdown-row withholding-row">
-          <span>Estimated Payments</span>
+          <span>− IN County Withheld</span>
+          <span class="row-value" id="br-county-withheld">($0)</span>
+        </div>
+        <div class="breakdown-row withholding-row">
+          <span>− Estimated Payments</span>
           <span class="row-value" id="br-estimated">($0)</span>
         </div>
         <div class="breakdown-row total-row">
-          <span>CA Refund / Amount Owed</span>
+          <span>IN Refund / Amount Owed</span>
           <span class="row-value" id="br-refund">$0</span>
         </div>
       </div>
 
-      <div class="bracket-vis">
-        <div class="bracket-vis-title">Your Tax Bracket</div>
-        <div class="bracket-bar-wrap">
-          <div class="bracket-bar-row">
-            <div class="bracket-bar-label" id="bracketPct">1%</div>
-            <div class="bracket-bar-bg">
-              <div class="bracket-bar-fill" id="bracketFill" style="width:0%;background:linear-gradient(90deg,#10b981,#3b82f6,#ef4444);"></div>
-            </div>
-            <div class="bracket-bar-amt">CA Income</div>
-          </div>
+      <div class="combined-rate-vis">
+        <div class="combined-rate-title">Combined Marginal Rate Breakdown</div>
+        <div class="rate-stack">
+          <div class="rate-stack-state" id="rateStackState" style="width:70%;"><span id="rateStackStateLabel">3.00%</span></div>
+          <div class="rate-stack-county" id="rateStackCounty" style="width:30%;"><span id="rateStackCountyLabel">—</span></div>
+        </div>
+        <div class="rate-legend">
+          <div><span class="rate-legend-dot" style="background:var(--primary);"></span>State flat rate</div>
+          <div><span class="rate-legend-dot" style="background:var(--purple);"></span>County LIT rate</div>
         </div>
       </div>
 
       <div class="data-note">
-        Results are estimates based on simplified rules. Consult a tax professional for your specific situation.
+        Indiana flat state rate plus your county's LIT applied to Indiana taxable income (after exemptions). County rates current as of Departmental Notice #1.
       </div>
     </div>
   </div>
@@ -1082,65 +1150,55 @@ input[type=number] { -moz-appearance: textfield; }
 </div>
 
 <script>
-// CA Tax Calculator v2025
-// Matches federal calculator design exactly
+// ══════════════════════════════════════════════════════════════════
+// Indiana State Tax Calculator
+// Source: IN DOR Departmental Notice #1, IT-40 Booklet, Schedule 2/3/6
+// ══════════════════════════════════════════════════════════════════
+
+// 2025 county LIT rates — Indiana DOR DN #1, effective Jan 1, 2025
+const IN_COUNTY_RATES_2025 = {
+  "Adams": 0.016, "Allen": 0.0159, "Bartholomew": 0.0175, "Benton": 0.0179,
+  "Blackford": 0.025, "Boone": 0.017, "Brown": 0.025234, "Carroll": 0.022733,
+  "Cass": 0.0295, "Clark": 0.02, "Clay": 0.0235, "Clinton": 0.0265,
+  "Crawford": 0.0165, "Daviess": 0.015, "Dearborn": 0.014, "Decatur": 0.0245,
+  "DeKalb": 0.0213, "Delaware": 0.015, "Dubois": 0.012, "Elkhart": 0.02,
+  "Fayette": 0.0282, "Floyd": 0.0189, "Fountain": 0.021, "Franklin": 0.017,
+  "Fulton": 0.0288, "Gibson": 0.013, "Grant": 0.0255, "Greene": 0.0215,
+  "Hamilton": 0.011, "Hancock": 0.0194, "Harrison": 0.01, "Hendricks": 0.017,
+  "Henry": 0.0202, "Howard": 0.0195, "Huntington": 0.0195, "Jackson": 0.021,
+  "Jasper": 0.02864, "Jay": 0.025, "Jefferson": 0.0103, "Jennings": 0.025,
+  "Johnson": 0.014, "Knox": 0.017, "Kosciusko": 0.01, "LaGrange": 0.0165,
+  "Lake": 0.015, "LaPorte": 0.0145, "Lawrence": 0.0175, "Madison": 0.0225,
+  "Marion": 0.0202, "Marshall": 0.0125, "Martin": 0.025, "Miami": 0.0254,
+  "Monroe": 0.0214, "Montgomery": 0.0265, "Morgan": 0.0272, "Newton": 0.01,
+  "Noble": 0.0175, "Ohio": 0.02, "Orange": 0.0175, "Owen": 0.025,
+  "Parke": 0.0265, "Perry": 0.014, "Pike": 0.012, "Porter": 0.005,
+  "Posey": 0.0145, "Pulaski": 0.0285, "Putnam": 0.023, "Randolph": 0.03,
+  "Ripley": 0.0238, "Rush": 0.0215, "St. Joseph": 0.0175, "Scott": 0.0216,
+  "Shelby": 0.016, "Spencer": 0.008, "Starke": 0.0171, "Steuben": 0.0199,
+  "Sullivan": 0.017, "Switzerland": 0.0145, "Tippecanoe": 0.0128, "Tipton": 0.026,
+  "Union": 0.02, "Vanderburgh": 0.0125, "Vermillion": 0.015, "Vigo": 0.02,
+  "Wabash": 0.029, "Warren": 0.0212, "Warrick": 0.01, "Washington": 0.02,
+  "Wayne": 0.0125, "Wells": 0.021, "White": 0.0232, "Whitley": 0.016829
+};
+
+// 2026 county LIT rates — Indiana DOR DN #1, effective Jan 1, 2026
+// Six counties changed: Carroll, Grant, Greene, Howard, Shelby, Union (all increases)
+const IN_COUNTY_RATES_2026 = Object.assign({}, IN_COUNTY_RATES_2025, {
+  "Carroll": 0.024733,
+  "Grant": 0.0275,
+  "Greene": 0.0235,
+  "Howard": 0.0235,
+  "Shelby": 0.017,
+  "Union": 0.0275
+});
+
+const IN_STATE_RATES = { 2025: 0.03, 2026: 0.0295 };
 
 const calc = {
   taxYear: 2025,
   filingStatus: 'single',
   residencyStatus: 'full-year',
-  deductionMethod: 'std',
-
-  stdDeds: {
-    single: 5540, mfj: 11080, mfs: 5540, hoh: 11080
-  },
-
-  brackets: {
-    single: [
-      {min:0, max:10756, rate:0.01},
-      {min:10756, max:25499, rate:0.02},
-      {min:25499, max:40245, rate:0.04},
-      {min:40245, max:55866, rate:0.06},
-      {min:55866, max:70612, rate:0.08},
-      {min:70612, max:360659, rate:0.093},
-      {min:360659, max:432791, rate:0.103},
-      {min:432791, max:721314, rate:0.113},
-      {min:721314, max:Infinity, rate:0.123}
-    ],
-    mfj: [
-      {min:0, max:21512, rate:0.01},
-      {min:21512, max:50998, rate:0.02},
-      {min:50998, max:80490, rate:0.04},
-      {min:80490, max:111732, rate:0.06},
-      {min:111732, max:141224, rate:0.08},
-      {min:141224, max:721318, rate:0.093},
-      {min:721318, max:865582, rate:0.103},
-      {min:865582, max:1442628, rate:0.113},
-      {min:1442628, max:Infinity, rate:0.123}
-    ],
-    mfs: [
-      {min:0, max:10756, rate:0.01},
-      {min:10756, max:25499, rate:0.02},
-      {min:25499, max:40245, rate:0.04},
-      {min:40245, max:55866, rate:0.06},
-      {min:55866, max:70612, rate:0.08},
-      {min:70612, max:360659, rate:0.093},
-      {min:360659, max:432791, rate:0.103},
-      {min:432791, max:721314, rate:0.113},
-      {min:721314, max:Infinity, rate:0.123}
-    ],
-    hoh: [
-      {min:0, max:21527, rate:0.01},
-      {min:21527, max:51000, rate:0.02},
-      {min:51000, max:65744, rate:0.04},
-      {min:65744, max:81364, rate:0.06},
-      {min:81364, max:96111, rate:0.08},
-      {min:96111, max:490493, rate:0.093},
-      {min:490493, max:588593, rate:0.103},
-      {min:588593, max:980987, rate:0.113},
-      {min:980987, max:Infinity, rate:0.123}
-    ]
-  },
 
   getFieldValue(id) {
     const el = document.getElementById(id);
@@ -1162,27 +1220,93 @@ const calc = {
     return new Intl.NumberFormat('en-US', {style:'currency',currency:'USD',minimumFractionDigits:0,maximumFractionDigits:0}).format(val);
   },
 
-  calcTax(income, status) {
-    if (income <= 0) return 0;
-    const br = this.brackets[status] || this.brackets.single;
-    let tax = 0;
-    for (let b of br) {
-      if (income > b.min) {
-        const amt = Math.min(income, b.max) - b.min;
-        tax += amt * b.rate;
-      }
-    }
-    return tax;
+  formatPct(val) {
+    return (val * 100).toFixed(2) + '%';
   },
 
-  getMarginal(income, status) {
-    const br = this.brackets[status] || this.brackets.single;
-    for (let b of br) {
-      if (income >= b.min && income < b.max) {
-        return (b.rate * 100).toFixed(1);
-      }
+  countyRate() {
+    const c = document.getElementById('county').value;
+    if (!c) return 0;
+    const table = this.taxYear === 2026 ? IN_COUNTY_RATES_2026 : IN_COUNTY_RATES_2025;
+    return table[c] || 0;
+  },
+
+  stateRate() {
+    return IN_STATE_RATES[this.taxYear] || 0.03;
+  },
+
+  computeExemptions(fedAGI) {
+    const isMFJ = this.filingStatus === 'mfj';
+    const isMFS = this.filingStatus === 'mfs';
+    const age = this.getFieldValue('age');
+    const spouseAge = this.getFieldValue('spouseAge');
+    const blind = this.getFieldValue('isBlind');
+    const spouseBlind = this.getFieldValue('spouseBlind');
+    const numChildren = this.getFieldValue('numChildren');
+    const firstYearChildren = Math.min(this.getFieldValue('firstYearChildren'), numChildren);
+    const numDependents = this.getFieldValue('numDependents');
+    const adoptedChildren = this.getFieldValue('adoptedChildren');
+
+    let total = 0;
+    const lines = [];
+
+    // Personal
+    total += 1000;
+    lines.push({ label: 'Personal exemption (you)', amt: 1000 });
+
+    // Spouse
+    if (isMFJ) {
+      total += 1000;
+      lines.push({ label: 'Spouse exemption', amt: 1000 });
     }
-    return '12.3';
+
+    // Dependents (children + other) — $1,000 each
+    const totalDeps = numChildren + numDependents;
+    if (totalDeps > 0) {
+      total += totalDeps * 1000;
+      lines.push({ label: `Dependent exemptions (${totalDeps} × $1,000)`, amt: totalDeps * 1000 });
+    }
+
+    // First-year dependent additional — $1,500 each
+    if (firstYearChildren > 0) {
+      total += firstYearChildren * 1500;
+      lines.push({ label: `First-year dependents (${firstYearChildren} × $1,500)`, amt: firstYearChildren * 1500 });
+    }
+
+    // Adopted child additional — $3,000 each
+    if (adoptedChildren > 0) {
+      total += adoptedChildren * 3000;
+      lines.push({ label: `Adopted-child additional (${adoptedChildren} × $3,000)`, amt: adoptedChildren * 3000 });
+    }
+
+    // Age 65+ : $1,000 each
+    let age65Count = 0;
+    if (age >= 65) age65Count++;
+    if (isMFJ && spouseAge >= 65) age65Count++;
+    if (age65Count > 0) {
+      total += age65Count * 1000;
+      lines.push({ label: `Age 65+ exemption (${age65Count} × $1,000)`, amt: age65Count * 1000 });
+    }
+
+    // Age 65+ low-income additional: +$500 each if fed AGI < $40,000
+    if (age65Count > 0 && fedAGI < 40000) {
+      total += age65Count * 500;
+      lines.push({ label: `Age 65+ low-income additional (${age65Count} × $500, fed AGI < $40k)`, amt: age65Count * 500 });
+    }
+
+    // Blind: $1,000 each
+    let blindCount = 0;
+    if (blind) blindCount++;
+    if (isMFJ && spouseBlind) blindCount++;
+    if (blindCount > 0) {
+      total += blindCount * 1000;
+      lines.push({ label: `Blind exemption (${blindCount} × $1,000)`, amt: blindCount * 1000 });
+    }
+
+    // MFS: halve certain exemptions? Indiana allows full exemptions per filer; but only one filer can claim each dependent.
+    // We assume the user inputs reflect their portion, so no automatic halving.
+
+    return { total, lines };
   },
 
   recalc() {
@@ -1196,29 +1320,26 @@ const calc = {
     const closs = this.getFieldValue('capitalLoss');
     const qdiv = this.getFieldValue('qualifiedDiv');
     const odiv = this.getFieldValue('ordDiv');
-    const int = this.getFieldValue('interest');
+    const intInc = this.getFieldValue('interest');
     const rental = this.getFieldValue('rental');
     const other = this.getFieldValue('otherInc');
+    const socSec = this.getFieldValue('socSec');
     const seRev = this.getFieldValue('seRevenue');
     const seExp = this.getFieldValue('seExpenses');
     const k401Raw = this.getFieldValue('k401');
     const ira = this.getFieldValue('ira');
     const hsaRaw = this.getFieldValue('hsa');
 
-    // Through-payroll logic (matches federal):
-    // If checked = already excluded from W-2 Box 1, don't subtract again
-    // If unchecked = not yet excluded, subtract as above-the-line deduction
+    // Through-payroll logic — same as CA: if checked, already excluded from W-2 Box 1
     const k401ThroughPayroll = document.getElementById('k401through').checked;
     const hsaThroughPayroll = document.getElementById('hsathrough').checked;
     const k401ForCalc = k401ThroughPayroll ? 0 : k401Raw;
-    // HSA: CA does NOT allow HSA deduction. If through payroll (excluded from W-2),
-    // we must ADD it back. If NOT through payroll, it's already in gross, so no add-back needed.
-    const hsaAddBack = hsaThroughPayroll ? hsaRaw : 0;
+    const hsaForCalc = hsaThroughPayroll ? 0 : hsaRaw;
 
-    // Gross income
-    let gross = w2 + stcg + ltcg + Math.max(0, qdiv + odiv - closs) + int + rental + other + Math.max(0, seRev - seExp);
+    // Gross income (federal-style)
+    let gross = w2 + stcg + ltcg + Math.max(0, qdiv + odiv - closs) + intInc + rental + other + socSec + Math.max(0, seRev - seExp);
 
-    // Residency proration
+    // Residency proration on gross
     if (this.residencyStatus === 'part-year') {
       const start = document.getElementById('residencyStart').value;
       const end = document.getElementById('residencyEnd').value;
@@ -1226,80 +1347,115 @@ const calc = {
         const d1 = new Date(start);
         const d2 = new Date(end);
         const days = (d2 - d1) / (1000*60*60*24);
-        const ratio = Math.min(days / 365, 1);
+        const ratio = Math.min(Math.max(days / 365, 0), 1);
         gross *= ratio;
       }
     } else if (this.residencyStatus === 'nonresident') {
-      const pct = (this.getFieldValue('caSourcePercent') || 50) / 100;
+      const pct = (this.getFieldValue('inSourcePercent') || 50) / 100;
       gross *= pct;
     }
 
-    // AGI: subtract 401k/IRA (if not already excluded), add back HSA (CA disallows HSA deduction)
-    const agi = Math.max(0, gross - k401ForCalc - ira + hsaAddBack);
+    // Federal AGI ≈ gross − above-the-line adjustments (401k, IRA, HSA — IN conforms)
+    const fedAGI = Math.max(0, gross - k401ForCalc - ira - hsaForCalc);
 
-    // Deduction — federal-style comparison
-    const stdDed = this.stdDeds[this.filingStatus] || 5540;
-    const mort = this.getFieldValue('mortgage');
-    const ptax = this.getFieldValue('propertyTax');
-    const char = this.getFieldValue('charitable');
-    const med = Math.max(0, this.getFieldValue('medical') - agi * 0.075);
-    const otherD = this.getFieldValue('otherDed');
-    const totalItemized = mort + ptax + char + med + otherD;
-    document.getElementById('totalItemized').textContent = this.formatCurr(totalItemized);
+    // Indiana add-backs (Schedule 1)
+    const oosMuni = this.getFieldValue('oosMuni');
+    const totalAddbacks = oosMuni;
 
-    const forceItemized = document.getElementById('forceItemized').checked;
-    const forceStandard = document.getElementById('forceStandard').checked;
-    const naturallyItemized = totalItemized > stdDed;
-    let isItemized;
-    if (forceItemized) isItemized = true;
-    else if (forceStandard) isItemized = false;
-    else isItemized = naturallyItemized;
+    // Indiana subtractions (Schedule 2) — capped at limits
+    const rentDed = Math.min(this.getFieldValue('rentPaid'), 3000);
+    const milPay = Math.min(this.getFieldValue('activeMilPay'), 5000);
+    const milRet = this.getFieldValue('milRetirement'); // 100% deductible
+    let civilServ = Math.min(this.getFieldValue('civilServAnnuity'), 16000);
+    civilServ = Math.max(0, civilServ - socSec); // reduced by SS
+    const disRet = Math.min(this.getFieldValue('disabilityRet'), 5200);
+    const unempDed = this.getFieldValue('unempDed');
+    const otherDed = this.getFieldValue('otherDed');
+    const ssDed = socSec; // Indiana doesn't tax SS — full subtraction
 
-    const ded = isItemized ? totalItemized : stdDed;
+    const totalDeductions = rentDed + milPay + milRet + civilServ + disRet + unempDed + otherDed + ssDed;
 
-    const taxable = Math.max(0, agi - ded);
+    document.getElementById('totalDeductions').textContent = this.formatCurr(totalDeductions);
 
-    // Regular tax
-    const regTax = this.calcTax(taxable, this.filingStatus);
+    // Indiana AGI = federal AGI + add-backs − Schedule 2 subtractions
+    const inAGI = Math.max(0, fedAGI + totalAddbacks - totalDeductions);
 
-    // MHST (1% over $1M)
-    const mhst = taxable > 1000000 ? (taxable - 1000000) * 0.01 : 0;
+    // Exemptions (Schedule 3)
+    const exemptionData = this.computeExemptions(fedAGI);
+    const exemptions = exemptionData.total;
 
-    // SDI (1.1% on W2 wages, no cap 2025)
-    const sdi = w2 * 0.011;
+    // Render exemption breakdown
+    document.getElementById('exemptionTotal').textContent = this.formatCurr(exemptions);
+    const breakdownHTML = exemptionData.lines.map(l =>
+      `<div class="exemption-line"><span>${l.label}</span><span>$${l.amt.toLocaleString()}</span></div>`
+    ).join('');
+    document.getElementById('exemptionBreakdown').innerHTML = breakdownHTML;
 
-    // Total liability
-    const totalLiab = regTax + mhst + sdi;
+    const inTaxable = Math.max(0, inAGI - exemptions);
 
-    // Credits
-    const credits = this.getFieldValue('depCareCredit') + this.getFieldValue('renterCredit') +
-                    this.getFieldValue('caEITC') + this.getFieldValue('collegeCredit') +
-                    this.getFieldValue('otherCredits');
+    // State tax (flat)
+    const stateRate = this.stateRate();
+    const stateTax = inTaxable * stateRate;
 
-    // Tax after credits
+    // County tax — applied to same Indiana taxable income
+    const countyR = this.countyRate();
+    const countyTax = inTaxable * countyR;
+
+    const totalLiab = stateTax + countyTax;
+
+    // Credits — auto-calc + manual inputs
+    const ch529Contrib = this.getFieldValue('ch529Contrib');
+    const ch529Cap = this.filingStatus === 'mfs' ? 750 : 1500;
+    const ch529Credit = Math.min(ch529Contrib * 0.20, ch529Cap);
+    document.getElementById('ch529CreditAuto').textContent = this.formatCurr(ch529Credit);
+
+    const fedEIC = this.getFieldValue('federalEIC');
+    const inEIC = fedEIC * 0.10;
+    document.getElementById('inEICAuto').textContent = this.formatCurr(inEIC);
+
+    const fedAdopt = this.getFieldValue('federalAdoption');
+    const numAdopted = this.getFieldValue('adoptedChildren');
+    const inAdoption = Math.min(fedAdopt * 0.10, 1000 * Math.max(numAdopted, 1));
+    document.getElementById('inAdoptionAuto').textContent = this.formatCurr(inAdoption);
+
+    const elderlyCredit = this.getFieldValue('elderlyCredit');
+    const educatorCredit = Math.min(this.getFieldValue('educatorCredit'), 100);
+    const otherStateCredit = this.getFieldValue('otherStateCredit');
+    const otherCredits = this.getFieldValue('otherCredits');
+
+    const credits = ch529Credit + inEIC + inAdoption + elderlyCredit + educatorCredit + otherStateCredit + otherCredits;
+
+    // Tax after credits (cannot reduce below 0; most IN credits are nonrefundable)
     const taxAfter = Math.max(0, totalLiab - credits);
 
     // Payments
-    const wheld = this.getFieldValue('caWithholding');
+    const wheld = this.getFieldValue('inWithholding');
+    const countyWheld = this.getFieldValue('inCountyWithholding');
     const est = this.getFieldValue('estimatedPay');
-    const paid = wheld + est;
+    const paid = wheld + countyWheld + est;
 
-    // Refund/owed
     const refund = paid - taxAfter;
 
-    // Update UI
-    document.getElementById('br-gross').textContent = this.formatCurr(gross);
-    document.getElementById('br-adjust').textContent = this.formatCurr(k401ForCalc + ira - hsaAddBack);
-    document.getElementById('br-agi').textContent = this.formatCurr(agi);
-    document.getElementById('dedLabel').textContent = isItemized ? 'Deduction (Itemized)' : 'Deduction (Standard)';
-    document.getElementById('br-ded').textContent = this.formatCurr(ded);
-    document.getElementById('br-taxable').textContent = this.formatCurr(taxable);
-    document.getElementById('br-tax').textContent = this.formatCurr(regTax);
-    document.getElementById('br-mhst').textContent = this.formatCurr(mhst);
-    document.getElementById('br-sdi').textContent = this.formatCurr(sdi);
+    // ── Update UI ──
+    document.getElementById('br-fed-agi').textContent = this.formatCurr(fedAGI);
+    document.getElementById('br-addbacks').textContent = this.formatCurr(totalAddbacks);
+    document.getElementById('br-subtractions').textContent = this.formatCurr(totalDeductions);
+    document.getElementById('br-in-agi').textContent = this.formatCurr(inAGI);
+    document.getElementById('br-exemptions').textContent = this.formatCurr(exemptions);
+    document.getElementById('br-taxable').textContent = this.formatCurr(inTaxable);
+
+    document.getElementById('br-state-rate-label').textContent = `State Tax (${(stateRate*100).toFixed(2)}%)`;
+    document.getElementById('br-state-tax').textContent = this.formatCurr(stateTax);
+
+    const countyName = document.getElementById('county').value || '—';
+    const countyRateStr = countyR > 0 ? (countyR * 100).toFixed(4).replace(/0+$/, '').replace(/\.$/, '') + '%' : '—';
+    document.getElementById('br-county-rate-label').textContent = `County Tax (${countyName} ${countyRateStr})`;
+    document.getElementById('br-county-tax').textContent = this.formatCurr(countyTax);
+
     document.getElementById('br-total').textContent = this.formatCurr(totalLiab);
     document.getElementById('br-credits').textContent = '(' + this.formatCurr(credits) + ')';
     document.getElementById('br-withheld').textContent = '(' + this.formatCurr(wheld) + ')';
+    document.getElementById('br-county-withheld').textContent = '(' + this.formatCurr(countyWheld) + ')';
     document.getElementById('br-estimated').textContent = '(' + this.formatCurr(est) + ')';
 
     // Refund row
@@ -1320,70 +1476,31 @@ const calc = {
 
     // Metrics
     document.getElementById('metricGross').textContent = this.formatCurr(gross);
-    document.getElementById('metricAGI').textContent = this.formatCurr(agi);
-    document.getElementById('metricMargin').textContent = this.getMarginal(taxable, this.filingStatus) + '%';
-    const effRate = taxable > 0 ? ((taxAfter / taxable) * 100).toFixed(2) : '0.00';
+    document.getElementById('metricAGI').textContent = this.formatCurr(inAGI);
+    const combinedRate = stateRate + countyR;
+    document.getElementById('metricCombined').textContent = (combinedRate * 100).toFixed(2) + '%';
+    const effRate = inTaxable > 0 ? ((taxAfter / inTaxable) * 100).toFixed(2) : '0.00';
     document.getElementById('metricEffective').textContent = effRate + '%';
 
-    // Bracket viz
-    const br = this.brackets[this.filingStatus] || this.brackets.single;
-    let pct = 0;
-    for (let b of br) {
-      if (taxable >= b.max) {
-        pct += (b.max - b.min) * b.rate;
-      } else if (taxable >= b.min) {
-        pct += (taxable - b.min) * b.rate;
-        break;
-      }
-    }
-    const maxRate = 0.123; // 12.3%
-    const fillPct = Math.min(pct / maxRate * 100, 100);
-    document.getElementById('bracketFill').style.width = fillPct + '%';
-    document.getElementById('bracketPct').textContent = this.getMarginal(taxable, this.filingStatus) + '%';
-
-    // Deduction winner display (federal pattern)
-    const dw = document.getElementById('deductionWinner');
-    const dwTxt = document.getElementById('deductionWinnerText');
-    const diff = Math.abs(totalItemized - stdDed);
-    const margRate = parseFloat(this.getMarginal(taxable, this.filingStatus)) / 100;
-    const diffTax = Math.round(diff * margRate);
-    const isOverride = (isItemized && !naturallyItemized) || (!isItemized && naturallyItemized);
-
-    if (isItemized && !isOverride) {
-      dw.className = 'deduction-winner itemized';
-      dwTxt.textContent = `✓ Using itemized ($${Math.round(totalItemized).toLocaleString()}) — saves $${diffTax.toLocaleString()} in tax vs. standard ($${Math.round(stdDed).toLocaleString()})`;
-    } else if (isItemized && isOverride) {
-      dw.className = 'deduction-winner override';
-      dwTxt.textContent = `⚠️ Override active: using itemized ($${Math.round(totalItemized).toLocaleString()}) — costs ~$${diffTax.toLocaleString()} more in tax vs. standard ($${Math.round(stdDed).toLocaleString()})`;
-    } else if (!isItemized && !isOverride) {
-      dw.className = 'deduction-winner std';
-      dwTxt.textContent = `✓ Standard deduction ($${Math.round(stdDed).toLocaleString()}) is higher than itemized ($${Math.round(totalItemized).toLocaleString()})`;
-    } else {
-      dw.className = 'deduction-winner override';
-      dwTxt.textContent = `⚠️ Override active: using standard ($${Math.round(stdDed).toLocaleString()}) — costs ~$${diffTax.toLocaleString()} more in tax vs. itemized ($${Math.round(totalItemized).toLocaleString()})`;
-    }
-
-    // Toggle override checkboxes (federal pattern)
-    const forceItemizedRow = document.getElementById('forceItemizedRow');
-    const forceStandardRow = document.getElementById('forceStandardRow');
-    if (naturallyItemized) {
-      if (forceItemizedRow) { forceItemizedRow.style.display = 'none'; document.getElementById('forceItemized').checked = false; }
-      if (forceStandardRow) forceStandardRow.style.display = '';
-    } else {
-      if (forceItemizedRow) forceItemizedRow.style.display = '';
-      if (forceStandardRow) { forceStandardRow.style.display = 'none'; document.getElementById('forceStandard').checked = false; }
+    // Combined rate stack viz
+    if (combinedRate > 0) {
+      const statePct = (stateRate / combinedRate) * 100;
+      const countyPct = 100 - statePct;
+      document.getElementById('rateStackState').style.width = statePct + '%';
+      document.getElementById('rateStackCounty').style.width = countyPct + '%';
+      document.getElementById('rateStackStateLabel').textContent = (stateRate * 100).toFixed(2) + '%';
+      document.getElementById('rateStackCountyLabel').textContent = countyR > 0 ? (countyR * 100).toFixed(2) + '%' : '—';
     }
 
     // Suggestions
-    this.updateSuggestions(gross, agi, seRev - seExp, taxable);
+    this.updateSuggestions(gross, inAGI, seRev - seExp, inTaxable, ch529Contrib, w2);
 
-    // Save to localStorage
+    // Save
     this.saveProfile();
   },
 
   saveProfile() {
     const profile = {
-      // Use federal-compatible field names for cross-page sync
       filingStatus: this.filingStatus,
       age: this.getFieldValue('age'),
       spouseAge: this.getFieldValue('spouseAge'),
@@ -1406,36 +1523,122 @@ const calc = {
       k401Contrib: this.getFieldValue('k401'),
       iraContrib: this.getFieldValue('ira'),
       hsaContrib: this.getFieldValue('hsa'),
-      mortgageInterest: this.getFieldValue('mortgage'),
-      charitableDed: this.getFieldValue('charitable'),
-      medicalExpenses: this.getFieldValue('medical'),
-      propertyTax: this.getFieldValue('propertyTax')
+      // Indiana-specific
+      inCounty: document.getElementById('county').value,
+      ch529Contrib: this.getFieldValue('ch529Contrib'),
+      rentPaid: this.getFieldValue('rentPaid')
     };
     try { localStorage.setItem('taxProfile', JSON.stringify(profile)); } catch(e) {}
   },
 
-  updateSuggestions(gross, agi, seIncome, taxable) {
+  updateSuggestions(gross, inAGI, seIncome, taxable, ch529, w2) {
     const list = document.getElementById('strategyList');
     list.innerHTML = '';
     const sugg = [];
 
-    if (gross > 100000) {
-      sugg.push({high:true, title:'Maximize Retirement Savings', desc:'At CA rates of 9.3-12.3%, each dollar in 401(k)/IRA saves significantly in state taxes.'});
+    const stateRate = this.stateRate();
+    const countyR = this.countyRate();
+    const combinedRate = stateRate + countyR;
+    const numChildren = this.getFieldValue('numChildren');
+    const ch529Cap = this.filingStatus === 'mfs' ? 750 : 1500;
+
+    // 1. CollegeChoice 529 — flagship Indiana strategy
+    if (numChildren > 0 && ch529 < (ch529Cap === 1500 ? 7500 : 3750)) {
+      const remaining = (ch529Cap === 1500 ? 7500 : 3750) - ch529;
+      const additionalCredit = Math.min(remaining * 0.20, ch529Cap - ch529 * 0.20);
+      sugg.push({
+        high: true,
+        title: 'Max the CollegeChoice 529 Credit',
+        desc: `Indiana gives a 20% credit on 529 contributions, max $${ch529Cap.toLocaleString()}/year. You're $${remaining.toLocaleString()} below the optimal contribution — adding it would yield up to $${Math.round(additionalCredit).toLocaleString()} in Indiana tax credit.`
+      });
+    } else if (ch529 === 0) {
+      sugg.push({
+        high: true,
+        title: 'CollegeChoice 529 Plan',
+        desc: `Indiana's highest-impact tax move. A 20% state credit on contributions to an Indiana 529 plan (CollegeChoice), up to $${ch529Cap.toLocaleString()}/year. Even without children, grandparents can claim this for grandchildren.`
+      });
     }
+
+    // 2. Rent deduction
+    if (this.getFieldValue('rentPaid') === 0 && w2 > 0 && inAGI < 75000) {
+      sugg.push({
+        high: false,
+        title: 'Renter\'s Deduction',
+        desc: `If you rent your Indiana primary residence (subject to property tax), deduct rent paid up to $3,000. At your combined ${(combinedRate * 100).toFixed(2)}% rate, that's ~$${Math.round(3000 * combinedRate)} in savings.`
+      });
+    }
+
+    // 3. Retirement maximization
+    if (gross > 60000 && this.getFieldValue('k401') < 15000) {
+      sugg.push({
+        high: true,
+        title: 'Maximize 401(k) / 403(b) Contributions',
+        desc: `Indiana conforms to federal AGI, so every dollar you defer pre-tax saves you ${(combinedRate * 100).toFixed(2)}% in IN tax (state + county) on top of federal savings.`
+      });
+    }
+
+    // 4. HSA conformity
+    if (this.getFieldValue('hsa') === 0 && gross > 50000) {
+      sugg.push({
+        high: false,
+        title: 'HSA Contributions (IN-Friendly)',
+        desc: `Unlike California, Indiana fully recognizes HSA tax benefits. If you have an HDHP, contributing to an HSA reduces both federal AGI AND Indiana AGI.`
+      });
+    }
+
+    // 5. Military retirement deduction
+    if (this.getFieldValue('milRetirement') > 0) {
+      sugg.push({
+        high: true,
+        title: 'Military Retirement Fully Deductible',
+        desc: `Since TY 2023, Indiana exempts 100% of military retirement and survivor benefits from state income tax — confirmed in your inputs.`
+      });
+    }
+
+    // 6. SE income
     if (seIncome > 50000) {
-      sugg.push({high:true, title:'S-Corp Election', desc:'An S-Corp can reduce SDI (1.1%) by distributing profits, not wages.'});
+      sugg.push({
+        high: false,
+        title: 'Quarterly Estimated Payments',
+        desc: `With self-employment income, file IN Form ES-40 quarterly to avoid underpayment penalty. Indiana mirrors federal due dates: April 15, June 15, Sept 15, Jan 15.`
+      });
     }
-    if (this.getFieldValue('stcg') > 0 || this.getFieldValue('ltcg') > 0) {
-      sugg.push({high:true, title:'Capital Gains Strategy', desc:'CA taxes gains at full rates (no preferential treatment). Plan realization timing.'});
+
+    // 7. County tax awareness
+    if (countyR > 0.025) {
+      sugg.push({
+        high: false,
+        title: 'High-LIT County',
+        desc: `Your county's local income tax (${(countyR * 100).toFixed(2)}%) is notably above the Indiana average (~1.6%). LIT is determined by county of residence on Jan 1 — relevant if you're considering a move within Indiana.`
+      });
     }
-    if (this.getFieldValue('hsa') > 0) {
-      sugg.push({high:false, title:'HSA Reconsideration', desc:'CA taxes HSA contributions, reducing their benefit. Verify strategy still makes sense.'});
+
+    // 8. SC-40 elderly credit
+    const age = this.getFieldValue('age');
+    const fedAGI = inAGI; // approximation — actual fed AGI; close enough for trigger
+    if (age >= 65 && fedAGI < 20000 && this.getFieldValue('elderlyCredit') === 0) {
+      sugg.push({
+        high: false,
+        title: 'Unified Tax Credit for the Elderly (SC-40)',
+        desc: `You may qualify for the Unified Tax Credit (Form SC-40) — a refundable $40-$140 credit for low-income filers 65+. Worth checking even if you don't need to file IT-40.`
+      });
     }
-    if (agi < 50000) {
-      sugg.push({high:false, title:'CA Renter\'s Credit', desc:'Up to $60 for singles, $120 for MFJ with qualifying income and rent.'});
+
+    // 9. School scholarship credit
+    if (gross > 100000 && numChildren > 0) {
+      sugg.push({
+        high: false,
+        title: 'School Scholarship (SGO) Credit',
+        desc: `Indiana gives a 50% credit for contributions to qualified Scholarship Granting Organizations. A $2,000 contribution → $1,000 IN credit (subject to statewide cap).`
+      });
     }
-    if (agi > 150000 && this.getFieldValue('charitable') < agi * 0.05) {
-      sugg.push({high:false, title:'Charitable Bunching', desc:'At high marginal rates, consider bunching multi-year giving in one year.'});
+
+    if (sugg.length === 0) {
+      const li = document.createElement('li');
+      li.className = 'no-suggestions';
+      li.textContent = 'Enter your income and profile details above to see personalized Indiana tax-saving strategies.';
+      list.appendChild(li);
+      return;
     }
 
     sugg.forEach(s => {
@@ -1460,6 +1663,8 @@ function setYear(yr) {
   calc.taxYear = yr;
   document.getElementById('btn2025').classList.toggle('active', yr === 2025);
   document.getElementById('btn2026').classList.toggle('active', yr === 2026);
+  document.getElementById('headerSubtitle').textContent = `Indiana State Tax Calculator · personalized plan to reduce your state tax bill · ${yr}`;
+  document.getElementById('resultsHeaderTitle').textContent = `${yr} INDIANA TAX ESTIMATE`;
   recalc();
 }
 
@@ -1470,17 +1675,14 @@ function updateResidency(status) {
   recalc();
 }
 
-// setDeductionMethod removed — now uses federal-style deduction-winner with forceItemized/forceStandard checkboxes
-
 function recalc() {
-  // Read filing status from DOM FIRST (before calc.recalc uses it)
+  // Read filing status from DOM FIRST
   calc.filingStatus = document.getElementById('filingStatus').value || 'single';
 
   // Toggle spouse fields
   const showSpouse = ['mfj', 'mfs'].includes(calc.filingStatus);
   document.getElementById('spouseAgeGroup').style.display = showSpouse ? 'block' : 'none';
   document.getElementById('spouseBlindRow').style.display = showSpouse ? 'flex' : 'none';
-  // Clear spouse values when not applicable
   if (!showSpouse) {
     const sa = document.getElementById('spouseAge');
     const sb = document.getElementById('spouseBlind');
@@ -1493,7 +1695,7 @@ function recalc() {
   const yr = calc.taxYear || 2025;
   const k401Base = 23500;
   const k401Catch = age >= 50 ? 7500 : 0;
-  const k401Super = (age >= 60 && age <= 63) ? 11250 - k401Catch : 0; // Super catch-up
+  const k401Super = (age >= 60 && age <= 63) ? 11250 - k401Catch : 0;
   const k401Max = k401Base + k401Catch + k401Super;
   const iraBase = 7000;
   const iraCatch = age >= 50 ? 1000 : 0;
@@ -1509,8 +1711,20 @@ function recalc() {
   calc.recalc();
 }
 
+// ══════════════════ POPULATE COUNTY DROPDOWN ══════════════════
+function populateCountyDropdown() {
+  const sel = document.getElementById('county');
+  const counties = Object.keys(IN_COUNTY_RATES_2025).sort();
+  counties.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c;
+    const r2025 = IN_COUNTY_RATES_2025[c];
+    opt.textContent = `${c} — ${(r2025 * 100).toFixed(2)}%`;
+    sel.appendChild(opt);
+  });
+}
+
 // ══════════════════ LOCAL STORAGE PROFILE SYNC ══════════════════
-// Map federal field IDs → CA field IDs
 const FIELD_MAP = {
   filingStatus: 'filingStatus',
   age: 'age',
@@ -1533,10 +1747,7 @@ const FIELD_MAP = {
   seExpenses: 'seExpenses',
   k401Contrib: 'k401',
   iraContrib: 'ira',
-  hsaContrib: 'hsa',
-  mortgageInterest: 'mortgage',
-  charitableDed: 'charitable',
-  medicalExpenses: 'medical'
+  hsaContrib: 'hsa'
 };
 
 function formatCurrencyField(el) {
@@ -1549,11 +1760,10 @@ function acceptProfile() {
     const profile = JSON.parse(localStorage.getItem('taxProfile'));
     if (!profile) return;
 
-    // Map and populate fields
-    for (const [fedKey, caKey] of Object.entries(FIELD_MAP)) {
-      if (profile[fedKey] === undefined && profile[caKey] === undefined) continue;
-      const val = profile[fedKey] !== undefined ? profile[fedKey] : profile[caKey];
-      const el = document.getElementById(caKey);
+    for (const [fedKey, inKey] of Object.entries(FIELD_MAP)) {
+      if (profile[fedKey] === undefined && profile[inKey] === undefined) continue;
+      const val = profile[fedKey] !== undefined ? profile[fedKey] : profile[inKey];
+      const el = document.getElementById(inKey);
       if (!el) continue;
 
       if (el.tagName === 'SELECT') {
@@ -1562,7 +1772,6 @@ function acceptProfile() {
       } else if (el.type === 'checkbox') {
         el.checked = !!val;
       } else {
-        // Currency or number field — parse from string or number, then format
         let numVal = val;
         if (typeof val === 'string') numVal = parseFloat(val.replace(/[\$,]/g, ''));
         if (typeof numVal === 'number' && !isNaN(numVal) && numVal > 0) {
@@ -1572,7 +1781,12 @@ function acceptProfile() {
       }
     }
 
-    // Trigger recalculation
+    // Restore previously-selected Indiana county if present
+    if (profile.inCounty) {
+      const sel = document.getElementById('county');
+      if (sel) sel.value = profile.inCounty;
+    }
+
     recalc();
   } catch(e) {
     console.error('Profile load error:', e);
@@ -1586,22 +1800,32 @@ function declineProfile() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Set initial filing status
-  calc.filingStatus = 'single';
-  recalc();
+  populateCountyDropdown();
 
-  // Check for saved federal profile and show sync banner
+  // Restore county from saved profile if any
   try {
     const saved = localStorage.getItem('taxProfile');
     if (saved) {
       const profile = JSON.parse(saved);
-      // Parse values that may be formatted strings like "155,000"
+      if (profile.inCounty) {
+        document.getElementById('county').value = profile.inCounty;
+      }
+    }
+  } catch(e) {}
+
+  calc.filingStatus = 'single';
+  recalc();
+
+  // Federal profile sync banner
+  try {
+    const saved = localStorage.getItem('taxProfile');
+    if (saved) {
+      const profile = JSON.parse(saved);
       const parseVal = (v) => {
         if (typeof v === 'number') return v;
         if (typeof v === 'string') return parseFloat(v.replace(/[\$,]/g, '')) || 0;
         return 0;
       };
-      // Show banner only if profile has meaningful data
       const hasData = parseVal(profile.w2Wages) > 0 || parseVal(profile.seRevenue) > 0 ||
                       parseVal(profile.stcg) > 0 || parseVal(profile.ltcg) > 0 ||
                       parseVal(profile.interestIncome) > 0 || parseVal(profile.rentalIncome) > 0 ||
@@ -1650,7 +1874,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Initialize currency formatting
+  // Currency formatting
   document.querySelectorAll('[data-currency]').forEach(el => {
     el.addEventListener('blur', function() {
       const val = parseFloat(this.value.replace(/[\$,]/g, '')) || 0;
